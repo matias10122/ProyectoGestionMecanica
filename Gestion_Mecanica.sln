@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Gestion_Mecanica", "Gestion_Mecanica\Gestion_Mecanica.vbproj", "{05175C8D-A750-4211-B25B-3A99FE19795D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05175C8D-A750-4211-B25B-3A99FE19795D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05175C8D-A750-4211-B25B-3A99FE19795D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05175C8D-A750-4211-B25B-3A99FE19795D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05175C8D-A750-4211-B25B-3A99FE19795D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C264A01-E8F4-4AA7-954D-7C0BFCD9DDD0}
+	EndGlobalSection
+EndGlobal

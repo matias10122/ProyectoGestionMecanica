@@ -1,0 +1,12 @@
+# Excluir archivos de Visual Studio
+.vs/
+*.user
+*.suo
+*.exe
+*.dll
+*.pdb
+*.obj
+*.log
+bin/
+obj/
+.vs/
