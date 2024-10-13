@@ -2,43 +2,36 @@
 
 Public Class Login
 
-    Private Sub ButtonLogin_Click(sender As Object, e As EventArgs) Handles buttonLogin.Click
-        Dim connectionString As String = "server=localhost;user id=root;database=taller"
-        Dim connection As New MySqlConnection(connectionString)
+    Private Sub buttonLogin_Click(sender As Object, e As EventArgs) Handles buttonLogin.Click
+        Dim connectionString As String = "server=localhost;database=taller;uid=root;pwd=;"
+        Dim query As String = "SELECT Correo, Contraseña, Tipo FROM usuarios WHERE Correo=@correo AND Contraseña=@contraseña"
 
-        Try
-            connection.Open()
-            Dim query As String = "SELECT * FROM usuarios WHERE Correo = @Correo AND Contraseña = @Contraseña"
+        Using connection As New MySqlConnection(connectionString)
             Dim command As New MySqlCommand(query, connection)
-            command.Parameters.AddWithValue("@Correo", textboxUsuario.Text)
-            command.Parameters.AddWithValue("@Contraseña", textboxContrasena.Text)
+            command.Parameters.AddWithValue("@correo", textboxUsuario.Text)
+            command.Parameters.AddWithValue("@contraseña", textboxContrasena.Text)
 
+            connection.Open()
             Dim reader As MySqlDataReader = command.ExecuteReader()
 
             If reader.HasRows Then
+                reader.Read()
+                Dim email As String = reader("Correo").ToString()
+                Dim tipo As String = reader("Tipo").ToString()
+
+                ' Mostrar mensaje de inicio de sesión exitoso
                 MessageBox.Show("Ha iniciado sesión correctamente")
-                Dim menuForm As New Menu()
-                Me.Hide() ' Cierra el formulario de login
-                menuForm.ShowDialog() ' Abre el formulario de menú
-                Me.Close()
+
+                ' Cierra el formulario de login
+                Me.Hide()
+
+                ' Abre el formulario Menu y pasa los datos
+                Dim menuForm As New Menu(email, tipo)
+                menuForm.Show()
             Else
                 MessageBox.Show("Usuario o contraseña incorrectos")
             End If
-
-            reader.Close()
-        Catch ex As MySqlException
-            MessageBox.Show("Error de conexión: " & ex.Message)
-        Finally
-            connection.Close()
-        End Try
+        End Using
     End Sub
-
-    Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.StartPosition = FormStartPosition.CenterScreen
-    End Sub
-
-
-
-
 
 End Class
