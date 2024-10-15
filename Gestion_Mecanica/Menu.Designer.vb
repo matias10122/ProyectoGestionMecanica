@@ -41,8 +41,10 @@ Partial Class Menu
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
+        Button2 = New Button()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        panelSiniestro.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
@@ -193,6 +195,7 @@ Partial Class Menu
         ' 
         ' panelSiniestro
         ' 
+        panelSiniestro.Controls.Add(Button2)
         panelSiniestro.Location = New Point(8, 57)
         panelSiniestro.Name = "panelSiniestro"
         panelSiniestro.Size = New Size(790, 392)
@@ -219,9 +222,18 @@ Partial Class Menu
         panelRepuestos.Size = New Size(790, 392)
         panelRepuestos.TabIndex = 0
         ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(43, 64)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(75, 23)
+        Button2.TabIndex = 0
+        Button2.Text = "Button2"
+        Button2.UseVisualStyleBackColor = True
+        ' 
         ' Menu
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(800, 478)
@@ -239,6 +251,7 @@ Partial Class Menu
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
+        panelSiniestro.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
@@ -261,4 +274,5 @@ Partial Class Menu
     Friend WithEvents panelVentaRepuestos As Panel
     Friend WithEvents panelRepuestos As Panel
     Friend WithEvents panelGestionServicios As Panel
+    Friend WithEvents Button2 As Button
 End Class
