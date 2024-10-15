@@ -41,12 +41,15 @@ Partial Class Menu
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
+        buttonUsuario = New Button()
+        panelUsuario = New Panel()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(buttonUsuario)
         Panel1.Controls.Add(buttonHome)
         Panel1.Controls.Add(buttonRepuestos)
         Panel1.Controls.Add(buttonGestionServicios)
@@ -70,45 +73,45 @@ Partial Class Menu
         ' 
         ' buttonRepuestos
         ' 
-        buttonRepuestos.Location = New Point(91, 0)
+        buttonRepuestos.Location = New Point(185, 0)
         buttonRepuestos.Name = "buttonRepuestos"
-        buttonRepuestos.Size = New Size(116, 48)
+        buttonRepuestos.Size = New Size(97, 48)
         buttonRepuestos.TabIndex = 5
         buttonRepuestos.Text = "Respuestos"
         buttonRepuestos.UseVisualStyleBackColor = True
         ' 
         ' buttonGestionServicios
         ' 
-        buttonGestionServicios.Location = New Point(593, 0)
+        buttonGestionServicios.Location = New Point(612, 0)
         buttonGestionServicios.Name = "buttonGestionServicios"
-        buttonGestionServicios.Size = New Size(133, 48)
+        buttonGestionServicios.Size = New Size(114, 48)
         buttonGestionServicios.TabIndex = 4
         buttonGestionServicios.Text = "Gestion - solicitudes"
         buttonGestionServicios.UseVisualStyleBackColor = True
         ' 
         ' buttonSoliServicios
         ' 
-        buttonSoliServicios.Location = New Point(464, 0)
+        buttonSoliServicios.Location = New Point(501, 0)
         buttonSoliServicios.Name = "buttonSoliServicios"
-        buttonSoliServicios.Size = New Size(133, 48)
+        buttonSoliServicios.Size = New Size(114, 48)
         buttonSoliServicios.TabIndex = 3
         buttonSoliServicios.Text = "Solicitud de servicio"
         buttonSoliServicios.UseVisualStyleBackColor = True
         ' 
         ' buttonSiniestros
         ' 
-        buttonSiniestros.Location = New Point(334, 0)
+        buttonSiniestros.Location = New Point(390, 0)
         buttonSiniestros.Name = "buttonSiniestros"
-        buttonSiniestros.Size = New Size(133, 48)
+        buttonSiniestros.Size = New Size(114, 48)
         buttonSiniestros.TabIndex = 2
         buttonSiniestros.Text = "Siniestros"
         buttonSiniestros.UseVisualStyleBackColor = True
         ' 
         ' buttonVentaRepuestos
         ' 
-        buttonVentaRepuestos.Location = New Point(204, 0)
+        buttonVentaRepuestos.Location = New Point(279, 0)
         buttonVentaRepuestos.Name = "buttonVentaRepuestos"
-        buttonVentaRepuestos.Size = New Size(133, 48)
+        buttonVentaRepuestos.Size = New Size(114, 48)
         buttonVentaRepuestos.TabIndex = 1
         buttonVentaRepuestos.Text = "Venta-Repuestos"
         buttonVentaRepuestos.UseVisualStyleBackColor = True
@@ -219,12 +222,29 @@ Partial Class Menu
         panelRepuestos.Size = New Size(790, 392)
         panelRepuestos.TabIndex = 0
         ' 
+        ' buttonUsuario
+        ' 
+        buttonUsuario.Location = New Point(100, 0)
+        buttonUsuario.Name = "buttonUsuario"
+        buttonUsuario.Size = New Size(90, 49)
+        buttonUsuario.TabIndex = 7
+        buttonUsuario.Text = "Gestion - Usuarios"
+        buttonUsuario.UseVisualStyleBackColor = True
+        ' 
+        ' panelUsuario
+        ' 
+        panelUsuario.Location = New Point(8, 57)
+        panelUsuario.Name = "panelUsuario"
+        panelUsuario.Size = New Size(790, 392)
+        panelUsuario.TabIndex = 8
+        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(800, 478)
+        Controls.Add(panelUsuario)
         Controls.Add(panelSiniestro)
         Controls.Add(panelVentaRepuestos)
         Controls.Add(panelRepuestos)
@@ -261,4 +281,6 @@ Partial Class Menu
     Friend WithEvents panelVentaRepuestos As Panel
     Friend WithEvents panelRepuestos As Panel
     Friend WithEvents panelGestionServicios As Panel
+    Friend WithEvents buttonUsuario As Button
+    Friend WithEvents panelUsuario As Panel
 End Class

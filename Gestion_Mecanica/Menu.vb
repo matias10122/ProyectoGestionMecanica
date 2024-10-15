@@ -16,6 +16,7 @@
         panelSiniestro.Visible = False
         panelSoliServicios.Visible = False
         panelGestionServicios.Visible = False
+        panelUsuario.Visible = False
     End Sub
 
     Private Sub buttonRepuestos_Click(sender As Object, e As EventArgs) Handles buttonRepuestos.Click
@@ -63,6 +64,11 @@
         ' Mostrar el formulario de login
         Dim loginForm As New Login()
         loginForm.Show()
+    End Sub
+
+    Private Sub buttonUsuario_Click(sender As Object, e As EventArgs) Handles buttonUsuario.Click
+        OcultarTodosLosPaneles()
+        panelUsuario.Visible = True
     End Sub
 
     ' Otras funciones del formulario Menu
