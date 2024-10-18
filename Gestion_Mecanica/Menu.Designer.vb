@@ -23,6 +23,7 @@ Partial Class Menu
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        buttonUsuario = New Button()
         buttonHome = New Button()
         buttonRepuestos = New Button()
         buttonGestionServicios = New Button()
@@ -41,7 +42,6 @@ Partial Class Menu
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
-        buttonUsuario = New Button()
         panelUsuario = New Panel()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
@@ -61,6 +61,15 @@ Partial Class Menu
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(796, 48)
         Panel1.TabIndex = 0
+        ' 
+        ' buttonUsuario
+        ' 
+        buttonUsuario.Location = New Point(100, 0)
+        buttonUsuario.Name = "buttonUsuario"
+        buttonUsuario.Size = New Size(90, 49)
+        buttonUsuario.TabIndex = 7
+        buttonUsuario.Text = "Gestion - Usuarios"
+        buttonUsuario.UseVisualStyleBackColor = True
         ' 
         ' buttonHome
         ' 
@@ -221,15 +230,6 @@ Partial Class Menu
         panelRepuestos.Name = "panelRepuestos"
         panelRepuestos.Size = New Size(790, 392)
         panelRepuestos.TabIndex = 0
-        ' 
-        ' buttonUsuario
-        ' 
-        buttonUsuario.Location = New Point(100, 0)
-        buttonUsuario.Name = "buttonUsuario"
-        buttonUsuario.Size = New Size(90, 49)
-        buttonUsuario.TabIndex = 7
-        buttonUsuario.Text = "Gestion - Usuarios"
-        buttonUsuario.UseVisualStyleBackColor = True
         ' 
         ' panelUsuario
         ' 
