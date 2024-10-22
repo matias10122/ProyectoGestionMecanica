@@ -198,6 +198,32 @@ Public Class Menu
     End Sub
 
     Private Sub buttonMostrarUsuarios_Click(sender As Object, e As EventArgs) Handles buttonMostrarUsuarios.Click
+        Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
+        Dim usuariosList As New List(Of String)()
 
+        Using connection As New MySqlConnection(connectionString)
+            Dim command As New MySqlCommand("SELECT Rut, Correo FROM usuarios", connection)
+
+            Try
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                While reader.Read()
+                    Dim rut As String = reader("Rut").ToString()
+                    Dim correo As String = reader("Correo").ToString()
+                    usuariosList.Add($"RUT: {rut}, Correo: {correo}")
+                End While
+
+                If usuariosList.Count > 0 Then
+                    Dim usuariosInfo As String = String.Join(Environment.NewLine, usuariosList)
+                    MessageBox.Show(usuariosInfo, "Lista de Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBox.Show("No hay usuarios registrados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar los usuarios: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
     End Sub
 End Class
