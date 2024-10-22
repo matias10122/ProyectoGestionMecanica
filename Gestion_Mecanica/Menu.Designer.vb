@@ -414,7 +414,7 @@ Partial Class Menu
         ' 
         ' Menu
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)

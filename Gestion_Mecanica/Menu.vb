@@ -119,6 +119,11 @@ Public Class Menu
     End Sub
 
     Private Sub ButtonEditar_Click(sender As Object, e As EventArgs) Handles ButtonEditar.Click
+        If String.IsNullOrEmpty(TextBoxRutUsuario.Text.Trim()) Then
+            MessageBox.Show("Debe ingresar un Rut y consultar antes de poder realizar cambios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
         Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
         Using connection As New MySqlConnection(connectionString)
             Dim command As New MySqlCommand("UPDATE usuarios SET Correo = @Correo, Contraseña = @Contraseña, Tipo = @Tipo WHERE Rut = @Rut", connection)
@@ -142,6 +147,11 @@ Public Class Menu
     End Sub
 
     Private Sub ButtonEliminarUsuario_Click(sender As Object, e As EventArgs) Handles ButtonEliminarUsuario.Click
+        If String.IsNullOrEmpty(TextBoxRutUsuario.Text.Trim()) Then
+            MessageBox.Show("Debe ingresar un Rut y consultar antes de poder realizar cambios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
         Dim result As DialogResult = MessageBox.Show("¿Está seguro de que desea eliminar este usuario?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
         If result = DialogResult.Yes Then
             Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
@@ -170,6 +180,11 @@ Public Class Menu
     End Sub
 
     Private Sub ButtonGuardarUsuario_Click(sender As Object, e As EventArgs) Handles ButtonGuardarUsuario.Click
+        If String.IsNullOrEmpty(TextBoxRutUsuario.Text.Trim()) Then
+            MessageBox.Show("Debe ingresar un Rut y consultar antes de poder realizar cambios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
         Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
         Using connection As New MySqlConnection(connectionString)
             Dim command As New MySqlCommand("INSERT INTO usuarios (Rut, Correo, Contraseña, Tipo) VALUES (@Rut, @Correo, @Contraseña, @Tipo)", connection)
@@ -225,5 +240,9 @@ Public Class Menu
                 MessageBox.Show("Error al cargar los usuarios: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
+    End Sub
+
+    Private Sub TextBoxRut_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRut.TextChanged
+
     End Sub
 End Class
