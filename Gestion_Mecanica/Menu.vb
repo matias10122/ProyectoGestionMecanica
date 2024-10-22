@@ -131,7 +131,7 @@ Public Class Menu
                 connection.Open()
                 Dim rowsAffected As Integer = command.ExecuteNonQuery()
                 If rowsAffected > 0 Then
-                    MessageBox.Show("Usuario actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("Se ha editado correctamente el Usuario.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Else
                     MessageBox.Show("No se pudo actualizar el usuario. Verifique el RUT.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
@@ -153,7 +153,7 @@ Public Class Menu
                     connection.Open()
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
                     If rowsAffected > 0 Then
-                        MessageBox.Show("Usuario eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        MessageBox.Show("Se ha eliminado correctamente el Usuario.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         ' Limpiar los campos después de eliminar
                         TextBoxRutUsuario.Clear()
                         TextBoxCorreo.Clear()
@@ -182,7 +182,7 @@ Public Class Menu
                 connection.Open()
                 Dim rowsAffected As Integer = command.ExecuteNonQuery()
                 If rowsAffected > 0 Then
-                    MessageBox.Show("Usuario guardado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("Se ha guardado correctamente el Usuario.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
                     ' Limpiar los campos después de guardar
                     TextBoxRutUsuario.Clear()
                     TextBoxCorreo.Clear()
