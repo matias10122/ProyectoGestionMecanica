@@ -245,4 +245,188 @@ Public Class Menu
     Private Sub TextBoxRut_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRut.TextChanged
 
     End Sub
+
+    Private connectionString As String = "server=localhost;user id=root;password=;database=taller"
+
+    Private Sub Repuestos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LimpiarCampos()
+        CargarRepuestosEnComboBox()
+    End Sub
+
+    Private Sub LimpiarCampos()
+        TextBoxRepuestoNombre.Clear()
+        TextBoxRepuestoDescripcion.Clear() ' Aquí también se puede cambiar el nombre del TextBox para reflejar que ahora es el Proveedor.
+        TextBoxRepuestoPrecio.Clear()
+        TextBoxRepuestoCantidad.Clear()
+        TextBoxBuscarRepuestoID.Clear()
+        TextBoxBuscarRepuestoNombre.Clear()
+        ComboBoxRepuestos.SelectedIndex = -1 ' Limpiar el ComboBox
+        ButtonEditarRepuesto.Enabled = False
+        ButtonEliminarRepuesto.Enabled = False
+    End Sub
+
+    Private Function ExecuteReader(query As String, Optional parameters As Dictionary(Of String, Object) = Nothing) As MySqlDataReader
+        Dim connection As New MySqlConnection(connectionString)
+        Dim command As New MySqlCommand(query, connection)
+
+        If parameters IsNot Nothing Then
+            For Each param In parameters
+                command.Parameters.AddWithValue(param.Key, param.Value)
+            Next
+        End If
+
+        connection.Open()
+        Return command.ExecuteReader(CommandBehavior.CloseConnection) ' Cierra la conexión cuando se cierra el lector
+    End Function
+
+    Private Function ExecuteNonQuery(query As String, parameters As Dictionary(Of String, Object)) As Integer
+        Using connection As New MySqlConnection(connectionString)
+            Using command As New MySqlCommand(query, connection)
+                If parameters IsNot Nothing Then
+                    For Each param In parameters
+                        command.Parameters.AddWithValue(param.Key, param.Value)
+                    Next
+                End If
+                connection.Open()
+                Return command.ExecuteNonQuery()
+            End Using
+        End Using
+    End Function
+
+    Private Sub CargarRepuestosEnComboBox()
+        ComboBoxRepuestos.Items.Clear()
+
+        Dim query As String = "SELECT NombreRepuesto FROM repuestos"
+        Using reader As MySqlDataReader = ExecuteReader(query)
+            While reader.Read()
+                ComboBoxRepuestos.Items.Add(reader("NombreRepuesto").ToString())
+            End While
+        End Using
+    End Sub
+
+    Private Sub ButtonGuardarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonGuardarRepuesto.Click
+        ' Validar campos obligatorios
+        If Not ValidarCamposObligatorios() Then Return
+
+        ' Validar duplicados
+        Dim checkQuery As String = "SELECT COUNT(*) FROM repuestos WHERE NombreRepuesto = @Nombre"
+        Dim checkParams As New Dictionary(Of String, Object) From {
+        {"@Nombre", TextBoxRepuestoNombre.Text.Trim()}
+    }
+
+        Dim count As Integer = Convert.ToInt32(ExecuteReader(checkQuery, checkParams).Read())
+        If count > 0 Then
+            MessageBox.Show("Este repuesto ya está registrado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Insertar nuevo repuesto
+        Dim insertQuery As String = "INSERT INTO repuestos (NombreRepuesto, Proveedor, PrecioUnitario, CantidadStock) VALUES (@Nombre, @Proveedor, @Precio, @Cantidad)"
+        Dim insertParams As New Dictionary(Of String, Object) From {
+        {"@Nombre", TextBoxRepuestoNombre.Text.Trim()},
+        {"@Proveedor", TextBoxRepuestoDescripcion.Text.Trim()}, ' Cambiar aquí
+        {"@Precio", Convert.ToDecimal(TextBoxRepuestoPrecio.Text.Trim())},
+        {"@Cantidad", Convert.ToInt32(TextBoxRepuestoCantidad.Text.Trim())}
+    }
+
+        If ExecuteNonQuery(insertQuery, insertParams) > 0 Then
+            MessageBox.Show("Repuesto guardado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            LimpiarCampos()
+            CargarRepuestosEnComboBox()
+        End If
+    End Sub
+
+    Private Function ValidarCamposObligatorios() As Boolean
+        If String.IsNullOrWhiteSpace(TextBoxRepuestoNombre.Text) OrElse
+       String.IsNullOrWhiteSpace(TextBoxRepuestoDescripcion.Text) OrElse
+       String.IsNullOrWhiteSpace(TextBoxRepuestoPrecio.Text) OrElse
+       String.IsNullOrWhiteSpace(TextBoxRepuestoCantidad.Text) Then
+            MessageBox.Show("Todos los campos son obligatorios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return False
+        End If
+        Return True
+    End Function
+
+    Private Sub ButtonConsultarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonConsultarRepuesto.Click
+        Dim idRepuesto As String = TextBoxBuscarRepuestoID.Text.Trim()
+        Dim nombreRepuesto As String = TextBoxBuscarRepuestoNombre.Text.Trim()
+
+        If String.IsNullOrEmpty(idRepuesto) AndAlso String.IsNullOrEmpty(nombreRepuesto) Then
+            MessageBox.Show("Por favor, ingrese un ID o nombre de repuesto para consultar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim query As String = "SELECT RepuestoID, NombreRepuesto, Proveedor, PrecioUnitario, CantidadStock FROM repuestos WHERE RepuestoID = @ID OR NombreRepuesto = @Nombre"
+        Dim parameters As New Dictionary(Of String, Object) From {
+        {"@ID", If(String.IsNullOrEmpty(idRepuesto), DBNull.Value, idRepuesto)}, ' Usa DBNull si está vacío
+        {"@Nombre", If(String.IsNullOrEmpty(nombreRepuesto), DBNull.Value, nombreRepuesto)} ' Usa DBNull si está vacío
+    }
+
+        Using reader As MySqlDataReader = ExecuteReader(query, parameters)
+            If reader.Read() Then
+                TextBoxRepuestoNombre.Text = reader("NombreRepuesto").ToString()
+                TextBoxRepuestoDescripcion.Text = reader("Proveedor").ToString() ' Cambiar aquí
+                TextBoxRepuestoPrecio.Text = reader("PrecioUnitario").ToString()
+                TextBoxRepuestoCantidad.Text = reader("CantidadStock").ToString()
+                ButtonEditarRepuesto.Enabled = True
+                ButtonEliminarRepuesto.Enabled = True
+            Else
+                MessageBox.Show("Repuesto no encontrado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                LimpiarCampos()
+            End If
+        End Using
+    End Sub
+
+    Private Sub ButtonEditarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonEditarRepuesto.Click
+        Dim idRepuesto As String = TextBoxBuscarRepuestoID.Text.Trim()
+        If String.IsNullOrEmpty(idRepuesto) Then
+            MessageBox.Show("Por favor, consulte un repuesto antes de editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim query As String = "UPDATE repuestos SET NombreRepuesto = @Nombre, Proveedor = @Proveedor, PrecioUnitario = @Precio, CantidadStock = @Cantidad WHERE RepuestoID = @ID"
+        Dim parameters As New Dictionary(Of String, Object) From {
+        {"@ID", idRepuesto},
+        {"@Nombre", TextBoxRepuestoNombre.Text.Trim()},
+        {"@Proveedor", TextBoxRepuestoDescripcion.Text.Trim()}, ' Cambiar aquí
+        {"@Precio", Convert.ToDecimal(TextBoxRepuestoPrecio.Text.Trim())},
+        {"@Cantidad", Convert.ToInt32(TextBoxRepuestoCantidad.Text.Trim())}
+    }
+
+        If ExecuteNonQuery(query, parameters) > 0 Then
+            MessageBox.Show("Repuesto actualizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            LimpiarCampos()
+            CargarRepuestosEnComboBox()
+        Else
+            MessageBox.Show("No se pudo actualizar el repuesto. Verifique el ID.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub ButtonEliminarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonEliminarRepuesto.Click
+        Dim idRepuesto As String = TextBoxBuscarRepuestoID.Text.Trim()
+        If String.IsNullOrEmpty(idRepuesto) Then
+            MessageBox.Show("Por favor, consulte un repuesto antes de eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim query As String = "DELETE FROM repuestos WHERE RepuestoID = @ID"
+        Dim parameters As New Dictionary(Of String, Object) From {
+        {"@ID", idRepuesto}
+    }
+
+        If ExecuteNonQuery(query, parameters) > 0 Then
+            MessageBox.Show("Repuesto eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            LimpiarCampos()
+            CargarRepuestosEnComboBox()
+        Else
+            MessageBox.Show("No se pudo eliminar el repuesto. Verifique el ID.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+    End Sub
+
+    Private Sub ButtonLimpiarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonLimpiarRepuesto.Click
+        LimpiarCampos() ' Llama al método para limpiar los campos.
+    End Sub
+
 End Class
+
+
