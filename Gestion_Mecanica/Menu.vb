@@ -269,7 +269,6 @@ Public Class Menu
         TextBoxRepuestoDescripcion.Clear()
         TextBoxRepuestoPrecio.Clear()
         TextBoxRepuestoCantidad.Clear()
-        ComboBoxRepuestos.SelectedIndex = -1
         ButtonEditarRepuesto.Enabled = False
         ButtonEliminarRepuesto.Enabled = False
         TextBoxNombreVer.Clear()
@@ -486,5 +485,10 @@ Public Class Menu
         TextBoxContraseña.Clear()
         TextBoxCorreo.Clear()
         TextBoxRut.Clear()
+    End Sub
+
+    Private Sub ComboBoxRepuestos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxRepuestos.SelectedIndexChanged
+        ' Al seleccionar un elemento en el ComboBox, muestra el nombre en el TextBox
+        TextBoxBuscarRepuestoNombre.Text = ComboBoxRepuestos.SelectedItem.ToString()
     End Sub
 End Class
