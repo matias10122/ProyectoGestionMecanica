@@ -22,6 +22,7 @@ Partial Class Menu
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Panel1 = New Panel()
         buttonHome = New Button()
         buttonRepuestos = New Button()
@@ -36,13 +37,18 @@ Partial Class Menu
         Label4 = New Label()
         Panel2 = New Panel()
         panelHome = New Panel()
+        cajaImagenHome = New PictureBox()
+        labelTituloHome = New Label()
         panelVentaRepuestos = New Panel()
         panelSiniestro = New Panel()
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
+        Timer1 = New Timer(components)
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        panelHome.SuspendLayout()
+        CType(cajaImagenHome, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Panel1
@@ -179,10 +185,35 @@ Partial Class Menu
         ' 
         panelHome.BackgroundImage = My.Resources.Resources.fondomotor
         panelHome.BackgroundImageLayout = ImageLayout.Stretch
+        panelHome.Controls.Add(cajaImagenHome)
+        panelHome.Controls.Add(labelTituloHome)
         panelHome.Location = New Point(8, 57)
         panelHome.Name = "panelHome"
         panelHome.Size = New Size(790, 392)
         panelHome.TabIndex = 6
+        ' 
+        ' cajaImagenHome
+        ' 
+        cajaImagenHome.BackColor = Color.Transparent
+        cajaImagenHome.Image = My.Resources.Resources.engranajeHome
+        cajaImagenHome.ImageLocation = ""
+        cajaImagenHome.Location = New Point(328, 138)
+        cajaImagenHome.Name = "cajaImagenHome"
+        cajaImagenHome.Size = New Size(100, 100)
+        cajaImagenHome.TabIndex = 1
+        cajaImagenHome.TabStop = False
+        ' 
+        ' labelTituloHome
+        ' 
+        labelTituloHome.AutoSize = True
+        labelTituloHome.BackColor = Color.Purple
+        labelTituloHome.Font = New Font("Segoe UI Black", 26.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloHome.ForeColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
+        labelTituloHome.Location = New Point(85, 52)
+        labelTituloHome.Name = "labelTituloHome"
+        labelTituloHome.Size = New Size(601, 47)
+        labelTituloHome.TabIndex = 0
+        labelTituloHome.Text = "Bienvenido a tu gestion mecanica"
         ' 
         ' panelVentaRepuestos
         ' 
@@ -219,18 +250,21 @@ Partial Class Menu
         panelRepuestos.Size = New Size(790, 392)
         panelRepuestos.TabIndex = 0
         ' 
+        ' Timer1
+        ' 
+        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(800, 478)
+        Controls.Add(panelHome)
         Controls.Add(panelSiniestro)
         Controls.Add(panelVentaRepuestos)
         Controls.Add(panelRepuestos)
         Controls.Add(panelSoliServicios)
         Controls.Add(panelGestionServicios)
-        Controls.Add(panelHome)
         Controls.Add(Panel2)
         Controls.Add(Panel1)
         Name = "Menu"
@@ -239,6 +273,9 @@ Partial Class Menu
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
+        panelHome.ResumeLayout(False)
+        panelHome.PerformLayout()
+        CType(cajaImagenHome, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -261,4 +298,7 @@ Partial Class Menu
     Friend WithEvents panelVentaRepuestos As Panel
     Friend WithEvents panelRepuestos As Panel
     Friend WithEvents panelGestionServicios As Panel
+    Friend WithEvents labelTituloHome As Label
+    Friend WithEvents cajaImagenHome As PictureBox
+    Friend WithEvents Timer1 As Timer
 End Class
