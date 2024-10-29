@@ -62,10 +62,10 @@ Partial Class Menu
         LabelRepuestoDescripcion = New Label()
         LabelRepuestoNombre = New Label()
         panelUsuario = New Panel()
+        comboBoxTipo = New ComboBox()
         ButtonGuardarUsuario = New Button()
         ButtonEliminarUsuario = New Button()
         ButtonEditar = New Button()
-        TextBoxTipo = New TextBox()
         TextBoxCorreo = New TextBox()
         LabelTipo = New Label()
         LabelCorreo = New Label()
@@ -76,6 +76,7 @@ Partial Class Menu
         TextBoxRut = New TextBox()
         buttonConsultarRut = New Button()
         panelEncabezadoUsuario = New Panel()
+        limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
         Panel1.SuspendLayout()
@@ -472,10 +473,10 @@ Partial Class Menu
         ' panelUsuario
         ' 
         panelUsuario.BackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        panelUsuario.Controls.Add(comboBoxTipo)
         panelUsuario.Controls.Add(ButtonGuardarUsuario)
         panelUsuario.Controls.Add(ButtonEliminarUsuario)
         panelUsuario.Controls.Add(ButtonEditar)
-        panelUsuario.Controls.Add(TextBoxTipo)
         panelUsuario.Controls.Add(TextBoxCorreo)
         panelUsuario.Controls.Add(LabelTipo)
         panelUsuario.Controls.Add(LabelCorreo)
@@ -490,6 +491,14 @@ Partial Class Menu
         panelUsuario.Name = "panelUsuario"
         panelUsuario.Size = New Size(790, 392)
         panelUsuario.TabIndex = 8
+        ' 
+        ' comboBoxTipo
+        ' 
+        comboBoxTipo.FormattingEnabled = True
+        comboBoxTipo.Location = New Point(495, 167)
+        comboBoxTipo.Name = "comboBoxTipo"
+        comboBoxTipo.Size = New Size(161, 23)
+        comboBoxTipo.TabIndex = 16
         ' 
         ' ButtonGuardarUsuario
         ' 
@@ -521,14 +530,6 @@ Partial Class Menu
         ButtonEditar.TabIndex = 11
         ButtonEditar.Text = "Editar"
         ButtonEditar.UseVisualStyleBackColor = True
-        ' 
-        ' TextBoxTipo
-        ' 
-        TextBoxTipo.Location = New Point(495, 170)
-        TextBoxTipo.Margin = New Padding(3, 2, 3, 2)
-        TextBoxTipo.Name = "TextBoxTipo"
-        TextBoxTipo.Size = New Size(161, 23)
-        TextBoxTipo.TabIndex = 10
         ' 
         ' TextBoxCorreo
         ' 
@@ -626,6 +627,7 @@ Partial Class Menu
         ' panelEncabezadoUsuario
         ' 
         panelEncabezadoUsuario.BackColor = Color.FromArgb(CByte(64), CByte(0), CByte(64))
+        panelEncabezadoUsuario.Controls.Add(limpiarCamposGestionUsuarios)
         panelEncabezadoUsuario.Controls.Add(buttonMostrarUsuarios)
         panelEncabezadoUsuario.Controls.Add(LabelRut)
         panelEncabezadoUsuario.Location = New Point(0, 17)
@@ -633,15 +635,25 @@ Partial Class Menu
         panelEncabezadoUsuario.Size = New Size(787, 125)
         panelEncabezadoUsuario.TabIndex = 15
         ' 
+        ' limpiarCamposGestionUsuarios
+        ' 
+        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        limpiarCamposGestionUsuarios.Location = New Point(534, 37)
+        limpiarCamposGestionUsuarios.Name = "limpiarCamposGestionUsuarios"
+        limpiarCamposGestionUsuarios.Size = New Size(94, 50)
+        limpiarCamposGestionUsuarios.TabIndex = 15
+        limpiarCamposGestionUsuarios.Text = "Limpiar Campos"
+        limpiarCamposGestionUsuarios.UseVisualStyleBackColor = True
+        ' 
         ' buttonMostrarUsuarios
         ' 
         buttonMostrarUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        buttonMostrarUsuarios.Location = New Point(562, 37)
+        buttonMostrarUsuarios.Location = New Point(644, 38)
         buttonMostrarUsuarios.Margin = New Padding(3, 2, 3, 2)
         buttonMostrarUsuarios.Name = "buttonMostrarUsuarios"
-        buttonMostrarUsuarios.Size = New Size(158, 49)
+        buttonMostrarUsuarios.Size = New Size(112, 49)
         buttonMostrarUsuarios.TabIndex = 14
-        buttonMostrarUsuarios.Text = "Ver Usuarios"
+        buttonMostrarUsuarios.Text = "Ver Todos los Usuarios"
         buttonMostrarUsuarios.UseVisualStyleBackColor = True
         ' 
         ' LabelRut
@@ -649,7 +661,7 @@ Partial Class Menu
         LabelRut.AutoSize = True
         LabelRut.Font = New Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelRut.ForeColor = Color.Green
-        LabelRut.Location = New Point(66, 40)
+        LabelRut.Location = New Point(65, 40)
         LabelRut.Name = "LabelRut"
         LabelRut.Size = New Size(78, 47)
         LabelRut.TabIndex = 3
@@ -712,7 +724,6 @@ Partial Class Menu
     Friend WithEvents LabelRut As Label
     Friend WithEvents TextBoxRutUsuario As TextBox
     Friend WithEvents LabelContraseña As Label
-    Friend WithEvents TextBoxTipo As TextBox
     Friend WithEvents TextBoxCorreo As TextBox
     Friend WithEvents LabelTipo As Label
     Friend WithEvents LabelCorreo As Label
@@ -741,4 +752,6 @@ Partial Class Menu
     Friend WithEvents Label6 As Label
     Friend WithEvents TextBoxNombreVer As TextBox
     Friend WithEvents panelEncabezadoUsuario As Panel
+    Friend WithEvents comboBoxTipo As ComboBox
+    Friend WithEvents limpiarCamposGestionUsuarios As Button
 End Class

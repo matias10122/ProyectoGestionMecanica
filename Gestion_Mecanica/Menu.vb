@@ -8,6 +8,19 @@ Public Class Menu
 
         ' Mostrar solo el panelHome al inicio
         panelHome.Visible = True
+        CargarTiposEnComboBox()
+    End Sub
+
+    Private Sub CargarTiposEnComboBox()
+        comboBoxTipo.Items.Clear()
+        comboBoxTipo.Items.Add("Administrador")
+        comboBoxTipo.Items.Add("Usuario")
+        comboBoxTipo.Items.Add("Vendedor")
+        comboBoxTipo.Items.Add("Mecanico")
+        comboBoxTipo.Items.Add("Aseguradora")
+        comboBoxTipo.Items.Add("Analista")
+        comboBoxTipo.Items.Add("Gerente")
+        ' Agrega más tipos según sea necesario
     End Sub
 
     Private Sub OcultarTodosLosPaneles()
@@ -89,7 +102,7 @@ Public Class Menu
                     TextBoxRutUsuario.Text = reader("Rut").ToString()
                     TextBoxCorreo.Text = reader("Correo").ToString()
                     TextBoxContraseña.Text = reader("Contraseña").ToString()
-                    TextBoxTipo.Text = reader("Tipo").ToString()
+                    comboBoxTipo.Text = reader("Tipo").ToString()  ' Cambiado de TextBoxTipo a comboBoxTipo
 
                     ButtonGuardarUsuario.Enabled = False
                     ButtonEditar.Enabled = True
@@ -99,7 +112,7 @@ Public Class Menu
                     ' Usuario no encontrado
                     TextBoxCorreo.Clear()
                     TextBoxContraseña.Clear()
-                    TextBoxTipo.Clear()
+                    comboBoxTipo.SelectedIndex = -1  ' Cambiado de TextBoxTipo.Clear() a comboBoxTipo.SelectedIndex = -1
 
                     ButtonGuardarUsuario.Enabled = True
                     ButtonEditar.Enabled = False
@@ -130,7 +143,7 @@ Public Class Menu
             command.Parameters.AddWithValue("@Rut", TextBoxRutUsuario.Text.Trim())
             command.Parameters.AddWithValue("@Correo", TextBoxCorreo.Text.Trim())
             command.Parameters.AddWithValue("@Contraseña", TextBoxContraseña.Text.Trim())
-            command.Parameters.AddWithValue("@Tipo", TextBoxTipo.Text.Trim())
+            command.Parameters.AddWithValue("@Tipo", comboBoxTipo.Text.Trim()) ' Reemplazado aquí
 
             Try
                 connection.Open()
@@ -168,7 +181,7 @@ Public Class Menu
                         TextBoxRutUsuario.Clear()
                         TextBoxCorreo.Clear()
                         TextBoxContraseña.Clear()
-                        TextBoxTipo.Clear()
+                        comboBoxTipo.SelectedIndex = -1 ' Limpiar comboBoxTipo
                     Else
                         MessageBox.Show("No se pudo eliminar el usuario. Verifique el RUT.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     End If
@@ -180,18 +193,14 @@ Public Class Menu
     End Sub
 
     Private Sub ButtonGuardarUsuario_Click(sender As Object, e As EventArgs) Handles ButtonGuardarUsuario.Click
-        If String.IsNullOrEmpty(TextBoxRutUsuario.Text.Trim()) Then
-            MessageBox.Show("Debe ingresar un Rut y consultar antes de poder realizar cambios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-
         Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
+
         Using connection As New MySqlConnection(connectionString)
             Dim command As New MySqlCommand("INSERT INTO usuarios (Rut, Correo, Contraseña, Tipo) VALUES (@Rut, @Correo, @Contraseña, @Tipo)", connection)
             command.Parameters.AddWithValue("@Rut", TextBoxRutUsuario.Text.Trim())
             command.Parameters.AddWithValue("@Correo", TextBoxCorreo.Text.Trim())
             command.Parameters.AddWithValue("@Contraseña", TextBoxContraseña.Text.Trim())
-            command.Parameters.AddWithValue("@Tipo", TextBoxTipo.Text.Trim())
+            command.Parameters.AddWithValue("@Tipo", comboBoxTipo.Text.Trim()) ' Reemplazado aquí
 
             Try
                 connection.Open()
@@ -202,7 +211,7 @@ Public Class Menu
                     TextBoxRutUsuario.Clear()
                     TextBoxCorreo.Clear()
                     TextBoxContraseña.Clear()
-                    TextBoxTipo.Clear()
+                    comboBoxTipo.SelectedIndex = -1 ' Limpiar comboBoxTipo
                 Else
                     MessageBox.Show("No se pudo guardar el usuario.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
@@ -464,5 +473,17 @@ Public Class Menu
         TextBoxNombreVer.Text = TextBoxBuscarRepuestoNombre.Text
     End Sub
 
+    Private Sub LabelRut_Click(sender As Object, e As EventArgs) Handles LabelRut.Click
 
+    End Sub
+
+
+    Private Sub limpiarCamposGestionUsuarios_Click(sender As Object, e As EventArgs) Handles limpiarCamposGestionUsuarios.Click
+        ' Limpiar los campos
+        TextBoxRutUsuario.Clear()
+        comboBoxTipo.SelectedIndex = -1 ' Desmarcar el ComboBox
+        TextBoxContraseña.Clear()
+        TextBoxCorreo.Clear()
+        TextBoxRut.Clear()
+    End Sub
 End Class
