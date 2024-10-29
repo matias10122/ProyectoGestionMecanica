@@ -42,6 +42,23 @@ Partial Class Menu
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
+        Label5 = New Label()
+        ComboBoxRepuestos = New ComboBox()
+        ButtonGuardarRepuesto = New Button()
+        ButtonEliminarRepuesto = New Button()
+        ButtonEditarRepuesto = New Button()
+        ButtonLimpiarRepuesto = New Button()
+        ButtonConsultarRepuesto = New Button()
+        TextBoxRepuestoDescripcion = New TextBox()
+        TextBoxRepuestoPrecio = New TextBox()
+        TextBoxRepuestoCantidad = New TextBox()
+        TextBoxBuscarRepuestoNombre = New TextBox()
+        TextBoxBuscarRepuestoID = New TextBox()
+        LabelRepuestoID = New Label()
+        LabelRepuestoCantidad = New Label()
+        LabelRepuestoPrecio = New Label()
+        LabelRepuestoDescripcion = New Label()
+        LabelRepuestoNombre = New Label()
         panelUsuario = New Panel()
         buttonMostrarUsuarios = New Button()
         ButtonGuardarUsuario = New Button()
@@ -58,8 +75,11 @@ Partial Class Menu
         LabelRutUsuario = New Label()
         TextBoxRut = New TextBox()
         buttonConsultarRut = New Button()
+        TextBoxNombreVer = New TextBox()
+        Label6 = New Label()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        panelRepuestos.SuspendLayout()
         panelUsuario.SuspendLayout()
         SuspendLayout()
         ' 
@@ -257,11 +277,183 @@ Partial Class Menu
         ' 
         ' panelRepuestos
         ' 
+        panelRepuestos.Controls.Add(Label6)
+        panelRepuestos.Controls.Add(TextBoxNombreVer)
+        panelRepuestos.Controls.Add(Label5)
+        panelRepuestos.Controls.Add(ComboBoxRepuestos)
+        panelRepuestos.Controls.Add(ButtonGuardarRepuesto)
+        panelRepuestos.Controls.Add(ButtonEliminarRepuesto)
+        panelRepuestos.Controls.Add(ButtonEditarRepuesto)
+        panelRepuestos.Controls.Add(ButtonLimpiarRepuesto)
+        panelRepuestos.Controls.Add(ButtonConsultarRepuesto)
+        panelRepuestos.Controls.Add(TextBoxRepuestoDescripcion)
+        panelRepuestos.Controls.Add(TextBoxRepuestoPrecio)
+        panelRepuestos.Controls.Add(TextBoxRepuestoCantidad)
+        panelRepuestos.Controls.Add(TextBoxBuscarRepuestoNombre)
+        panelRepuestos.Controls.Add(TextBoxBuscarRepuestoID)
+        panelRepuestos.Controls.Add(LabelRepuestoID)
+        panelRepuestos.Controls.Add(LabelRepuestoCantidad)
+        panelRepuestos.Controls.Add(LabelRepuestoPrecio)
+        panelRepuestos.Controls.Add(LabelRepuestoDescripcion)
+        panelRepuestos.Controls.Add(LabelRepuestoNombre)
         panelRepuestos.Location = New Point(9, 76)
         panelRepuestos.Margin = New Padding(3, 4, 3, 4)
         panelRepuestos.Name = "panelRepuestos"
         panelRepuestos.Size = New Size(903, 523)
         panelRepuestos.TabIndex = 0
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(459, 21)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(151, 20)
+        Label5.TabIndex = 18
+        Label5.Text = "Ver todo los repuesto"
+        ' 
+        ' ComboBoxRepuestos
+        ' 
+        ComboBoxRepuestos.DropDownStyle = ComboBoxStyle.DropDownList
+        ComboBoxRepuestos.FormattingEnabled = True
+        ComboBoxRepuestos.Location = New Point(402, 44)
+        ComboBoxRepuestos.Name = "ComboBoxRepuestos"
+        ComboBoxRepuestos.Size = New Size(275, 28)
+        ComboBoxRepuestos.TabIndex = 16
+        ' 
+        ' ButtonGuardarRepuesto
+        ' 
+        ButtonGuardarRepuesto.BackColor = SystemColors.HotTrack
+        ButtonGuardarRepuesto.Location = New Point(556, 420)
+        ButtonGuardarRepuesto.Name = "ButtonGuardarRepuesto"
+        ButtonGuardarRepuesto.Size = New Size(158, 68)
+        ButtonGuardarRepuesto.TabIndex = 15
+        ButtonGuardarRepuesto.Text = "Guardar"
+        ButtonGuardarRepuesto.UseVisualStyleBackColor = False
+        ' 
+        ' ButtonEliminarRepuesto
+        ' 
+        ButtonEliminarRepuesto.BackColor = Color.Red
+        ButtonEliminarRepuesto.Enabled = False
+        ButtonEliminarRepuesto.Location = New Point(292, 420)
+        ButtonEliminarRepuesto.Name = "ButtonEliminarRepuesto"
+        ButtonEliminarRepuesto.Size = New Size(161, 68)
+        ButtonEliminarRepuesto.TabIndex = 14
+        ButtonEliminarRepuesto.Text = "Eliminar "
+        ButtonEliminarRepuesto.UseVisualStyleBackColor = False
+        ' 
+        ' ButtonEditarRepuesto
+        ' 
+        ButtonEditarRepuesto.BackColor = Color.Olive
+        ButtonEditarRepuesto.Enabled = False
+        ButtonEditarRepuesto.Location = New Point(31, 420)
+        ButtonEditarRepuesto.Name = "ButtonEditarRepuesto"
+        ButtonEditarRepuesto.Size = New Size(170, 68)
+        ButtonEditarRepuesto.TabIndex = 13
+        ButtonEditarRepuesto.Text = "Editar"
+        ButtonEditarRepuesto.UseVisualStyleBackColor = False
+        ' 
+        ' ButtonLimpiarRepuesto
+        ' 
+        ButtonLimpiarRepuesto.BackColor = SystemColors.ControlDarkDark
+        ButtonLimpiarRepuesto.Location = New Point(731, 143)
+        ButtonLimpiarRepuesto.Name = "ButtonLimpiarRepuesto"
+        ButtonLimpiarRepuesto.Size = New Size(132, 92)
+        ButtonLimpiarRepuesto.TabIndex = 12
+        ButtonLimpiarRepuesto.Text = "Limpiar Campos"
+        ButtonLimpiarRepuesto.UseVisualStyleBackColor = False
+        ' 
+        ' ButtonConsultarRepuesto
+        ' 
+        ButtonConsultarRepuesto.BackColor = SystemColors.ActiveCaption
+        ButtonConsultarRepuesto.Location = New Point(731, 23)
+        ButtonConsultarRepuesto.Name = "ButtonConsultarRepuesto"
+        ButtonConsultarRepuesto.Size = New Size(132, 92)
+        ButtonConsultarRepuesto.TabIndex = 11
+        ButtonConsultarRepuesto.Text = "Consultar"
+        ButtonConsultarRepuesto.UseVisualStyleBackColor = False
+        ' 
+        ' TextBoxRepuestoDescripcion
+        ' 
+        TextBoxRepuestoDescripcion.Location = New Point(540, 343)
+        TextBoxRepuestoDescripcion.Name = "TextBoxRepuestoDescripcion"
+        TextBoxRepuestoDescripcion.Size = New Size(209, 27)
+        TextBoxRepuestoDescripcion.TabIndex = 10
+        TextBoxRepuestoDescripcion.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBoxRepuestoPrecio
+        ' 
+        TextBoxRepuestoPrecio.Location = New Point(278, 343)
+        TextBoxRepuestoPrecio.Name = "TextBoxRepuestoPrecio"
+        TextBoxRepuestoPrecio.Size = New Size(213, 27)
+        TextBoxRepuestoPrecio.TabIndex = 9
+        TextBoxRepuestoPrecio.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBoxRepuestoCantidad
+        ' 
+        TextBoxRepuestoCantidad.Location = New Point(40, 343)
+        TextBoxRepuestoCantidad.Name = "TextBoxRepuestoCantidad"
+        TextBoxRepuestoCantidad.Size = New Size(187, 27)
+        TextBoxRepuestoCantidad.TabIndex = 8
+        TextBoxRepuestoCantidad.TextAlign = HorizontalAlignment.Center
+        ' 
+        ' TextBoxBuscarRepuestoNombre
+        ' 
+        TextBoxBuscarRepuestoNombre.Location = New Point(187, 44)
+        TextBoxBuscarRepuestoNombre.Name = "TextBoxBuscarRepuestoNombre"
+        TextBoxBuscarRepuestoNombre.Size = New Size(199, 27)
+        TextBoxBuscarRepuestoNombre.TabIndex = 7
+        ' 
+        ' TextBoxBuscarRepuestoID
+        ' 
+        TextBoxBuscarRepuestoID.Location = New Point(71, 161)
+        TextBoxBuscarRepuestoID.Name = "TextBoxBuscarRepuestoID"
+        TextBoxBuscarRepuestoID.Size = New Size(181, 27)
+        TextBoxBuscarRepuestoID.TabIndex = 6
+        ' 
+        ' LabelRepuestoID
+        ' 
+        LabelRepuestoID.AutoSize = True
+        LabelRepuestoID.Location = New Point(31, 164)
+        LabelRepuestoID.Name = "LabelRepuestoID"
+        LabelRepuestoID.Size = New Size(28, 20)
+        LabelRepuestoID.TabIndex = 4
+        LabelRepuestoID.Text = " ID"
+        ' 
+        ' LabelRepuestoCantidad
+        ' 
+        LabelRepuestoCantidad.AutoSize = True
+        LabelRepuestoCantidad.Location = New Point(46, 290)
+        LabelRepuestoCantidad.Name = "LabelRepuestoCantidad"
+        LabelRepuestoCantidad.Size = New Size(129, 20)
+        LabelRepuestoCantidad.TabIndex = 3
+        LabelRepuestoCantidad.Text = "Cantidad en Stock"
+        ' 
+        ' LabelRepuestoPrecio
+        ' 
+        LabelRepuestoPrecio.AutoSize = True
+        LabelRepuestoPrecio.Location = New Point(335, 290)
+        LabelRepuestoPrecio.Name = "LabelRepuestoPrecio"
+        LabelRepuestoPrecio.Size = New Size(54, 20)
+        LabelRepuestoPrecio.TabIndex = 2
+        LabelRepuestoPrecio.Text = "Precio "
+        ' 
+        ' LabelRepuestoDescripcion
+        ' 
+        LabelRepuestoDescripcion.AutoSize = True
+        LabelRepuestoDescripcion.Location = New Point(590, 290)
+        LabelRepuestoDescripcion.Name = "LabelRepuestoDescripcion"
+        LabelRepuestoDescripcion.Size = New Size(77, 20)
+        LabelRepuestoDescripcion.TabIndex = 1
+        LabelRepuestoDescripcion.Text = "Proveedor"
+        ' 
+        ' LabelRepuestoNombre
+        ' 
+        LabelRepuestoNombre.AutoSize = True
+        LabelRepuestoNombre.Location = New Point(14, 48)
+        LabelRepuestoNombre.Name = "LabelRepuestoNombre"
+        LabelRepuestoNombre.Size = New Size(167, 20)
+        LabelRepuestoNombre.TabIndex = 0
+        LabelRepuestoNombre.Text = "Buscar por nombre o ID"
         ' 
         ' panelUsuario
         ' 
@@ -412,17 +604,33 @@ Partial Class Menu
         buttonConsultarRut.Text = "Consultar"
         buttonConsultarRut.UseVisualStyleBackColor = True
         ' 
+        ' TextBoxNombreVer
+        ' 
+        TextBoxNombreVer.Location = New Point(366, 161)
+        TextBoxNombreVer.Name = "TextBoxNombreVer"
+        TextBoxNombreVer.Size = New Size(217, 27)
+        TextBoxNombreVer.TabIndex = 19
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(278, 168)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(64, 20)
+        Label6.TabIndex = 20
+        Label6.Text = "Nombre"
+        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
+        Controls.Add(panelRepuestos)
         Controls.Add(panelUsuario)
         Controls.Add(panelGestionServicios)
         Controls.Add(panelSiniestro)
         Controls.Add(panelVentaRepuestos)
-        Controls.Add(panelRepuestos)
         Controls.Add(panelSoliServicios)
         Controls.Add(panelHome)
         Controls.Add(Panel2)
@@ -434,6 +642,8 @@ Partial Class Menu
         Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
+        panelRepuestos.ResumeLayout(False)
+        panelRepuestos.PerformLayout()
         panelUsuario.ResumeLayout(False)
         panelUsuario.PerformLayout()
         ResumeLayout(False)
@@ -475,4 +685,23 @@ Partial Class Menu
     Friend WithEvents ButtonEditar As Button
     Friend WithEvents ButtonGuardarUsuario As Button
     Friend WithEvents buttonMostrarUsuarios As Button
+    Friend WithEvents LabelRepuestoID As Label
+    Friend WithEvents LabelRepuestoCantidad As Label
+    Friend WithEvents LabelRepuestoPrecio As Label
+    Friend WithEvents LabelRepuestoDescripcion As Label
+    Friend WithEvents LabelRepuestoNombre As Label
+    Friend WithEvents TextBoxRepuestoDescripcion As TextBox
+    Friend WithEvents TextBoxRepuestoPrecio As TextBox
+    Friend WithEvents TextBoxRepuestoCantidad As TextBox
+    Friend WithEvents TextBoxBuscarRepuestoNombre As TextBox
+    Friend WithEvents TextBoxBuscarRepuestoID As TextBox
+    Friend WithEvents ButtonGuardarRepuesto As Button
+    Friend WithEvents ButtonEliminarRepuesto As Button
+    Friend WithEvents ButtonEditarRepuesto As Button
+    Friend WithEvents ButtonLimpiarRepuesto As Button
+    Friend WithEvents ButtonConsultarRepuesto As Button
+    Friend WithEvents ComboBoxRepuestos As ComboBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents TextBoxNombreVer As TextBox
 End Class
