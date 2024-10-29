@@ -75,6 +75,8 @@ Partial Class Menu
         LabelRutUsuario = New Label()
         TextBoxRut = New TextBox()
         buttonConsultarRut = New Button()
+        TextBoxNombreVer = New TextBox()
+        Label6 = New Label()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelRepuestos.SuspendLayout()
@@ -275,6 +277,8 @@ Partial Class Menu
         ' 
         ' panelRepuestos
         ' 
+        panelRepuestos.Controls.Add(Label6)
+        panelRepuestos.Controls.Add(TextBoxNombreVer)
         panelRepuestos.Controls.Add(Label5)
         panelRepuestos.Controls.Add(ComboBoxRepuestos)
         panelRepuestos.Controls.Add(ButtonGuardarRepuesto)
@@ -401,7 +405,7 @@ Partial Class Menu
         ' 
         ' TextBoxBuscarRepuestoID
         ' 
-        TextBoxBuscarRepuestoID.Location = New Point(143, 165)
+        TextBoxBuscarRepuestoID.Location = New Point(71, 161)
         TextBoxBuscarRepuestoID.Name = "TextBoxBuscarRepuestoID"
         TextBoxBuscarRepuestoID.Size = New Size(181, 27)
         TextBoxBuscarRepuestoID.TabIndex = 6
@@ -409,11 +413,11 @@ Partial Class Menu
         ' LabelRepuestoID
         ' 
         LabelRepuestoID.AutoSize = True
-        LabelRepuestoID.Location = New Point(14, 168)
+        LabelRepuestoID.Location = New Point(31, 164)
         LabelRepuestoID.Name = "LabelRepuestoID"
-        LabelRepuestoID.Size = New Size(96, 20)
+        LabelRepuestoID.Size = New Size(28, 20)
         LabelRepuestoID.TabIndex = 4
-        LabelRepuestoID.Text = "Nombre o ID"
+        LabelRepuestoID.Text = " ID"
         ' 
         ' LabelRepuestoCantidad
         ' 
@@ -600,6 +604,22 @@ Partial Class Menu
         buttonConsultarRut.Text = "Consultar"
         buttonConsultarRut.UseVisualStyleBackColor = True
         ' 
+        ' TextBoxNombreVer
+        ' 
+        TextBoxNombreVer.Location = New Point(366, 161)
+        TextBoxNombreVer.Name = "TextBoxNombreVer"
+        TextBoxNombreVer.Size = New Size(217, 27)
+        TextBoxNombreVer.TabIndex = 19
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(278, 168)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(64, 20)
+        Label6.TabIndex = 20
+        Label6.Text = "Nombre"
+        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -682,4 +702,6 @@ Partial Class Menu
     Friend WithEvents ButtonConsultarRepuesto As Button
     Friend WithEvents ComboBoxRepuestos As ComboBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents TextBoxNombreVer As TextBox
 End Class

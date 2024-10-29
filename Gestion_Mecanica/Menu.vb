@@ -246,7 +246,6 @@ Public Class Menu
 
     End Sub
 
-
     Private connectionString As String = "server=localhost;user id=root;password=;database=taller"
 
         Private Sub Repuestos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -263,6 +262,7 @@ Public Class Menu
             ComboBoxRepuestos.SelectedIndex = -1
             ButtonEditarRepuesto.Enabled = False
             ButtonEliminarRepuesto.Enabled = False
+            TextBoxNombreVer.Clear()
         End Sub
 
         Private Function ExecuteReader(query As String, Optional parameters As Dictionary(Of String, Object) = Nothing) As MySqlDataReader
@@ -366,10 +366,8 @@ Public Class Menu
         End Sub
 
         Private Sub ButtonEditarRepuesto_Click(sender As Object, e As EventArgs) Handles ButtonEditarRepuesto.Click
-            ' Validación de que los campos Precio y Cantidad solo contengan números
             If Not ValidarCamposObligatorios() Then Return
 
-            ' Actualización de todos los campos especificados
             Dim query As String = "UPDATE repuestos SET RepuestoID = @ID, NombreRepuesto = @Nombre, Proveedor = @Proveedor, PrecioUnitario = @Precio, CantidadStock = @Cantidad WHERE RepuestoID = @ID OR NombreRepuesto = @Nombre"
             Dim parameters As New Dictionary(Of String, Object) From {
             {"@ID", TextBoxBuscarRepuestoID.Text.Trim()},
@@ -438,7 +436,6 @@ Public Class Menu
         End Sub
 
         Private Function ValidarCamposObligatorios() As Boolean
-            ' Validación para Precio
             Dim precio As Decimal
             If Not Decimal.TryParse(TextBoxRepuestoPrecio.Text.Trim(), precio) Then
                 MessageBox.Show("El campo Precio solo debe contener números.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -446,7 +443,6 @@ Public Class Menu
                 Return False
             End If
 
-            ' Validación para Cantidad
             Dim cantidad As Integer
             If Not Integer.TryParse(TextBoxRepuestoCantidad.Text.Trim(), cantidad) Then
                 MessageBox.Show("El campo Cantidad solo debe contener números enteros.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -454,13 +450,17 @@ Public Class Menu
                 Return False
             End If
 
-            ' Verificación de otros campos obligatorios
             If String.IsNullOrWhiteSpace(TextBoxBuscarRepuestoNombre.Text) OrElse
-           String.IsNullOrWhiteSpace(TextBoxRepuestoDescripcion.Text) Then
+            String.IsNullOrWhiteSpace(TextBoxRepuestoDescripcion.Text) Then
                 MessageBox.Show("Todos los campos son obligatorios.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return False
             End If
 
             Return True
         End Function
+
+        ' Sincronización del texto en TextBoxNombreVer
+        Private Sub TextBoxBuscarRepuestoNombre_TextChanged(sender As Object, e As EventArgs) Handles TextBoxBuscarRepuestoNombre.TextChanged
+            TextBoxNombreVer.Text = TextBoxBuscarRepuestoNombre.Text
+        End Sub
     End Class
