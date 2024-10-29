@@ -584,6 +584,7 @@ Partial Class Menu
         ' 
         ' TextBoxRutUsuario
         ' 
+        TextBoxRutUsuario.Enabled = False
         TextBoxRutUsuario.Location = New Point(150, 170)
         TextBoxRutUsuario.Margin = New Padding(3, 2, 3, 2)
         TextBoxRutUsuario.Name = "TextBoxRutUsuario"
