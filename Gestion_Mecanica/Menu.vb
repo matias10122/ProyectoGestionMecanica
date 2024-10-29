@@ -9,6 +9,7 @@ Public Class Menu
         ' Mostrar solo el panelHome al inicio
         panelHome.Visible = True
         CargarTiposEnComboBox()
+        comboBoxTipo.DropDownStyle = ComboBoxStyle.DropDownList
     End Sub
 
     Private Sub CargarTiposEnComboBox()
