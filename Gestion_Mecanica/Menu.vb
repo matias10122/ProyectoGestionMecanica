@@ -1,4 +1,5 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Reflection
+Imports MySql.Data.MySqlClient
 
 Public Class Menu
 
@@ -491,4 +492,351 @@ Public Class Menu
         ' Al seleccionar un elemento en el ComboBox, muestra el nombre en el TextBox
         TextBoxBuscarRepuestoNombre.Text = ComboBoxRepuestos.SelectedItem.ToString()
     End Sub
+
+
+    '-------------------------------------generar codigo venta-repuesto----------------------------------------'
+    'Codigo Jasna'
+
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Llenar el ComboBox con los nombres de los repuestos
+        CargarNombresRepuestos()
+    End Sub
+
+
+    ' Método para cargar los nombres de los repuestos en el ComboBox
+    Private Sub CargarNombresRepuestos()
+        Using conn As New MySqlConnection(connectionString)
+            Try
+                conn.Open()
+
+                ' Consulta para obtener los nombres de los repuestos
+                Dim sql As String = "SELECT NombreRepuesto FROM Repuestos"
+                Using cmd As New MySqlCommand(sql, conn)
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        cmbNombreRepuesto.Items.Clear() ' Limpiar el ComboBox antes de llenarlo
+                        While reader.Read()
+                            ' Agregar los nombres de los repuestos al ComboBox
+                            cmbNombreRepuesto.Items.Add(reader("NombreRepuesto").ToString())
+                        End While
+                    End Using
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar los repuestos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Evento para mostrar el precio unitario, ID y cantidad en txtMontoNeto, txtId, y txtStock al seleccionar un repuesto
+    Private Sub cmbNombreRepuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbNombreRepuesto.SelectedIndexChanged
+        ' Obtener el nombre del repuesto seleccionado
+        Dim nombreRepuesto As String = cmbNombreRepuesto.SelectedItem.ToString()
+
+        ' Verificar y mostrar los detalles del repuesto seleccionado
+        Using conn As New MySqlConnection(connectionString)
+            Try
+                conn.Open()
+
+                ' Consulta para obtener el precio unitario, ID y cantidad del repuesto seleccionado
+                Dim query As String = "SELECT PrecioUnitario, RepuestoID, CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
+                Using cmdPrecio As New MySqlCommand(query, conn)
+                    cmdPrecio.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+
+                    Using readerPrecio As MySqlDataReader = cmdPrecio.ExecuteReader()
+                        If readerPrecio.Read() Then
+                            ' Convertir el PrecioUnitario a Decimal y formatearlo como moneda
+                            Dim precioUnitario As Decimal = Convert.ToDecimal(readerPrecio("PrecioUnitario"))
+                            txtMontoNeto.Text = precioUnitario.ToString("C")
+
+                            ' Mostrar el ID del repuesto en txtId
+                            txtId.Text = readerPrecio("RepuestoID").ToString()
+
+                            ' Mostrar la cantidad en stock en txtStock
+                            txtStock.Text = readerPrecio("CantidadStock").ToString()
+                        Else
+                            txtMontoNeto.Text = "0" ' Si no se encuentra, mostrar 0 o limpiar
+                            txtId.Text = ""
+                            txtStock.Text = ""
+                        End If
+                    End Using
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Error al obtener el precio del repuesto: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles btnRegistrarVenta.Click
+        ' Verificar que un repuesto esté seleccionado
+        Dim nombreRepuesto As String = If(cmbNombreRepuesto.SelectedItem?.ToString(), "")
+        If String.IsNullOrEmpty(nombreRepuesto) Then
+            MessageBox.Show("Por favor, seleccione un repuesto.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        ' Verificar y convertir la cantidad vendida
+        Dim CantidadVendida As Integer
+        If Not Integer.TryParse(txtCantidadVendida.Text, CantidadVendida) Then
+            MessageBox.Show("Por favor, ingrese una cantidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Exit Sub
+        End If
+
+        ' Inicializar total
+        Dim total As Decimal = 0
+        txtTotal.Text = total.ToString("C")
+
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                ' Abrir la conexión
+                connection.Open()
+
+                ' Consulta para obtener el precio unitario y verificar el stock
+                Dim Query As String = "SELECT CantidadStock, PrecioUnitario FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
+                Using cmd As New MySqlCommand(Query, connection)
+                    cmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            Dim CantidadStock As Integer = Convert.ToInt32(reader("CantidadStock"))
+                            Dim PrecioUnitario As Decimal = Convert.ToDecimal(reader("PrecioUnitario"))
+
+                            ' Calcular el total
+                            total = (CantidadVendida * PrecioUnitario) * 1.19
+                            txtTotal.Text = total.ToString("C")
+
+                            ' Verificar si hay suficiente stock
+                            If CantidadStock >= CantidadVendida Then
+                                ' Cerrar el reader para ejecutar nuevas consultas
+                                reader.Close()
+
+                                ' Insertar en ventasrepuestos directamente
+                                Dim insertQuery As String = "INSERT INTO ventasrepuestos (NombreRepuesto, CantidadVendida, Cliente, FechaVenta, Total) VALUES (@nombreRepuesto, @cantidadVendida, @cliente, @fechaVenta, @total)"
+                                Using insertCmd As New MySqlCommand(insertQuery, connection)
+                                    insertCmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                                    insertCmd.Parameters.AddWithValue("@cantidadVendida", CantidadVendida)
+                                    insertCmd.Parameters.AddWithValue("@cliente", txtCliente.Text.Trim())
+                                    insertCmd.Parameters.AddWithValue("@fechaVenta", dtpFechaVenta.Value)
+                                    insertCmd.Parameters.AddWithValue("@total", total)
+                                    insertCmd.ExecuteNonQuery()
+                                End Using
+
+                                ' Actualizar el stock en la tabla de repuestos
+                                Dim updateStockQuery As String = "UPDATE repuestos SET CantidadStock = CantidadStock - @cantidadVendida WHERE NombreRepuesto = @nombreRepuesto"
+                                Using updateCmd As New MySqlCommand(updateStockQuery, connection)
+                                    updateCmd.Parameters.AddWithValue("@cantidadVendida", CantidadVendida)
+                                    updateCmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                                    updateCmd.ExecuteNonQuery()
+                                End Using
+
+                                ' Mostrar mensaje de éxito
+                                Dim resumenVenta As String = $"Resumen de Venta:{Environment.NewLine}" &
+                                                         $"Repuesto: {nombreRepuesto}{Environment.NewLine}" &
+                                                         $"Cantidad Vendida: {CantidadVendida}{Environment.NewLine}" &
+                                                         $"Cliente: {txtCliente.Text.Trim()}{Environment.NewLine}" &
+                                                         $"Fecha de Venta: {dtpFechaVenta.Value.ToShortDateString()}{Environment.NewLine}" &
+                                                         $"Total: {total.ToString("C")}"
+
+                                MessageBox.Show(resumenVenta, "Venta Registrada Exitosamente", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                ' Limpiar los campos de texto después de mostrar el resumen
+                                txtCantidadVendida.Text = ""
+                                txtCliente.Text = ""
+                                txtMontoNeto.Text = ""
+                                txtStock.Text = ""
+                                txtTotal.Text = ""
+                                cmbNombreRepuesto.Text = ""
+                                txtId.Text = ""
+                            Else
+                                MessageBox.Show("Stock insuficiente para realizar la venta.")
+                            End If
+                        Else
+                            MessageBox.Show("Repuesto no encontrado en el inventario.")
+                        End If
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al realizar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    'Este es el codigo de resumen de venta'
+
+
+    Private Sub frmRegistroVentaRepuestos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Cargar datos en el DataGridView al abrir el formulario
+        CargarResumenVentas()
+    End Sub
+    'Mostrar el resumen de ventas'
+
+    Private Sub CargarResumenVentas(Optional fechaInicio As DateTime? = Nothing, Optional fechaFin As DateTime? = Nothing, Optional repuesto As String = "", Optional cliente As String = "")
+        Try
+            Using connection As New MySqlConnection(connectionString)
+                connection.Open()
+
+                ' Construir consulta SQL
+                Dim query As String = "SELECT FechaVenta, NombreRepuesto, CantidadVendida, Cliente, Total FROM ventasrepuestos WHERE 1=1"
+                If fechaInicio.HasValue AndAlso fechaFin.HasValue Then query &= " AND FechaVenta BETWEEN @fechaInicio AND @fechaFin"
+                If Not String.IsNullOrEmpty(repuesto) Then query &= " AND NombreRepuesto = @repuesto"
+                If Not String.IsNullOrEmpty(cliente) Then query &= " AND Cliente LIKE @cliente"
+
+                Using cmd As New MySqlCommand(query, connection)
+                    ' Agregar parámetros solo cuando se utilizan
+                    If fechaInicio.HasValue AndAlso fechaFin.HasValue Then
+                        cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio.Value)
+                        cmd.Parameters.AddWithValue("@fechaFin", fechaFin.Value)
+                    End If
+                    If Not String.IsNullOrEmpty(repuesto) Then cmd.Parameters.AddWithValue("@repuesto", repuesto)
+                    If Not String.IsNullOrEmpty(cliente) Then cmd.Parameters.AddWithValue("@cliente", "%" & cliente & "%")
+
+                    ' Cargar datos en el DataGridView
+                    Dim adapter As New MySqlDataAdapter(cmd)
+                    Dim dt As New DataTable()
+                    adapter.Fill(dt)
+                    dgvResumenVentas.DataSource = dt
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub btnAplicarFiltros_Click(sender As Object, e As EventArgs) Handles btnAplicarFiltros.Click
+        ' Obtener los valores de los controles para filtrar
+        Dim fechaInicio As DateTime? = If(dtpFechaInicio.Checked, dtpFechaInicio.Value, Nothing)
+        Dim fechaFin As DateTime? = If(dtpFechaFin.Checked, dtpFechaFin.Value, Nothing)
+        Dim repuesto As String = If(cmbFiltroRepuesto.SelectedItem?.ToString(), "")
+        Dim cliente As String = If(cmbFiltroCliente.SelectedItem?.ToString(), "")
+
+        ' Llamar a la función CargarResumenVentas con los filtros
+        CargarResumenVentas(fechaInicio, fechaFin, repuesto, cliente)
+    End Sub
+
+    Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Llenar el ComboBox con los nombres de los repuestos
+        CargarRepuestos()
+    End Sub
+
+    ' Método para cargar los nombres de los repuestos en el ComboBox
+    Private Sub CargarRepuestos()
+        Using conn As New MySqlConnection(connectionString)
+            Try
+                conn.Open()
+
+                ' Consulta para obtener los nombres de los repuestos
+                Dim sql As String = "SELECT NombreRepuesto FROM Repuestos"
+                Using cmd As New MySqlCommand(sql, conn)
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        cmbFiltroRepuesto.Items.Clear() ' Limpiar el ComboBox antes de llenarlo
+                        cmbFiltroRepuesto.Items.Add("") ' Agregar línea en blanco
+                        While reader.Read()
+                            ' Agregar los nombres de los repuestos al ComboBox
+                            Dim repuesto As String = reader("NombreRepuesto").ToString()
+                            If Not cmbFiltroRepuesto.Items.Contains(repuesto) Then
+                                cmbFiltroRepuesto.Items.Add(repuesto)
+                            End If
+                        End While
+                    End Using
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar los repuestos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Llenar el ComboBox con los nombres de los clientes
+        CargarCliente()
+    End Sub
+
+    ' Método para cargar los nombres de los clientes en el ComboBox
+    Private Sub CargarCliente()
+        Using conn As New MySqlConnection(connectionString)
+            Try
+                conn.Open()
+
+                ' Consulta para obtener los nombres de los clientes
+                ' Usamos DISTINCT para obtener solo nombres únicos de clientes.
+                ' Esto evita duplicados en el ComboBox, mostrando cada cliente solo una vez,
+                ' incluso si tiene múltiples registros en la tabla ventasrepuestos.
+                Dim sql As String = "SELECT DISTINCT Cliente FROM ventasrepuestos"
+                Using cmd As New MySqlCommand(sql, conn)
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        cmbFiltroCliente.Items.Clear() ' Limpiar el ComboBox antes de llenarlo
+                        cmbFiltroCliente.Items.Add("") ' Agregar línea en blanco
+
+                        While reader.Read()
+                            Dim cliente As String = reader("Cliente").ToString()
+                            If Not cmbFiltroCliente.Items.Contains(cliente) Then
+                                cmbFiltroCliente.Items.Add(cliente)
+                            End If
+                        End While
+                    End Using
+                End Using
+
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar los clientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub btnRestaurarFiltros_Click(sender As Object, e As EventArgs) Handles btnRestaurarFiltros.Click
+        ' restaurar los filtros y mostrar todos los registros
+
+        ' Limpiar los filtros en los ComboBox y DateTimePickers
+        cmbFiltroRepuesto.SelectedIndex = -1 ' Desmarca el filtro de repuestos
+        cmbFiltroCliente.SelectedIndex = -1 ' Desmarca el filtro de clientes
+        dtpFechaInicio.Checked = False ' Desmarca la fecha de inicio
+        dtpFechaFin.Checked = False ' Desmarca la fecha de fin
+
+        ' Llamar a la función para cargar todos los registros sin filtros
+        CargarResumenVentas()
+    End Sub
+
+    'Codigo para que se expanda el DataGridView'
+
+    Private originalSize As Size
+    Private originalLocation As Point
+    Private originalParent As Control
+    Private isExpanded As Boolean = False
+
+    Private Sub btnVer_Click(sender As Object, e As EventArgs) Handles btnVer.Click
+        ' Verificar si ya está expandido o no
+        If Not isExpanded Then
+            ' Guardar el tamaño, la ubicación y el control padre originales
+            originalSize = dgvResumenVentas.Size
+            originalLocation = dgvResumenVentas.Location
+            originalParent = dgvResumenVentas.Parent
+
+            ' Cambiar el Parent del DataGridView al formulario para que esté sobre todos los controles
+            Me.Controls.Add(dgvResumenVentas) ' Agregar al formulario principal
+            dgvResumenVentas.BringToFront() ' Llevar al frente
+            dgvResumenVentas.Location = New Point(14, 53) ' Nueva ubicación en la pantalla
+            dgvResumenVentas.Size = New Size(450, 390) ' Tamaño expandido
+            dgvResumenVentas.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+
+            ' Cambiar el texto del botón y marcar como expandido
+            btnVer.Text = "Cerrar Vista Expandida"
+            isExpanded = True
+        Else
+            ' Restaurar el DataGridView a su control padre original (GroupBox), tamaño y posición originales
+            originalParent.Controls.Add(dgvResumenVentas) ' Regresar al control original
+            dgvResumenVentas.Size = originalSize
+            dgvResumenVentas.Location = originalLocation
+            dgvResumenVentas.Anchor = AnchorStyles.Top Or AnchorStyles.Left
+
+            ' Cambiar el texto del botón y marcar como no expandido
+            btnVer.Text = "Ver Resumen Expandido"
+            isExpanded = False
+        End If
+    End Sub
+
+
+
+
+
+    'Fin del codigo'
 End Class
