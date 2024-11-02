@@ -46,31 +46,33 @@ Partial Class Menu
         cmbFiltroRepuesto = New ComboBox()
         dtpFechaFin = New DateTimePicker()
         dtpFechaInicio = New DateTimePicker()
-        Label21 = New Label()
-        Label20 = New Label()
-        Label19 = New Label()
-        Label18 = New Label()
+        lblrepuesto = New Label()
+        lblTermino = New Label()
+        lblInicio = New Label()
+        lblCliente = New Label()
         dgvResumenVentas = New DataGridView()
         Label17 = New Label()
         GroupBox1 = New GroupBox()
+        lblDatosCliente = New Label()
+        btEditarVenta = New Button()
         btnRegistrarVenta = New Button()
         txtStock = New TextBox()
         txtId = New TextBox()
-        Label16 = New Label()
-        Label15 = New Label()
+        lblStock = New Label()
+        lblID = New Label()
         txtTotal = New TextBox()
-        Label14 = New Label()
+        lblmensajeIVA = New Label()
         txtMontoNeto = New TextBox()
         dtpFechaVenta = New DateTimePicker()
         txtCliente = New TextBox()
         txtCantidadVendida = New TextBox()
         cmbNombreRepuesto = New ComboBox()
-        Label13 = New Label()
-        Label12 = New Label()
-        Label11 = New Label()
-        Label10 = New Label()
-        Label9 = New Label()
-        Label8 = New Label()
+        lblTotal = New Label()
+        lblNomRepuesto = New Label()
+        lblCntVender = New Label()
+        lblRut = New Label()
+        lblFecVenta = New Label()
+        lblNeto = New Label()
         Label7 = New Label()
         panelSiniestro = New Panel()
         panelGestionServicios = New Panel()
@@ -113,6 +115,7 @@ Partial Class Menu
         limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
+        btnEliminarVenta = New Button()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelVentaRepuestos.SuspendLayout()
@@ -305,13 +308,13 @@ Partial Class Menu
         GroupBox2.Controls.Add(cmbFiltroRepuesto)
         GroupBox2.Controls.Add(dtpFechaFin)
         GroupBox2.Controls.Add(dtpFechaInicio)
-        GroupBox2.Controls.Add(Label21)
-        GroupBox2.Controls.Add(Label20)
-        GroupBox2.Controls.Add(Label19)
-        GroupBox2.Controls.Add(Label18)
+        GroupBox2.Controls.Add(lblrepuesto)
+        GroupBox2.Controls.Add(lblTermino)
+        GroupBox2.Controls.Add(lblInicio)
+        GroupBox2.Controls.Add(lblCliente)
         GroupBox2.Controls.Add(dgvResumenVentas)
         GroupBox2.Controls.Add(Label17)
-        GroupBox2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBox2.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBox2.Location = New Point(501, 11)
         GroupBox2.Name = "GroupBox2"
         GroupBox2.Size = New Size(392, 496)
@@ -375,45 +378,45 @@ Partial Class Menu
         dtpFechaInicio.Size = New Size(187, 27)
         dtpFechaInicio.TabIndex = 11
         ' 
-        ' Label21
+        ' lblrepuesto
         ' 
-        Label21.AutoSize = True
-        Label21.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label21.Location = New Point(36, 340)
-        Label21.Name = "Label21"
-        Label21.Size = New Size(75, 20)
-        Label21.TabIndex = 10
-        Label21.Text = "Repuesto"
+        lblrepuesto.AutoSize = True
+        lblrepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblrepuesto.Location = New Point(36, 340)
+        lblrepuesto.Name = "lblrepuesto"
+        lblrepuesto.Size = New Size(75, 20)
+        lblrepuesto.TabIndex = 10
+        lblrepuesto.Text = "Repuesto"
         ' 
-        ' Label20
+        ' lblTermino
         ' 
-        Label20.AutoSize = True
-        Label20.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label20.Location = New Point(36, 298)
-        Label20.Name = "Label20"
-        Label20.Size = New Size(67, 20)
-        Label20.TabIndex = 9
-        Label20.Text = "Termino"
+        lblTermino.AutoSize = True
+        lblTermino.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblTermino.Location = New Point(36, 298)
+        lblTermino.Name = "lblTermino"
+        lblTermino.Size = New Size(67, 20)
+        lblTermino.TabIndex = 9
+        lblTermino.Text = "Termino"
         ' 
-        ' Label19
+        ' lblInicio
         ' 
-        Label19.AutoSize = True
-        Label19.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label19.Location = New Point(36, 260)
-        Label19.Name = "Label19"
-        Label19.Size = New Size(47, 20)
-        Label19.TabIndex = 8
-        Label19.Text = "Inicio"
+        lblInicio.AutoSize = True
+        lblInicio.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblInicio.Location = New Point(36, 260)
+        lblInicio.Name = "lblInicio"
+        lblInicio.Size = New Size(47, 20)
+        lblInicio.TabIndex = 8
+        lblInicio.Text = "Inicio"
         ' 
-        ' Label18
+        ' lblCliente
         ' 
-        Label18.AutoSize = True
-        Label18.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label18.Location = New Point(36, 383)
-        Label18.Name = "Label18"
-        Label18.Size = New Size(57, 20)
-        Label18.TabIndex = 7
-        Label18.Text = "Cliente"
+        lblCliente.AutoSize = True
+        lblCliente.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblCliente.Location = New Point(36, 383)
+        lblCliente.Name = "lblCliente"
+        lblCliente.Size = New Size(57, 20)
+        lblCliente.TabIndex = 7
+        lblCliente.Text = "Cliente"
         ' 
         ' dgvResumenVentas
         ' 
@@ -438,31 +441,52 @@ Partial Class Menu
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.CadetBlue
+        GroupBox1.Controls.Add(btnEliminarVenta)
+        GroupBox1.Controls.Add(lblDatosCliente)
+        GroupBox1.Controls.Add(btEditarVenta)
         GroupBox1.Controls.Add(btnRegistrarVenta)
         GroupBox1.Controls.Add(txtStock)
         GroupBox1.Controls.Add(txtId)
-        GroupBox1.Controls.Add(Label16)
-        GroupBox1.Controls.Add(Label15)
+        GroupBox1.Controls.Add(lblStock)
+        GroupBox1.Controls.Add(lblID)
         GroupBox1.Controls.Add(txtTotal)
-        GroupBox1.Controls.Add(Label14)
+        GroupBox1.Controls.Add(lblmensajeIVA)
         GroupBox1.Controls.Add(txtMontoNeto)
         GroupBox1.Controls.Add(dtpFechaVenta)
         GroupBox1.Controls.Add(txtCliente)
         GroupBox1.Controls.Add(txtCantidadVendida)
         GroupBox1.Controls.Add(cmbNombreRepuesto)
-        GroupBox1.Controls.Add(Label13)
-        GroupBox1.Controls.Add(Label12)
-        GroupBox1.Controls.Add(Label11)
-        GroupBox1.Controls.Add(Label10)
-        GroupBox1.Controls.Add(Label9)
-        GroupBox1.Controls.Add(Label8)
+        GroupBox1.Controls.Add(lblTotal)
+        GroupBox1.Controls.Add(lblNomRepuesto)
+        GroupBox1.Controls.Add(lblCntVender)
+        GroupBox1.Controls.Add(lblRut)
+        GroupBox1.Controls.Add(lblFecVenta)
+        GroupBox1.Controls.Add(lblNeto)
         GroupBox1.Controls.Add(Label7)
-        GroupBox1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        GroupBox1.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         GroupBox1.Location = New Point(14, 11)
         GroupBox1.Name = "GroupBox1"
         GroupBox1.Size = New Size(481, 496)
         GroupBox1.TabIndex = 0
         GroupBox1.TabStop = False
+        ' 
+        ' lblDatosCliente
+        ' 
+        lblDatosCliente.AutoSize = True
+        lblDatosCliente.Location = New Point(353, 144)
+        lblDatosCliente.Name = "lblDatosCliente"
+        lblDatosCliente.Size = New Size(106, 20)
+        lblDatosCliente.TabIndex = 20
+        lblDatosCliente.Text = "Datos Cliente:"
+        ' 
+        ' btEditarVenta
+        ' 
+        btEditarVenta.Location = New Point(177, 392)
+        btEditarVenta.Name = "btEditarVenta"
+        btEditarVenta.Size = New Size(147, 29)
+        btEditarVenta.TabIndex = 19
+        btEditarVenta.Text = "Editar venta"
+        btEditarVenta.UseVisualStyleBackColor = True
         ' 
         ' btnRegistrarVenta
         ' 
@@ -487,25 +511,25 @@ Partial Class Menu
         txtId.Size = New Size(56, 27)
         txtId.TabIndex = 16
         ' 
-        ' Label16
+        ' lblStock
         ' 
-        Label16.AutoSize = True
-        Label16.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label16.Location = New Point(352, 97)
-        Label16.Name = "Label16"
-        Label16.Size = New Size(47, 20)
-        Label16.TabIndex = 15
-        Label16.Text = "Stock"
+        lblStock.AutoSize = True
+        lblStock.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblStock.Location = New Point(352, 97)
+        lblStock.Name = "lblStock"
+        lblStock.Size = New Size(47, 20)
+        lblStock.TabIndex = 15
+        lblStock.Text = "Stock"
         ' 
-        ' Label15
+        ' lblID
         ' 
-        Label15.AutoSize = True
-        Label15.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label15.Location = New Point(358, 57)
-        Label15.Name = "Label15"
-        Label15.Size = New Size(25, 20)
-        Label15.TabIndex = 14
-        Label15.Text = "ID"
+        lblID.AutoSize = True
+        lblID.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblID.Location = New Point(358, 57)
+        lblID.Name = "lblID"
+        lblID.Size = New Size(25, 20)
+        lblID.TabIndex = 14
+        lblID.Text = "ID"
         ' 
         ' txtTotal
         ' 
@@ -514,15 +538,15 @@ Partial Class Menu
         txtTotal.Size = New Size(147, 27)
         txtTotal.TabIndex = 13
         ' 
-        ' Label14
+        ' lblmensajeIVA
         ' 
-        Label14.AutoSize = True
-        Label14.Font = New Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label14.Location = New Point(152, 275)
-        Label14.Name = "Label14"
-        Label14.Size = New Size(190, 17)
-        Label14.TabIndex = 12
-        Label14.Text = "Esta compra esta sujeto a IVA"
+        lblmensajeIVA.AutoSize = True
+        lblmensajeIVA.Font = New Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblmensajeIVA.Location = New Point(152, 275)
+        lblmensajeIVA.Name = "lblmensajeIVA"
+        lblmensajeIVA.Size = New Size(190, 17)
+        lblmensajeIVA.TabIndex = 12
+        lblmensajeIVA.Text = "Esta compra esta sujeto a IVA"
         ' 
         ' txtMontoNeto
         ' 
@@ -560,65 +584,65 @@ Partial Class Menu
         cmbNombreRepuesto.Size = New Size(151, 28)
         cmbNombreRepuesto.TabIndex = 7
         ' 
-        ' Label13
+        ' lblTotal
         ' 
-        Label13.AutoSize = True
-        Label13.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label13.Location = New Point(17, 305)
-        Label13.Name = "Label13"
-        Label13.Size = New Size(93, 20)
-        Label13.TabIndex = 6
-        Label13.Text = "Monto total"
+        lblTotal.AutoSize = True
+        lblTotal.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblTotal.Location = New Point(17, 305)
+        lblTotal.Name = "lblTotal"
+        lblTotal.Size = New Size(93, 20)
+        lblTotal.TabIndex = 6
+        lblTotal.Text = "Monto total"
         ' 
-        ' Label12
+        ' lblNomRepuesto
         ' 
-        Label12.AutoSize = True
-        Label12.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label12.Location = New Point(17, 65)
-        Label12.Name = "Label12"
-        Label12.Size = New Size(158, 20)
-        Label12.TabIndex = 5
-        Label12.Text = "Nombre del repuesto"
+        lblNomRepuesto.AutoSize = True
+        lblNomRepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNomRepuesto.Location = New Point(17, 65)
+        lblNomRepuesto.Name = "lblNomRepuesto"
+        lblNomRepuesto.Size = New Size(158, 20)
+        lblNomRepuesto.TabIndex = 5
+        lblNomRepuesto.Text = "Nombre del repuesto"
         ' 
-        ' Label11
+        ' lblCntVender
         ' 
-        Label11.AutoSize = True
-        Label11.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label11.Location = New Point(17, 108)
-        Label11.Name = "Label11"
-        Label11.Size = New Size(135, 20)
-        Label11.TabIndex = 4
-        Label11.Text = "Cantidad a vender"
+        lblCntVender.AutoSize = True
+        lblCntVender.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblCntVender.Location = New Point(17, 108)
+        lblCntVender.Name = "lblCntVender"
+        lblCntVender.Size = New Size(135, 20)
+        lblCntVender.TabIndex = 4
+        lblCntVender.Text = "Cantidad a vender"
         ' 
-        ' Label10
+        ' lblRut
         ' 
-        Label10.AutoSize = True
-        Label10.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label10.Location = New Point(17, 152)
-        Label10.Name = "Label10"
-        Label10.Size = New Size(86, 20)
-        Label10.TabIndex = 3
-        Label10.Text = "Rut Cliente"
+        lblRut.AutoSize = True
+        lblRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblRut.Location = New Point(17, 152)
+        lblRut.Name = "lblRut"
+        lblRut.Size = New Size(86, 20)
+        lblRut.TabIndex = 3
+        lblRut.Text = "Rut Cliente"
         ' 
-        ' Label9
+        ' lblFecVenta
         ' 
-        Label9.AutoSize = True
-        Label9.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label9.Location = New Point(17, 200)
-        Label9.Name = "Label9"
-        Label9.Size = New Size(113, 20)
-        Label9.TabIndex = 2
-        Label9.Text = "Fecha de venta"
+        lblFecVenta.AutoSize = True
+        lblFecVenta.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblFecVenta.Location = New Point(17, 200)
+        lblFecVenta.Name = "lblFecVenta"
+        lblFecVenta.Size = New Size(113, 20)
+        lblFecVenta.TabIndex = 2
+        lblFecVenta.Text = "Fecha de venta"
         ' 
-        ' Label8
+        ' lblNeto
         ' 
-        Label8.AutoSize = True
-        Label8.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        Label8.Location = New Point(17, 240)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(92, 20)
-        Label8.TabIndex = 1
-        Label8.Text = "Monto neto"
+        lblNeto.AutoSize = True
+        lblNeto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNeto.Location = New Point(17, 240)
+        lblNeto.Name = "lblNeto"
+        lblNeto.Size = New Size(92, 20)
+        lblNeto.TabIndex = 1
+        lblNeto.Text = "Monto neto"
         ' 
         ' Label7
         ' 
@@ -921,7 +945,7 @@ Partial Class Menu
         ' 
         LabelTipo.AutoSize = True
         LabelTipo.BackColor = Color.Transparent
-        LabelTipo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelTipo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTipo.ForeColor = SystemColors.ControlLight
         LabelTipo.Location = New Point(515, 227)
         LabelTipo.Name = "LabelTipo"
@@ -933,7 +957,7 @@ Partial Class Menu
         ' 
         LabelCorreo.AutoSize = True
         LabelCorreo.BackColor = Color.Transparent
-        LabelCorreo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelCorreo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelCorreo.ForeColor = SystemColors.ControlLight
         LabelCorreo.Location = New Point(501, 309)
         LabelCorreo.Name = "LabelCorreo"
@@ -952,7 +976,7 @@ Partial Class Menu
         ' 
         LabelContraseña.AutoSize = True
         LabelContraseña.BackColor = Color.Transparent
-        LabelContraseña.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelContraseña.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelContraseña.ForeColor = SystemColors.ControlLight
         LabelContraseña.Location = New Point(71, 309)
         LabelContraseña.Name = "LabelContraseña"
@@ -972,7 +996,7 @@ Partial Class Menu
         ' 
         LabelRutUsuario.AutoSize = True
         LabelRutUsuario.BackColor = Color.Transparent
-        LabelRutUsuario.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelRutUsuario.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelRutUsuario.ForeColor = SystemColors.Control
         LabelRutUsuario.Location = New Point(48, 231)
         LabelRutUsuario.Name = "LabelRutUsuario"
@@ -990,7 +1014,7 @@ Partial Class Menu
         ' buttonConsultarRut
         ' 
         buttonConsultarRut.BackColor = Color.Transparent
-        buttonConsultarRut.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonConsultarRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonConsultarRut.Location = New Point(459, 72)
         buttonConsultarRut.Name = "buttonConsultarRut"
         buttonConsultarRut.Size = New Size(123, 67)
@@ -1012,7 +1036,7 @@ Partial Class Menu
         ' 
         ' limpiarCamposGestionUsuarios
         ' 
-        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         limpiarCamposGestionUsuarios.Location = New Point(610, 49)
         limpiarCamposGestionUsuarios.Margin = New Padding(3, 4, 3, 4)
         limpiarCamposGestionUsuarios.Name = "limpiarCamposGestionUsuarios"
@@ -1023,7 +1047,7 @@ Partial Class Menu
         ' 
         ' buttonMostrarUsuarios
         ' 
-        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonMostrarUsuarios.Location = New Point(736, 51)
         buttonMostrarUsuarios.Name = "buttonMostrarUsuarios"
         buttonMostrarUsuarios.Size = New Size(128, 65)
@@ -1042,9 +1066,18 @@ Partial Class Menu
         LabelRut.TabIndex = 3
         LabelRut.Text = "Rut"
         ' 
+        ' btnEliminarVenta
+        ' 
+        btnEliminarVenta.Location = New Point(177, 430)
+        btnEliminarVenta.Name = "btnEliminarVenta"
+        btnEliminarVenta.Size = New Size(147, 29)
+        btnEliminarVenta.TabIndex = 21
+        btnEliminarVenta.Text = "Eliminar venta"
+        btnEliminarVenta.UseVisualStyleBackColor = True
+        ' 
         ' Menu
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
@@ -1137,22 +1170,22 @@ Partial Class Menu
     Friend WithEvents comboBoxTipo As ComboBox
     Friend WithEvents limpiarCamposGestionUsuarios As Button
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents Label13 As Label
-    Friend WithEvents Label12 As Label
-    Friend WithEvents Label11 As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label9 As Label
-    Friend WithEvents Label8 As Label
+    Friend WithEvents lblTotal As Label
+    Friend WithEvents lblNomRepuesto As Label
+    Friend WithEvents lblCntVender As Label
+    Friend WithEvents lblRut As Label
+    Friend WithEvents lblFecVenta As Label
+    Friend WithEvents lblNeto As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents cmbNombreRepuesto As ComboBox
     Friend WithEvents txtCantidadVendida As TextBox
     Friend WithEvents txtCliente As TextBox
-    Friend WithEvents Label14 As Label
+    Friend WithEvents lblmensajeIVA As Label
     Friend WithEvents txtMontoNeto As TextBox
     Friend WithEvents dtpFechaVenta As DateTimePicker
     Friend WithEvents txtTotal As TextBox
-    Friend WithEvents Label16 As Label
-    Friend WithEvents Label15 As Label
+    Friend WithEvents lblStock As Label
+    Friend WithEvents lblID As Label
     Friend WithEvents txtStock As TextBox
     Friend WithEvents txtId As TextBox
     Friend WithEvents btnRegistrarVenta As Button
@@ -1160,14 +1193,17 @@ Partial Class Menu
     Friend WithEvents Label17 As Label
     Friend WithEvents dgvResumenVentas As DataGridView
     Friend WithEvents dtpFechaInicio As DateTimePicker
-    Friend WithEvents Label21 As Label
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Label19 As Label
-    Friend WithEvents Label18 As Label
+    Friend WithEvents lblrepuesto As Label
+    Friend WithEvents lblTermino As Label
+    Friend WithEvents lblInicio As Label
+    Friend WithEvents lblCliente As Label
     Friend WithEvents dtpFechaFin As DateTimePicker
     Friend WithEvents cmbFiltroCliente As ComboBox
     Friend WithEvents cmbFiltroRepuesto As ComboBox
     Friend WithEvents btnRestaurarFiltros As Button
     Friend WithEvents btnAplicarFiltros As Button
     Friend WithEvents btnVer As Button
+    Friend WithEvents lblDatosCliente As Label
+    Friend WithEvents btEditarVenta As Button
+    Friend WithEvents btnEliminarVenta As Button
 End Class

@@ -493,8 +493,9 @@ Public Class Menu
         TextBoxBuscarRepuestoNombre.Text = ComboBoxRepuestos.SelectedItem.ToString()
     End Sub
 
+    '-------------------------------------generar código venta-repuesto    02-11-2024----------------------------------------
+    '-------------------------------------generar codigo venta-repuesto    02-11.2024----------------------------------------'
 
-    '-------------------------------------generar codigo venta-repuesto----------------------------------------'
     'Codigo Jasna'
 
 
@@ -530,44 +531,44 @@ Public Class Menu
 
     ' Evento para mostrar el precio unitario, ID y cantidad en txtMontoNeto, txtId, y txtStock al seleccionar un repuesto
     Private Sub cmbNombreRepuesto_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbNombreRepuesto.SelectedIndexChanged
-        ' Obtener el nombre del repuesto seleccionado
-        Dim nombreRepuesto As String = cmbNombreRepuesto.SelectedItem.ToString()
+        ' Limpiar los campos si no hay un elemento seleccionado
+        If cmbNombreRepuesto.SelectedItem Is Nothing Then
+            LimpiarCamposRepuesto()
+            Return
+        End If
 
-        ' Verificar y mostrar los detalles del repuesto seleccionado
+        ' Obtener y mostrar los detalles del repuesto seleccionado
+        Dim nombreRepuesto As String = cmbNombreRepuesto.SelectedItem.ToString()
         Using conn As New MySqlConnection(connectionString)
             Try
                 conn.Open()
-
-                ' Consulta para obtener el precio unitario, ID y cantidad del repuesto seleccionado
                 Dim query As String = "SELECT PrecioUnitario, RepuestoID, CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
-                Using cmdPrecio As New MySqlCommand(query, conn)
-                    cmdPrecio.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
-
-                    Using readerPrecio As MySqlDataReader = cmdPrecio.ExecuteReader()
-                        If readerPrecio.Read() Then
-                            ' Convertir el PrecioUnitario a Decimal y formatearlo como moneda
-                            Dim precioUnitario As Decimal = Convert.ToDecimal(readerPrecio("PrecioUnitario"))
-                            txtMontoNeto.Text = precioUnitario.ToString("C")
-
-                            ' Mostrar el ID del repuesto en txtId
-                            txtId.Text = readerPrecio("RepuestoID").ToString()
-
-                            ' Mostrar la cantidad en stock en txtStock
-                            txtStock.Text = readerPrecio("CantidadStock").ToString()
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            txtMontoNeto.Text = Convert.ToDecimal(reader("PrecioUnitario")).ToString("C")
+                            txtId.Text = reader("RepuestoID").ToString()
+                            txtStock.Text = reader("CantidadStock").ToString()
                         Else
-                            txtMontoNeto.Text = "0" ' Si no se encuentra, mostrar 0 o limpiar
-                            txtId.Text = ""
-                            txtStock.Text = ""
+                            LimpiarCamposRepuesto()
                         End If
                     End Using
                 End Using
-
             Catch ex As Exception
                 MessageBox.Show("Error al obtener el precio del repuesto: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
     End Sub
 
+    ' Sub para limpiar los campos
+    Private Sub LimpiarCamposRepuesto()
+        txtMontoNeto.Text = "0"
+        txtId.Text = ""
+        txtStock.Text = ""
+    End Sub
+
+    'En este Bloque se registra la venta realizada'
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles btnRegistrarVenta.Click
         ' Verificar que un repuesto esté seleccionado
         Dim nombreRepuesto As String = If(cmbNombreRepuesto.SelectedItem?.ToString(), "")
@@ -632,11 +633,11 @@ Public Class Menu
 
                                 ' Mostrar mensaje de éxito
                                 Dim resumenVenta As String = $"Resumen de Venta:{Environment.NewLine}" &
-                                                         $"Repuesto: {nombreRepuesto}{Environment.NewLine}" &
-                                                         $"Cantidad Vendida: {CantidadVendida}{Environment.NewLine}" &
-                                                         $"Cliente: {txtCliente.Text.Trim()}{Environment.NewLine}" &
-                                                         $"Fecha de Venta: {dtpFechaVenta.Value.ToShortDateString()}{Environment.NewLine}" &
-                                                         $"Total: {total.ToString("C")}"
+                                                     $"Repuesto: {nombreRepuesto}{Environment.NewLine}" &
+                                                     $"Cantidad Vendida: {CantidadVendida}{Environment.NewLine}" &
+                                                     $"Cliente: {txtCliente.Text.Trim()}{Environment.NewLine}" &
+                                                     $"Fecha de Venta: {dtpFechaVenta.Value.ToShortDateString()}{Environment.NewLine}" &
+                                                     $"Total: {total.ToString("C")}"
 
                                 MessageBox.Show(resumenVenta, "Venta Registrada Exitosamente", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -648,6 +649,9 @@ Public Class Menu
                                 txtTotal.Text = ""
                                 cmbNombreRepuesto.Text = ""
                                 txtId.Text = ""
+
+                                ' Actualizar el DataGridView con las ventas recientes
+                                CargarResumenVentas()
                             Else
                                 MessageBox.Show("Stock insuficiente para realizar la venta.")
                             End If
@@ -660,9 +664,198 @@ Public Class Menu
                 MessageBox.Show("Error al realizar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
+    End Sub  'Fin del bloque de insertar la venta'
+
+
+    'Esta parte es para actualizar la compra'
+    Private Sub btEditarVenta_Click(sender As Object, e As EventArgs) Handles btEditarVenta.Click
+        If selectedVentaId = -1 Then
+            MessageBox.Show("Seleccione una venta para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim nombreRepuesto As String = If(cmbNombreRepuesto.SelectedItem?.ToString(), "")
+        If String.IsNullOrEmpty(nombreRepuesto) Then
+            MessageBox.Show("Por favor, seleccione un repuesto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim CantidadVendidaNueva As Integer
+        If Not Integer.TryParse(txtCantidadVendida.Text, CantidadVendidaNueva) Then
+            MessageBox.Show("Ingrese una cantidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim cliente As String = txtCliente.Text.Trim()
+        If String.IsNullOrEmpty(cliente) Then
+            MessageBox.Show("Ingrese el nombre del cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim PrecioUnitario As Decimal
+        If Not Decimal.TryParse(txtMontoNeto.Text.Replace("$", "").Trim(), PrecioUnitario) Then
+            MessageBox.Show("El monto neto no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim total As Decimal = (CantidadVendidaNueva * PrecioUnitario) * 1.19
+        txtTotal.Text = total.ToString("C")
+
+        Using connection As New MySqlConnection(connectionString)
+            connection.Open()
+            Using transaction As MySqlTransaction = connection.BeginTransaction()
+                Try
+                    Dim cantidadVendidaOriginal As Integer
+                    Dim stockActual As Integer
+
+                    ' Obtener el stock actual y cantidad vendida original
+                    Dim queryStock As String = "SELECT CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
+                    Using cmdStock As New MySqlCommand(queryStock, connection, transaction)
+                        cmdStock.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                        stockActual = Convert.ToInt32(cmdStock.ExecuteScalar())
+                    End Using
+
+                    Dim queryVenta As String = "SELECT CantidadVendida FROM ventasrepuestos WHERE VentaID = @ventaId"
+                    Using cmdVenta As New MySqlCommand(queryVenta, connection, transaction)
+                        cmdVenta.Parameters.AddWithValue("@ventaId", selectedVentaId)
+                        cantidadVendidaOriginal = Convert.ToInt32(cmdVenta.ExecuteScalar())
+                    End Using
+
+                    Dim cantidadRestaurar As Integer = CantidadVendidaNueva - cantidadVendidaOriginal
+                    Dim nuevoStock As Integer = stockActual - cantidadRestaurar
+
+                    ' Actualizar el stock
+                    Dim queryUpdateStock As String = "UPDATE Repuestos SET CantidadStock = @nuevoStock WHERE NombreRepuesto = @nombreRepuesto"
+                    Using cmdUpdateStock As New MySqlCommand(queryUpdateStock, connection, transaction)
+                        cmdUpdateStock.Parameters.AddWithValue("@nuevoStock", nuevoStock)
+                        cmdUpdateStock.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                        cmdUpdateStock.ExecuteNonQuery()
+                    End Using
+
+                    ' Actualizar la venta
+                    Dim query As String = "UPDATE ventasrepuestos SET NombreRepuesto = @nombreRepuesto, CantidadVendida = @cantidadVendidaNueva, Cliente = @cliente, FechaVenta = @fechaVenta, Total = @total WHERE VentaID = @ventaId"
+                    Using cmd As New MySqlCommand(query, connection, transaction)
+                        cmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                        cmd.Parameters.AddWithValue("@cantidadVendidaNueva", CantidadVendidaNueva)
+                        cmd.Parameters.AddWithValue("@cliente", cliente)
+                        cmd.Parameters.AddWithValue("@fechaVenta", dtpFechaVenta.Value)
+                        cmd.Parameters.AddWithValue("@total", total)
+                        cmd.Parameters.AddWithValue("@ventaId", selectedVentaId)
+
+                        Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                        If rowsAffected > 0 Then
+                            transaction.Commit()
+                            MessageBox.Show("Venta actualizada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            CargarResumenVentas()
+                            LimpiarCampos2()
+                        Else
+                            transaction.Rollback()
+                            MessageBox.Show("No se pudo actualizar la venta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End Using
+                Catch ex As Exception
+                    transaction.Rollback()
+                    MessageBox.Show("Error al actualizar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+        End Using
     End Sub
 
+    Private Sub LimpiarCampos2()
+        txtId.Clear()
+        cmbNombreRepuesto.SelectedIndex = -1
+        txtCantidadVendida.Clear()
+        txtCliente.Clear()
+        txtMontoNeto.Clear()
+        txtStock.Clear()
+        txtTotal.Clear()
+        selectedVentaId = -1
+    End Sub
+
+    Private Sub btnEliminarVenta_Click(sender As Object, e As EventArgs) Handles btnEliminarVenta.Click
+        ' Verificar que una venta esté seleccionada para eliminar
+        If selectedVentaId = -1 Then
+            MessageBox.Show("Seleccione una venta para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Confirmar eliminación
+        Dim confirmResult As DialogResult = MessageBox.Show("¿Está seguro de que desea eliminar esta venta?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirmResult = DialogResult.No Then
+            Return
+        End If
+
+        ' Obtener valores para restaurar el stock
+        Dim nombreRepuesto As String = cmbNombreRepuesto.SelectedItem?.ToString()
+        Dim CantidadVendida As Integer
+        If Not Integer.TryParse(txtCantidadVendida.Text, CantidadVendida) Then
+            MessageBox.Show("Cantidad vendida no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        ' Realizar la eliminación y restaurar el stock
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                connection.Open()
+
+                ' Recuperar el stock actual del repuesto
+                Dim stockActual As Integer
+                Dim queryStock As String = "SELECT CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
+                Using cmdStock As New MySqlCommand(queryStock, connection)
+                    cmdStock.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                    stockActual = Convert.ToInt32(cmdStock.ExecuteScalar())
+                End Using
+
+                ' Actualizar el stock añadiendo la cantidad vendida
+                Dim nuevoStock As Integer = stockActual + CantidadVendida
+                Dim updateStockQuery As String = "UPDATE Repuestos SET CantidadStock = @nuevoStock WHERE NombreRepuesto = @nombreRepuesto"
+                Using updateCmd As New MySqlCommand(updateStockQuery, connection)
+                    updateCmd.Parameters.AddWithValue("@nuevoStock", nuevoStock)
+                    updateCmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
+                    updateCmd.ExecuteNonQuery()
+                End Using
+
+                ' Eliminar la venta seleccionada
+                Dim deleteQuery As String = "DELETE FROM ventasrepuestos WHERE VentaID = @ventaId"
+                Using deleteCmd As New MySqlCommand(deleteQuery, connection)
+                    deleteCmd.Parameters.AddWithValue("@ventaId", selectedVentaId)
+                    deleteCmd.ExecuteNonQuery()
+                End Using
+
+                ' Mostrar mensaje de éxito
+                MessageBox.Show("Venta eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                ' Recargar el resumen de ventas y limpiar los campos después de la eliminación
+                CargarResumenVentas()
+                LimpiarCampos3()
+            Catch ex As Exception
+                MessageBox.Show("Error al eliminar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+
+    End Sub
+
+    Private Sub LimpiarCampos3()
+        txtId.Clear()
+        cmbNombreRepuesto.SelectedIndex = -1
+        txtCantidadVendida.Clear()
+        txtCliente.Clear()
+        txtMontoNeto.Clear()
+        txtStock.Clear()
+        txtTotal.Clear()
+        selectedVentaId = -1
+    End Sub
+
+
+
+    '-------------------------------------------------------------------------------------------'
+
+
+
     'Este es el codigo de resumen de venta'
+
+
+    'Mostrar el resumen de ventas'
 
 
     Private Sub frmRegistroVentaRepuestos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -676,14 +869,13 @@ Public Class Menu
             Using connection As New MySqlConnection(connectionString)
                 connection.Open()
 
-                ' Construir consulta SQL
-                Dim query As String = "SELECT FechaVenta, NombreRepuesto, CantidadVendida, Cliente, Total FROM ventasrepuestos WHERE 1=1"
+                ' Incluir VentaID en la consulta para poder identificar la venta en la edición
+                Dim query As String = "SELECT VentaID, FechaVenta, NombreRepuesto, CantidadVendida, Cliente, Total FROM ventasrepuestos WHERE 1=1"
                 If fechaInicio.HasValue AndAlso fechaFin.HasValue Then query &= " AND FechaVenta BETWEEN @fechaInicio AND @fechaFin"
                 If Not String.IsNullOrEmpty(repuesto) Then query &= " AND NombreRepuesto = @repuesto"
                 If Not String.IsNullOrEmpty(cliente) Then query &= " AND Cliente LIKE @cliente"
 
                 Using cmd As New MySqlCommand(query, connection)
-                    ' Agregar parámetros solo cuando se utilizan
                     If fechaInicio.HasValue AndAlso fechaFin.HasValue Then
                         cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio.Value)
                         cmd.Parameters.AddWithValue("@fechaFin", fechaFin.Value)
@@ -691,7 +883,6 @@ Public Class Menu
                     If Not String.IsNullOrEmpty(repuesto) Then cmd.Parameters.AddWithValue("@repuesto", repuesto)
                     If Not String.IsNullOrEmpty(cliente) Then cmd.Parameters.AddWithValue("@cliente", "%" & cliente & "%")
 
-                    ' Cargar datos en el DataGridView
                     Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
                     adapter.Fill(dt)
@@ -701,6 +892,23 @@ Public Class Menu
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message)
         End Try
+    End Sub
+
+    Private selectedVentaId As Integer = -1
+
+    Private Sub dgvResumenVentas_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvResumenVentas.CellClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = dgvResumenVentas.Rows(e.RowIndex)
+
+            ' Cargar datos en los controles
+            selectedVentaId = Convert.ToInt32(row.Cells("VentaID").Value)
+            cmbNombreRepuesto.SelectedItem = row.Cells("NombreRepuesto").Value.ToString()
+            txtCantidadVendida.Text = row.Cells("CantidadVendida").Value.ToString()
+            txtCliente.Text = row.Cells("Cliente").Value.ToString()
+            dtpFechaVenta.Value = Convert.ToDateTime(row.Cells("FechaVenta").Value)
+            txtTotal.Text = row.Cells("Total").Value.ToString()
+        End If
+
     End Sub
 
     Private Sub btnAplicarFiltros_Click(sender As Object, e As EventArgs) Handles btnAplicarFiltros.Click
@@ -819,7 +1027,7 @@ Public Class Menu
             dgvResumenVentas.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
 
             ' Cambiar el texto del botón y marcar como expandido
-            btnVer.Text = "Cerrar Vista Expandida"
+            btnVer.Text = "Cerrar"
             isExpanded = True
         Else
             ' Restaurar el DataGridView a su control padre original (GroupBox), tamaño y posición originales
@@ -829,14 +1037,10 @@ Public Class Menu
             dgvResumenVentas.Anchor = AnchorStyles.Top Or AnchorStyles.Left
 
             ' Cambiar el texto del botón y marcar como no expandido
-            btnVer.Text = "Ver Resumen Expandido"
+            btnVer.Text = "Ver"
             isExpanded = False
         End If
     End Sub
 
 
-
-
-
-    'Fin del codigo'
 End Class
