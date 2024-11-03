@@ -661,7 +661,7 @@ Public Class Menu
                     End Using
                 End Using
             Catch ex As Exception
-                MessageBox.Show("Error al realizar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Error al realizar la venta " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
     End Sub  'Fin del bloque de insertar la venta'
