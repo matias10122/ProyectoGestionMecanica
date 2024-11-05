@@ -91,6 +91,9 @@ Public Class Menu
             Return
         End If
 
+        ' Copiar el RUT ingresado en el TextBoxRutUsuario
+        TextBoxRutUsuario.Text = rut
+
         Dim connectionString As String = "server=localhost;user id=root;password=;database=taller"
         Using connection As New MySqlConnection(connectionString)
             Dim command As New MySqlCommand("SELECT Rut, Correo, Contraseña, Tipo FROM usuarios WHERE Rut = @Rut", connection)
@@ -102,7 +105,7 @@ Public Class Menu
 
                 If reader.Read() Then
                     ' Usuario encontrado
-                    TextBoxRutUsuario.Text = reader("Rut").ToString()
+                    TextBoxRutUsuario.Text = reader("Rut").ToString()  ' Si el RUT está en la base de datos, también lo mostramos aquí
                     TextBoxCorreo.Text = reader("Correo").ToString()
                     TextBoxContraseña.Text = reader("Contraseña").ToString()
                     comboBoxTipo.Text = reader("Tipo").ToString()  ' Cambiado de TextBoxTipo a comboBoxTipo
@@ -1264,4 +1267,7 @@ Public Class Menu
         dgvResumenVentas.ReadOnly = True
     End Sub
 
+    Private Sub TextBoxRutUsuario_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRutUsuario.TextChanged
+
+    End Sub
 End Class
