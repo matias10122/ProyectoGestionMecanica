@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.Net.Mail
+Imports System.Reflection
 Imports MySql.Data.MySqlClient
 
 Public Class Menu
@@ -567,7 +568,6 @@ Public Class Menu
         txtId.Text = ""
         txtStock.Text = ""
     End Sub
-
     'En este Bloque se registra la venta realizada'
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles btnRegistrarVenta.Click
         ' Verificar que un repuesto esté seleccionado
@@ -633,11 +633,11 @@ Public Class Menu
 
                                 ' Mostrar mensaje de éxito
                                 Dim resumenVenta As String = $"Resumen de Venta:{Environment.NewLine}" &
-                                                     $"Repuesto: {nombreRepuesto}{Environment.NewLine}" &
-                                                     $"Cantidad Vendida: {CantidadVendida}{Environment.NewLine}" &
-                                                     $"Cliente: {txtCliente.Text.Trim()}{Environment.NewLine}" &
-                                                     $"Fecha de Venta: {dtpFechaVenta.Value.ToShortDateString()}{Environment.NewLine}" &
-                                                     $"Total: {total.ToString("C")}"
+                                                   $"Repuesto: {nombreRepuesto}{Environment.NewLine}" &
+                                                   $"Cantidad Vendida: {CantidadVendida}{Environment.NewLine}" &
+                                                   $"Cliente: {txtCliente.Text.Trim()}{Environment.NewLine}" &
+                                                   $"Fecha de Venta: {dtpFechaVenta.Value.ToShortDateString()}{Environment.NewLine}" &
+                                                   $"Total: {total.ToString("C")}"
 
                                 MessageBox.Show(resumenVenta, "Venta Registrada Exitosamente", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -661,10 +661,13 @@ Public Class Menu
                     End Using
                 End Using
             Catch ex As Exception
-                MessageBox.Show("Error al realizar la venta " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Error al realizar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
     End Sub  'Fin del bloque de insertar la venta'
+
+
+    'Fin del bloque de insertar la venta'
 
 
     'Esta parte es para actualizar la compra'
@@ -780,13 +783,13 @@ Public Class Menu
         End If
 
         ' Confirmar eliminación
-        Dim confirmResult As DialogResult = MessageBox.Show("¿Está seguro de que desea eliminar esta venta?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim confirmResult = MessageBox.Show("¿Está seguro de que desea eliminar esta venta?", "Confirmar Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If confirmResult = DialogResult.No Then
             Return
         End If
 
         ' Obtener valores para restaurar el stock
-        Dim nombreRepuesto As String = cmbNombreRepuesto.SelectedItem?.ToString()
+        Dim nombreRepuesto = cmbNombreRepuesto.SelectedItem?.ToString
         Dim CantidadVendida As Integer
         If Not Integer.TryParse(txtCantidadVendida.Text, CantidadVendida) Then
             MessageBox.Show("Cantidad vendida no es válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -800,15 +803,15 @@ Public Class Menu
 
                 ' Recuperar el stock actual del repuesto
                 Dim stockActual As Integer
-                Dim queryStock As String = "SELECT CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
+                Dim queryStock = "SELECT CantidadStock FROM Repuestos WHERE NombreRepuesto = @nombreRepuesto"
                 Using cmdStock As New MySqlCommand(queryStock, connection)
                     cmdStock.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
-                    stockActual = Convert.ToInt32(cmdStock.ExecuteScalar())
+                    stockActual = Convert.ToInt32(cmdStock.ExecuteScalar)
                 End Using
 
                 ' Actualizar el stock añadiendo la cantidad vendida
-                Dim nuevoStock As Integer = stockActual + CantidadVendida
-                Dim updateStockQuery As String = "UPDATE Repuestos SET CantidadStock = @nuevoStock WHERE NombreRepuesto = @nombreRepuesto"
+                Dim nuevoStock = stockActual + CantidadVendida
+                Dim updateStockQuery = "UPDATE Repuestos SET CantidadStock = @nuevoStock WHERE NombreRepuesto = @nombreRepuesto"
                 Using updateCmd As New MySqlCommand(updateStockQuery, connection)
                     updateCmd.Parameters.AddWithValue("@nuevoStock", nuevoStock)
                     updateCmd.Parameters.AddWithValue("@nombreRepuesto", nombreRepuesto)
@@ -816,7 +819,7 @@ Public Class Menu
                 End Using
 
                 ' Eliminar la venta seleccionada
-                Dim deleteQuery As String = "DELETE FROM ventasrepuestos WHERE VentaID = @ventaId"
+                Dim deleteQuery = "DELETE FROM ventasrepuestos WHERE VentaID = @ventaId"
                 Using deleteCmd As New MySqlCommand(deleteQuery, connection)
                     deleteCmd.Parameters.AddWithValue("@ventaId", selectedVentaId)
                     deleteCmd.ExecuteNonQuery()
@@ -864,25 +867,28 @@ Public Class Menu
     End Sub
     'Mostrar el resumen de ventas'
 
-    Private Sub CargarResumenVentas(Optional fechaInicio As DateTime? = Nothing, Optional fechaFin As DateTime? = Nothing, Optional repuesto As String = "", Optional cliente As String = "")
+    Private Sub CargarResumenVentas(Optional fechaInicio As DateTime? = Nothing, Optional fechaFin As DateTime? = Nothing, Optional repuesto As String = "", Optional rutCliente As String = "")
         Try
             Using connection As New MySqlConnection(connectionString)
                 connection.Open()
 
-                ' Incluir VentaID en la consulta para poder identificar la venta en la edición
+                ' Construir la consulta SQL base
                 Dim query As String = "SELECT VentaID, FechaVenta, NombreRepuesto, CantidadVendida, Cliente, Total FROM ventasrepuestos WHERE 1=1"
-                If fechaInicio.HasValue AndAlso fechaFin.HasValue Then query &= " AND FechaVenta BETWEEN @fechaInicio AND @fechaFin"
+
+                ' Agregar condiciones opcionales para la consulta SQL
+                If fechaInicio.HasValue Then query &= " AND FechaVenta >= @fechaInicio"
+                If fechaFin.HasValue Then query &= " AND FechaVenta <= @fechaFin"
                 If Not String.IsNullOrEmpty(repuesto) Then query &= " AND NombreRepuesto = @repuesto"
-                If Not String.IsNullOrEmpty(cliente) Then query &= " AND Cliente LIKE @cliente"
+                If Not String.IsNullOrEmpty(rutCliente) Then query &= " AND Cliente = @rutCliente"
 
                 Using cmd As New MySqlCommand(query, connection)
-                    If fechaInicio.HasValue AndAlso fechaFin.HasValue Then
-                        cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio.Value)
-                        cmd.Parameters.AddWithValue("@fechaFin", fechaFin.Value)
-                    End If
+                    ' Asignar valores a los parámetros solo si están presentes
+                    If fechaInicio.HasValue Then cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio.Value)
+                    If fechaFin.HasValue Then cmd.Parameters.AddWithValue("@fechaFin", fechaFin.Value)
                     If Not String.IsNullOrEmpty(repuesto) Then cmd.Parameters.AddWithValue("@repuesto", repuesto)
-                    If Not String.IsNullOrEmpty(cliente) Then cmd.Parameters.AddWithValue("@cliente", "%" & cliente & "%")
+                    If Not String.IsNullOrEmpty(rutCliente) Then cmd.Parameters.AddWithValue("@rutCliente", rutCliente)
 
+                    ' Ejecutar la consulta y cargar los datos en el DataGridView
                     Dim adapter As New MySqlDataAdapter(cmd)
                     Dim dt As New DataTable()
                     adapter.Fill(dt)
@@ -890,25 +896,44 @@ Public Class Menu
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message)
+            MessageBox.Show("Error al cargar las ventas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private selectedVentaId As Integer = -1
 
     Private Sub dgvResumenVentas_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvResumenVentas.CellClick
-        If e.RowIndex >= 0 Then
-            Dim row As DataGridViewRow = dgvResumenVentas.Rows(e.RowIndex)
+        Try
+            If e.RowIndex >= 0 Then
+                Dim row As DataGridViewRow = dgvResumenVentas.Rows(e.RowIndex)
 
-            ' Cargar datos en los controles
-            selectedVentaId = Convert.ToInt32(row.Cells("VentaID").Value)
-            cmbNombreRepuesto.SelectedItem = row.Cells("NombreRepuesto").Value.ToString()
-            txtCantidadVendida.Text = row.Cells("CantidadVendida").Value.ToString()
-            txtCliente.Text = row.Cells("Cliente").Value.ToString()
-            dtpFechaVenta.Value = Convert.ToDateTime(row.Cells("FechaVenta").Value)
-            txtTotal.Text = row.Cells("Total").Value.ToString()
-        End If
+                ' Verificar y asignar el valor de VentaID
+                If Not IsDBNull(row.Cells("VentaID").Value) Then
+                    selectedVentaId = Convert.ToInt32(row.Cells("VentaID").Value)
+                End If
 
+                ' Verificar y asignar el valor de NombreRepuesto
+                cmbNombreRepuesto.Text = If(row.Cells("NombreRepuesto").Value IsNot DBNull.Value, row.Cells("NombreRepuesto").Value.ToString(), "")
+
+                ' Verificar y asignar el valor de CantidadVendida
+                txtCantidadVendida.Text = If(row.Cells("CantidadVendida").Value IsNot DBNull.Value, row.Cells("CantidadVendida").Value.ToString(), "")
+
+                ' Verificar y asignar el valor de Cliente
+                txtCliente.Text = If(row.Cells("Cliente").Value IsNot DBNull.Value, row.Cells("Cliente").Value.ToString(), "")
+
+                ' Verificar y asignar el valor de FechaVenta
+                If row.Cells("FechaVenta").Value IsNot DBNull.Value Then
+                    dtpFechaVenta.Value = Convert.ToDateTime(row.Cells("FechaVenta").Value)
+                Else
+                    dtpFechaVenta.Value = DateTime.Now ' Fecha por defecto si no hay valor
+                End If
+
+                ' Verificar y asignar el valor de Total con formato de moneda
+                txtTotal.Text = If(row.Cells("Total").Value IsNot DBNull.Value, Convert.ToDecimal(row.Cells("Total").Value).ToString("C"), "")
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al seleccionar la venta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub btnAplicarFiltros_Click(sender As Object, e As EventArgs) Handles btnAplicarFiltros.Click
@@ -916,10 +941,10 @@ Public Class Menu
         Dim fechaInicio As DateTime? = If(dtpFechaInicio.Checked, dtpFechaInicio.Value, Nothing)
         Dim fechaFin As DateTime? = If(dtpFechaFin.Checked, dtpFechaFin.Value, Nothing)
         Dim repuesto As String = If(cmbFiltroRepuesto.SelectedItem?.ToString(), "")
-        Dim cliente As String = If(cmbFiltroCliente.SelectedItem?.ToString(), "")
+        Dim rutCliente As String = If(cmbFiltroCliente.SelectedItem?.ToString(), "")
 
         ' Llamar a la función CargarResumenVentas con los filtros
-        CargarResumenVentas(fechaInicio, fechaFin, repuesto, cliente)
+        CargarResumenVentas(fechaInicio, fechaFin, repuesto, rutCliente)
     End Sub
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -992,13 +1017,18 @@ Public Class Menu
     End Sub
 
     Private Sub btnRestaurarFiltros_Click(sender As Object, e As EventArgs) Handles btnRestaurarFiltros.Click
-        ' restaurar los filtros y mostrar todos los registros
+        ' Restaurar los filtros en los ComboBox y DateTimePickers
 
-        ' Limpiar los filtros en los ComboBox y DateTimePickers
+        ' Limpiar los filtros en los ComboBox
         cmbFiltroRepuesto.SelectedIndex = -1 ' Desmarca el filtro de repuestos
         cmbFiltroCliente.SelectedIndex = -1 ' Desmarca el filtro de clientes
-        dtpFechaInicio.Checked = False ' Desmarca la fecha de inicio
-        dtpFechaFin.Checked = False ' Desmarca la fecha de fin
+
+        ' Establecer y desmarcar las fechas en los DateTimePickers
+        dtpFechaInicio.Value = DateTime.Now ' Puedes cambiar esta fecha a otra por defecto si lo prefieres
+        dtpFechaInicio.Checked = False
+
+        dtpFechaFin.Value = DateTime.Now ' Puedes cambiar esta fecha a otra por defecto si lo prefieres
+        dtpFechaFin.Checked = False
 
         ' Llamar a la función para cargar todos los registros sin filtros
         CargarResumenVentas()
@@ -1041,6 +1071,197 @@ Public Class Menu
             isExpanded = False
         End If
     End Sub
+    'Extras'
+    ' Evento que se ejecuta cuando se cambia el texto en el txtCliente
+    Private Sub txtCliente_TextChanged(sender As Object, e As EventArgs) Handles txtCliente.TextChanged
+        ' Obtener el RUT del cliente ingresado
+        Dim rutCliente As String = txtCliente.Text.Trim()
 
+        ' Validar que el RUT no esté vacío antes de realizar la consulta
+        If String.IsNullOrEmpty(rutCliente) Then
+            lblDatosCliente.Text = "Ingrese un RUT para ver los detalles del cliente."
+            Return
+        End If
+
+        ' Realizar la consulta para obtener los datos del cliente con el RUT ingresado
+        Using conn As New MySqlConnection(connectionString)
+            Try
+                conn.Open()
+                Dim query As String = "SELECT Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna FROM clientes WHERE Rut = @rutCliente"
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@rutCliente", rutCliente)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            ' Construir la cadena con la información del cliente
+                            Dim clienteInfo As String = $"Datos Cliente:{Environment.NewLine}" &
+                                                    $"Nombre Completo: {reader("Nombre")} {reader("ApellidoP")} {reader("ApellidoM")}{Environment.NewLine}" &
+                                                    $"Dir: {reader("Direccion")}{Environment.NewLine}" &
+                                                    $"Tel: {reader("Telefono")}{Environment.NewLine}" &
+                                                    $"Comuna: {reader("Comuna")}"
+
+                            ' Mostrar la información en el lblDatosCliente
+                            lblDatosCliente.Text = clienteInfo
+                        Else
+                            lblDatosCliente.Text = "Cliente no encontrado con el RUT ingresado."
+                        End If
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al obtener la información del cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Ocultar el panel de la boleta al iniciar el formulario
+        pnlBoleta.Visible = False
+    End Sub
+    Private Sub btnGenerarBoleta_Click(sender As Object, e As EventArgs) Handles btnGenerarBoleta.Click
+        ' Verificar si el panel de la boleta ya está visible
+        If pnlBoleta.Visible Then
+            ' Si está visible, oculta el panel y cambia el texto del botón a "Generar Boleta"
+            pnlBoleta.Visible = False
+            btnGenerarBoleta.Text = "Generar Boleta"
+        Else
+            ' Verificar que al menos una fila esté seleccionada en el DataGridView
+            If dgvResumenVentas.SelectedRows.Count = 0 Then
+                MessageBox.Show("Por favor, seleccione una o más ventas en el listado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+
+            ' Obtener el RUT del cliente desde la primera fila seleccionada
+            Dim clienteRut As String = dgvResumenVentas.SelectedRows(0).Cells("Cliente").Value.ToString()
+
+            ' Proceder a generar la boleta
+            Using connection As New MySqlConnection(connectionString)
+                connection.Open()
+                Try
+                    ' Obtener información del cliente
+                    Dim clienteNombre As String = ""
+                    Dim clienteDireccion As String = ""
+                    Dim queryCliente As String = "SELECT Nombre, ApellidoP, ApellidoM, Direccion FROM clientes WHERE Rut = @rut"
+                    Using cmdCliente As New MySqlCommand(queryCliente, connection)
+                        cmdCliente.Parameters.AddWithValue("@rut", clienteRut)
+                        Using reader As MySqlDataReader = cmdCliente.ExecuteReader()
+                            If reader.Read() Then
+                                clienteNombre = $"{reader("Nombre")} {reader("ApellidoP")} {reader("ApellidoM")}"
+                                clienteDireccion = reader("Direccion").ToString()
+                            Else
+                                MessageBox.Show("Cliente no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Return
+                            End If
+                        End Using
+                    End Using
+
+                    ' Mostrar los datos del cliente en el label correspondiente
+                    lblRutCliente_nombre.Text = $"Cliente: {clienteNombre}{Environment.NewLine}RUT: {clienteRut}"
+
+                    ' Procesar las filas seleccionadas y calcular los totales
+                    Dim totalSinIva As Decimal = 0
+                    Dim ventas As New List(Of String)()
+
+                    ' Encabezado "Producto" con espacio adicional
+                    ventas.Add("Producto:" & Environment.NewLine)
+
+                    For Each selectedRow As DataGridViewRow In dgvResumenVentas.SelectedRows
+                        Dim nombreRepuesto = selectedRow.Cells("NombreRepuesto").Value.ToString()
+                        Dim cantidadVendida = Convert.ToInt32(selectedRow.Cells("CantidadVendida").Value)
+                        Dim totalItem = Convert.ToDecimal(selectedRow.Cells("Total").Value)
+                        totalSinIva += totalItem
+
+                        ' Agregar detalles del producto
+                        ventas.Add($"  {nombreRepuesto} | Cantidad: {cantidadVendida} | Total Neto: {totalItem:C}")
+                    Next
+
+                    ' Mostrar los detalles del producto y sus valores en el lblProducto
+                    lblProducto.Text = String.Join(Environment.NewLine, ventas)
+
+                    ' Calcular el IVA y el total con IVA
+                    Dim iva As Decimal = totalSinIva * 0.19D
+                    Dim totalConIva As Decimal = totalSinIva + iva
+
+                    ' Mostrar los totales en lblTotalBoleta
+                    lblTotalBoleta.Text = $"Total sin IVA: {totalSinIva:C}{Environment.NewLine}" &
+                      $"IVA (19%): {iva:C}{Environment.NewLine}" &
+                      $"Total con IVA: {totalConIva:C}{Environment.NewLine}" &
+                      $"{New String("-"c, 40)}"
+                    ' Crear una línea divisoria con 40 guiones para separar secciones en la boleta
+                    ' Se puede ajustar este número para variar la longitud de la línea según el diseño deseado
+
+
+                    ' Hacer visible el panel de la boleta y cambiar el texto del botón a "Cerrar Boleta"
+                    pnlBoleta.Visible = True
+                    btnGenerarBoleta.Text = "Cerrar Boleta"
+
+                Catch ex As Exception
+                    MessageBox.Show("Error al generar la boleta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+        End If
+    End Sub
+
+    Private Sub btnEnviarBoleta_Click(sender As Object, e As EventArgs) Handles btnEnviarBoleta.Click
+
+        Try
+            ' Crear el contenido de la boleta usando información de los labels y controles dentro de gpBoleta
+            Dim boletaContenido As New Text.StringBuilder()
+
+            ' Añadir datos de la empresa y del cliente
+            boletaContenido.AppendLine("Empresa: Gestión Mecánica")
+            boletaContenido.AppendLine("RUT: 11111111-1")
+            boletaContenido.AppendLine("Fecha: " & DateTime.Now.ToString("dd/MM/yyyy"))
+            boletaContenido.AppendLine("Dirección: Republica 100, Santiago")
+            boletaContenido.AppendLine(New String("-"c, 40))
+            boletaContenido.AppendLine("Información del Cliente:")
+            boletaContenido.AppendLine("Nombre: " & lblRutCliente_nombre.Text)
+            boletaContenido.AppendLine(New String("-"c, 40))
+
+            ' Añadir información del producto
+            boletaContenido.AppendLine(" ")
+            boletaContenido.AppendLine(lblProducto.Text)
+            boletaContenido.AppendLine(New String("-"c, 40))
+
+            ' Añadir totales
+            boletaContenido.AppendLine("Totales:")
+            boletaContenido.AppendLine(lblTotalBoleta.Text)
+            boletaContenido.AppendLine(New String("-"c, 40))
+
+
+
+
+            Dim rutaArchivo As String = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "boleta.txt")
+
+            ' Escribir el contenido de la boleta en el archivo de texto
+            System.IO.File.WriteAllText(rutaArchivo, boletaContenido.ToString())
+
+            ' Notificar al usuario sobre la ubicación del archivo guardado
+            MessageBox.Show("La boleta ha sido guardada en un archivo de texto en Documentos.", "Boleta Guardada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            ' Abrir la ubicación del archivo para que el usuario pueda ver o imprimir el archivo
+            Process.Start("explorer.exe", "/select," & rutaArchivo)
+
+
+
+        Catch ex As Exception
+            MessageBox.Show("Error al guardar la boleta: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    'Bloqueo'
+
+    Private Sub Form5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Configurar txtTotal como solo lectura al cargar el formulario
+        txtTotal.ReadOnly = True
+        txtId.ReadOnly = True
+        txtMontoNeto.ReadOnly = True
+        txtStock.ReadOnly = True
+
+        cmbNombreRepuesto.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbFiltroRepuesto.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbFiltroCliente.DropDownStyle = ComboBoxStyle.DropDownList
+
+        dgvResumenVentas.ReadOnly = True
+    End Sub
 
 End Class

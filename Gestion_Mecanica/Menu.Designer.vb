@@ -38,6 +38,17 @@ Partial Class Menu
         Panel2 = New Panel()
         panelHome = New Panel()
         panelVentaRepuestos = New Panel()
+        pnlBoleta = New Panel()
+        gpBoleta = New GroupBox()
+        btnEnviarBoleta = New Button()
+        lblGracias = New Label()
+        lblTotalBoleta = New Label()
+        lblProducto = New Label()
+        lblRutCliente_nombre = New Label()
+        Label11 = New Label()
+        Label10 = New Label()
+        Label9 = New Label()
+        Label8 = New Label()
         GroupBox2 = New GroupBox()
         btnVer = New Button()
         btnRestaurarFiltros = New Button()
@@ -53,6 +64,9 @@ Partial Class Menu
         dgvResumenVentas = New DataGridView()
         Label17 = New Label()
         GroupBox1 = New GroupBox()
+        lblBoleta = New Label()
+        btnGenerarBoleta = New Button()
+        btnEliminarVenta = New Button()
         lblDatosCliente = New Label()
         btEditarVenta = New Button()
         btnRegistrarVenta = New Button()
@@ -115,10 +129,11 @@ Partial Class Menu
         limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
-        btnEliminarVenta = New Button()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelVentaRepuestos.SuspendLayout()
+        pnlBoleta.SuspendLayout()
+        gpBoleta.SuspendLayout()
         GroupBox2.SuspendLayout()
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).BeginInit()
         GroupBox1.SuspendLayout()
@@ -290,6 +305,7 @@ Partial Class Menu
         ' panelVentaRepuestos
         ' 
         panelVentaRepuestos.BackColor = Color.DarkSlateGray
+        panelVentaRepuestos.Controls.Add(pnlBoleta)
         panelVentaRepuestos.Controls.Add(GroupBox2)
         panelVentaRepuestos.Controls.Add(GroupBox1)
         panelVentaRepuestos.Location = New Point(9, 76)
@@ -297,6 +313,116 @@ Partial Class Menu
         panelVentaRepuestos.Name = "panelVentaRepuestos"
         panelVentaRepuestos.Size = New Size(903, 523)
         panelVentaRepuestos.TabIndex = 1
+        ' 
+        ' pnlBoleta
+        ' 
+        pnlBoleta.Controls.Add(gpBoleta)
+        pnlBoleta.Location = New Point(507, 3)
+        pnlBoleta.Name = "pnlBoleta"
+        pnlBoleta.Size = New Size(398, 504)
+        pnlBoleta.TabIndex = 24
+        ' 
+        ' gpBoleta
+        ' 
+        gpBoleta.BackColor = Color.MintCream
+        gpBoleta.Controls.Add(btnEnviarBoleta)
+        gpBoleta.Controls.Add(lblGracias)
+        gpBoleta.Controls.Add(lblTotalBoleta)
+        gpBoleta.Controls.Add(lblProducto)
+        gpBoleta.Controls.Add(lblRutCliente_nombre)
+        gpBoleta.Controls.Add(Label11)
+        gpBoleta.Controls.Add(Label10)
+        gpBoleta.Controls.Add(Label9)
+        gpBoleta.Controls.Add(Label8)
+        gpBoleta.Location = New Point(11, 8)
+        gpBoleta.Name = "gpBoleta"
+        gpBoleta.Size = New Size(380, 481)
+        gpBoleta.TabIndex = 8
+        gpBoleta.TabStop = False
+        gpBoleta.Text = "Boleta"
+        ' 
+        ' btnEnviarBoleta
+        ' 
+        btnEnviarBoleta.BackColor = SystemColors.ControlLight
+        btnEnviarBoleta.Location = New Point(103, 417)
+        btnEnviarBoleta.Name = "btnEnviarBoleta"
+        btnEnviarBoleta.Size = New Size(138, 32)
+        btnEnviarBoleta.TabIndex = 8
+        btnEnviarBoleta.Text = "Descargar Boleta"
+        btnEnviarBoleta.UseVisualStyleBackColor = False
+        ' 
+        ' lblGracias
+        ' 
+        lblGracias.AutoSize = True
+        lblGracias.Location = New Point(43, 378)
+        lblGracias.Name = "lblGracias"
+        lblGracias.Size = New Size(241, 20)
+        lblGracias.TabIndex = 7
+        lblGracias.Text = "¡Gracias por comprar con nosotros!"
+        ' 
+        ' lblTotalBoleta
+        ' 
+        lblTotalBoleta.AutoSize = True
+        lblTotalBoleta.Location = New Point(21, 300)
+        lblTotalBoleta.Name = "lblTotalBoleta"
+        lblTotalBoleta.Size = New Size(42, 20)
+        lblTotalBoleta.TabIndex = 6
+        lblTotalBoleta.Text = "Total"
+        ' 
+        ' lblProducto
+        ' 
+        lblProducto.AutoSize = True
+        lblProducto.Location = New Point(14, 184)
+        lblProducto.Name = "lblProducto"
+        lblProducto.Size = New Size(70, 20)
+        lblProducto.TabIndex = 5
+        lblProducto.Text = "producto"
+        ' 
+        ' lblRutCliente_nombre
+        ' 
+        lblRutCliente_nombre.AutoSize = True
+        lblRutCliente_nombre.Location = New Point(14, 118)
+        lblRutCliente_nombre.Name = "lblRutCliente_nombre"
+        lblRutCliente_nombre.Size = New Size(55, 20)
+        lblRutCliente_nombre.TabIndex = 4
+        lblRutCliente_nombre.Text = "Cliente"
+        ' 
+        ' Label11
+        ' 
+        Label11.AutoSize = True
+        Label11.Location = New Point(224, 56)
+        Label11.Name = "Label11"
+        Label11.Size = New Size(114, 20)
+        Label11.TabIndex = 3
+        Label11.Text = "Giro: Automotiz"
+        ' 
+        ' Label10
+        ' 
+        Label10.AutoSize = True
+        Label10.Location = New Point(16, 81)
+        Label10.Name = "Label10"
+        Label10.Size = New Size(173, 20)
+        Label10.TabIndex = 2
+        Label10.Text = "Dirección: Republica 100"
+        ' 
+        ' Label9
+        ' 
+        Label9.AutoSize = True
+        Label9.Location = New Point(18, 54)
+        Label9.Name = "Label9"
+        Label9.Size = New Size(116, 20)
+        Label9.TabIndex = 1
+        Label9.Text = "Rut: 11111111-1"
+        ' 
+        ' Label8
+        ' 
+        Label8.AutoSize = True
+        Label8.Font = New Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label8.Location = New Point(114, 24)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(149, 23)
+        Label8.TabIndex = 0
+        Label8.Text = "Gestión Mecánica"
         ' 
         ' GroupBox2
         ' 
@@ -441,6 +567,8 @@ Partial Class Menu
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.CadetBlue
+        GroupBox1.Controls.Add(lblBoleta)
+        GroupBox1.Controls.Add(btnGenerarBoleta)
         GroupBox1.Controls.Add(btnEliminarVenta)
         GroupBox1.Controls.Add(lblDatosCliente)
         GroupBox1.Controls.Add(btEditarVenta)
@@ -470,10 +598,37 @@ Partial Class Menu
         GroupBox1.TabIndex = 0
         GroupBox1.TabStop = False
         ' 
+        ' lblBoleta
+        ' 
+        lblBoleta.AutoSize = True
+        lblBoleta.Location = New Point(38, 12)
+        lblBoleta.Name = "lblBoleta"
+        lblBoleta.Size = New Size(71, 20)
+        lblBoleta.TabIndex = 23
+        lblBoleta.Text = "lblBoleta"
+        ' 
+        ' btnGenerarBoleta
+        ' 
+        btnGenerarBoleta.Location = New Point(382, 429)
+        btnGenerarBoleta.Name = "btnGenerarBoleta"
+        btnGenerarBoleta.Size = New Size(93, 29)
+        btnGenerarBoleta.TabIndex = 22
+        btnGenerarBoleta.Text = "Boleta"
+        btnGenerarBoleta.UseVisualStyleBackColor = True
+        ' 
+        ' btnEliminarVenta
+        ' 
+        btnEliminarVenta.Location = New Point(382, 383)
+        btnEliminarVenta.Name = "btnEliminarVenta"
+        btnEliminarVenta.Size = New Size(93, 29)
+        btnEliminarVenta.TabIndex = 21
+        btnEliminarVenta.Text = "Eliminar "
+        btnEliminarVenta.UseVisualStyleBackColor = True
+        ' 
         ' lblDatosCliente
         ' 
         lblDatosCliente.AutoSize = True
-        lblDatosCliente.Location = New Point(353, 144)
+        lblDatosCliente.Location = New Point(17, 353)
         lblDatosCliente.Name = "lblDatosCliente"
         lblDatosCliente.Size = New Size(106, 20)
         lblDatosCliente.TabIndex = 20
@@ -481,20 +636,20 @@ Partial Class Menu
         ' 
         ' btEditarVenta
         ' 
-        btEditarVenta.Location = New Point(177, 392)
+        btEditarVenta.Location = New Point(382, 344)
         btEditarVenta.Name = "btEditarVenta"
-        btEditarVenta.Size = New Size(147, 29)
+        btEditarVenta.Size = New Size(93, 29)
         btEditarVenta.TabIndex = 19
-        btEditarVenta.Text = "Editar venta"
+        btEditarVenta.Text = "Editar "
         btEditarVenta.UseVisualStyleBackColor = True
         ' 
         ' btnRegistrarVenta
         ' 
-        btnRegistrarVenta.Location = New Point(177, 357)
+        btnRegistrarVenta.Location = New Point(382, 303)
         btnRegistrarVenta.Name = "btnRegistrarVenta"
-        btnRegistrarVenta.Size = New Size(147, 29)
+        btnRegistrarVenta.Size = New Size(93, 29)
         btnRegistrarVenta.TabIndex = 18
-        btnRegistrarVenta.Text = "Registrar venta"
+        btnRegistrarVenta.Text = "Registrar "
         btnRegistrarVenta.UseVisualStyleBackColor = True
         ' 
         ' txtStock
@@ -542,7 +697,7 @@ Partial Class Menu
         ' 
         lblmensajeIVA.AutoSize = True
         lblmensajeIVA.Font = New Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblmensajeIVA.Location = New Point(152, 275)
+        lblmensajeIVA.Location = New Point(166, 267)
         lblmensajeIVA.Name = "lblmensajeIVA"
         lblmensajeIVA.Size = New Size(190, 17)
         lblmensajeIVA.TabIndex = 12
@@ -1066,15 +1221,6 @@ Partial Class Menu
         LabelRut.TabIndex = 3
         LabelRut.Text = "Rut"
         ' 
-        ' btnEliminarVenta
-        ' 
-        btnEliminarVenta.Location = New Point(177, 430)
-        btnEliminarVenta.Name = "btnEliminarVenta"
-        btnEliminarVenta.Size = New Size(147, 29)
-        btnEliminarVenta.TabIndex = 21
-        btnEliminarVenta.Text = "Eliminar venta"
-        btnEliminarVenta.UseVisualStyleBackColor = True
-        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
@@ -1098,6 +1244,9 @@ Partial Class Menu
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
         panelVentaRepuestos.ResumeLayout(False)
+        pnlBoleta.ResumeLayout(False)
+        gpBoleta.ResumeLayout(False)
+        gpBoleta.PerformLayout()
         GroupBox2.ResumeLayout(False)
         GroupBox2.PerformLayout()
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).EndInit()
@@ -1206,4 +1355,17 @@ Partial Class Menu
     Friend WithEvents lblDatosCliente As Label
     Friend WithEvents btEditarVenta As Button
     Friend WithEvents btnEliminarVenta As Button
+    Friend WithEvents btnGenerarBoleta As Button
+    Friend WithEvents lblBoleta As Label
+    Friend WithEvents pnlBoleta As Panel
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents lblGracias As Label
+    Friend WithEvents lblTotalBoleta As Label
+    Friend WithEvents lblProducto As Label
+    Friend WithEvents lblRutCliente_nombre As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents gpBoleta As GroupBox
+    Friend WithEvents btnEnviarBoleta As Button
 End Class
