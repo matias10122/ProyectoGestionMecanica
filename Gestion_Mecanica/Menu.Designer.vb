@@ -1227,9 +1227,9 @@ Partial Class Menu
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
+        Controls.Add(panelUsuario)
         Controls.Add(panelVentaRepuestos)
         Controls.Add(panelRepuestos)
-        Controls.Add(panelUsuario)
         Controls.Add(panelGestionServicios)
         Controls.Add(panelSiniestro)
         Controls.Add(panelSoliServicios)
