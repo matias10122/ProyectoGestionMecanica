@@ -38,6 +38,7 @@ Partial Class Menu
         Panel2 = New Panel()
         panelHome = New Panel()
         panelVentaRepuestos = New Panel()
+        pnregistroCliente = New Panel()
         pnlBoleta = New Panel()
         gpBoleta = New GroupBox()
         btnEnviarBoleta = New Button()
@@ -64,15 +65,16 @@ Partial Class Menu
         dgvResumenVentas = New DataGridView()
         Label17 = New Label()
         GroupBox1 = New GroupBox()
+        btRegistrarCli = New Button()
+        txtStock = New TextBox()
         lblBoleta = New Label()
+        lblStock = New Label()
         btnGenerarBoleta = New Button()
         btnEliminarVenta = New Button()
         lblDatosCliente = New Label()
         btEditarVenta = New Button()
         btnRegistrarVenta = New Button()
-        txtStock = New TextBox()
         txtId = New TextBox()
-        lblStock = New Label()
         lblID = New Label()
         txtTotal = New TextBox()
         lblmensajeIVA = New Label()
@@ -305,6 +307,7 @@ Partial Class Menu
         ' panelVentaRepuestos
         ' 
         panelVentaRepuestos.BackColor = Color.DarkSlateGray
+        panelVentaRepuestos.Controls.Add(pnregistroCliente)
         panelVentaRepuestos.Controls.Add(pnlBoleta)
         panelVentaRepuestos.Controls.Add(GroupBox2)
         panelVentaRepuestos.Controls.Add(GroupBox1)
@@ -313,6 +316,13 @@ Partial Class Menu
         panelVentaRepuestos.Name = "panelVentaRepuestos"
         panelVentaRepuestos.Size = New Size(903, 523)
         panelVentaRepuestos.TabIndex = 1
+        ' 
+        ' pnregistroCliente
+        ' 
+        pnregistroCliente.Location = New Point(0, 11)
+        pnregistroCliente.Name = "pnregistroCliente"
+        pnregistroCliente.Size = New Size(893, 393)
+        pnregistroCliente.TabIndex = 24
         ' 
         ' pnlBoleta
         ' 
@@ -567,15 +577,16 @@ Partial Class Menu
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.CadetBlue
+        GroupBox1.Controls.Add(btRegistrarCli)
+        GroupBox1.Controls.Add(txtStock)
         GroupBox1.Controls.Add(lblBoleta)
+        GroupBox1.Controls.Add(lblStock)
         GroupBox1.Controls.Add(btnGenerarBoleta)
         GroupBox1.Controls.Add(btnEliminarVenta)
         GroupBox1.Controls.Add(lblDatosCliente)
         GroupBox1.Controls.Add(btEditarVenta)
         GroupBox1.Controls.Add(btnRegistrarVenta)
-        GroupBox1.Controls.Add(txtStock)
         GroupBox1.Controls.Add(txtId)
-        GroupBox1.Controls.Add(lblStock)
         GroupBox1.Controls.Add(lblID)
         GroupBox1.Controls.Add(txtTotal)
         GroupBox1.Controls.Add(lblmensajeIVA)
@@ -598,6 +609,22 @@ Partial Class Menu
         GroupBox1.TabIndex = 0
         GroupBox1.TabStop = False
         ' 
+        ' btRegistrarCli
+        ' 
+        btRegistrarCli.Location = New Point(180, 429)
+        btRegistrarCli.Name = "btRegistrarCli"
+        btRegistrarCli.Size = New Size(93, 29)
+        btRegistrarCli.TabIndex = 24
+        btRegistrarCli.Text = "Cliente"
+        btRegistrarCli.UseVisualStyleBackColor = True
+        ' 
+        ' txtStock
+        ' 
+        txtStock.Location = New Point(399, 94)
+        txtStock.Name = "txtStock"
+        txtStock.Size = New Size(56, 27)
+        txtStock.TabIndex = 17
+        ' 
         ' lblBoleta
         ' 
         lblBoleta.AutoSize = True
@@ -606,6 +633,16 @@ Partial Class Menu
         lblBoleta.Size = New Size(71, 20)
         lblBoleta.TabIndex = 23
         lblBoleta.Text = "lblBoleta"
+        ' 
+        ' lblStock
+        ' 
+        lblStock.AutoSize = True
+        lblStock.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblStock.Location = New Point(345, 97)
+        lblStock.Name = "lblStock"
+        lblStock.Size = New Size(47, 20)
+        lblStock.TabIndex = 15
+        lblStock.Text = "Stock"
         ' 
         ' btnGenerarBoleta
         ' 
@@ -652,29 +689,12 @@ Partial Class Menu
         btnRegistrarVenta.Text = "Registrar "
         btnRegistrarVenta.UseVisualStyleBackColor = True
         ' 
-        ' txtStock
-        ' 
-        txtStock.Location = New Point(399, 90)
-        txtStock.Name = "txtStock"
-        txtStock.Size = New Size(56, 27)
-        txtStock.TabIndex = 17
-        ' 
         ' txtId
         ' 
         txtId.Location = New Point(399, 50)
         txtId.Name = "txtId"
         txtId.Size = New Size(56, 27)
         txtId.TabIndex = 16
-        ' 
-        ' lblStock
-        ' 
-        lblStock.AutoSize = True
-        lblStock.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblStock.Location = New Point(352, 97)
-        lblStock.Name = "lblStock"
-        lblStock.Size = New Size(47, 20)
-        lblStock.TabIndex = 15
-        lblStock.Text = "Stock"
         ' 
         ' lblID
         ' 
@@ -1227,8 +1247,8 @@ Partial Class Menu
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
-        Controls.Add(panelUsuario)
         Controls.Add(panelVentaRepuestos)
+        Controls.Add(panelUsuario)
         Controls.Add(panelRepuestos)
         Controls.Add(panelGestionServicios)
         Controls.Add(panelSiniestro)
@@ -1368,4 +1388,6 @@ Partial Class Menu
     Friend WithEvents Label11 As Label
     Friend WithEvents gpBoleta As GroupBox
     Friend WithEvents btnEnviarBoleta As Button
+    Friend WithEvents pnregistroCliente As Panel
+    Friend WithEvents btRegistrarCli As Button
 End Class

@@ -1267,6 +1267,17 @@ Public Class Menu
         dgvResumenVentas.ReadOnly = True
     End Sub
 
+    Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Ocultar el panel de registro de cliente al iniciar el formulario
+        pnregistroCliente.Visible = False
+    End Sub
+
+    Private Sub btRegistrarCli_Click(sender As Object, e As EventArgs) Handles btRegistrarCli.Click
+        ' Alternar la visibilidad del panel y llevarlo al frente si es visible
+        pnregistroCliente.Visible = True
+    End Sub
+
+
     Private Sub TextBoxRutUsuario_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRutUsuario.TextChanged
 
     End Sub
