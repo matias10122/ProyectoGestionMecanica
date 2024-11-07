@@ -1,4 +1,5 @@
-﻿Imports System.Net.Mail
+﻿Imports System.IO
+Imports System.Net.Mail
 Imports System.Reflection
 Imports MySql.Data.MySqlClient
 
@@ -12,6 +13,7 @@ Public Class Menu
         panelHome.Visible = True
         CargarTiposEnComboBox()
         comboBoxTipo.DropDownStyle = ComboBoxStyle.DropDownList
+        CargarDatosEnTableLayoutPanel()
     End Sub
 
     Private Sub CargarTiposEnComboBox()
@@ -1281,4 +1283,76 @@ Public Class Menu
     Private Sub TextBoxRutUsuario_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRutUsuario.TextChanged
 
     End Sub
+
+    Private Sub CargarDatosEnTableLayoutPanel()
+        ' Conexión a la base de datos
+        Dim connectionString As String = "Server=localhost;Database=taller;Uid=root;Pwd=;"
+        Dim connection As New MySqlConnection(connectionString)
+
+        Try
+            connection.Open()
+            Dim query As String = "SELECT SiniestroID, Detalle, Fecha_Siniestro, RutCompania, Rut, Estado_seguro, Estado_Siniestro FROM siniestro"
+            Dim command As New MySqlCommand(query, connection)
+            Dim adapter As New MySqlDataAdapter(command)
+            Dim table As New DataTable()
+            adapter.Fill(table)
+
+            ' Limpiar el panel antes de agregar nuevos datos
+            tableLayoutPanelSiniestro.Controls.Clear()
+
+            ' Agregar los títulos en la primera fila de cada columna
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "SiniestroID", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 0, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Detalle", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 1, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Fecha_Siniestro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 2, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "RutCompania", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 3, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Rut", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 4, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Estado_seguro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 5, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Estado_Siniestro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 6, 0)
+            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Ícono", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 7, 0)
+
+            ' Ruta de la carpeta de imágenes en el directorio de salida
+            Dim imagePath As String = Path.Combine(Application.StartupPath, "images")
+
+            ' Llenar los datos debajo de cada título
+            Dim currentRow As Integer = 1
+            For Each row As DataRow In table.Rows
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("SiniestroID").ToString(), .AutoSize = True}, 0, currentRow)
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Detalle").ToString(), .AutoSize = True}, 1, currentRow)
+
+                ' Convertir la fecha a solo día, mes y año
+                Dim fechaSiniestro As DateTime = Convert.ToDateTime(row("Fecha_Siniestro"))
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = fechaSiniestro.ToString("dd/MM/yyyy"), .AutoSize = True}, 2, currentRow)
+
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("RutCompania").ToString(), .AutoSize = True}, 3, currentRow)
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Rut").ToString(), .AutoSize = True}, 4, currentRow)
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Estado_seguro").ToString(), .AutoSize = True}, 5, currentRow)
+                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Estado_Siniestro").ToString(), .AutoSize = True}, 6, currentRow)
+
+                ' Determinar el ícono basado en el Estado_Siniestro
+                Dim icono As PictureBox = New PictureBox() With {
+                .Size = New Size(32, 32),
+                .SizeMode = PictureBoxSizeMode.Zoom
+            }
+                Dim estadoSiniestro As String = row("Estado_Siniestro").ToString().ToLower()
+                Dim iconPath As String = Path.Combine(imagePath, $"{estadoSiniestro}.ico")
+
+                ' Verificar existencia del archivo y cargarlo si existe
+                If File.Exists(iconPath) Then
+                    icono.Image = New Icon(iconPath).ToBitmap()
+                Else
+                    MessageBox.Show("No se encontró el archivo de icono: " & iconPath)
+                End If
+
+                ' Agregar el PictureBox en la columna de íconos
+                tableLayoutPanelSiniestro.Controls.Add(icono, 7, currentRow)
+                currentRow += 1
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar datos: " & ex.Message)
+        Finally
+            connection.Close()
+        End Try
+    End Sub
+
 End Class
