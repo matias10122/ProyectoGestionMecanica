@@ -131,9 +131,25 @@ Partial Class Menu
         limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
+        btCerrarRegistroCli = New Button()
+        Label12 = New Label()
+        Label13 = New Label()
+        Label14 = New Label()
+        Label15 = New Label()
+        Label16 = New Label()
+        Label18 = New Label()
+        Label19 = New Label()
+        TextBox1 = New TextBox()
+        TextBox2 = New TextBox()
+        TextBox3 = New TextBox()
+        TextBox4 = New TextBox()
+        TextBox5 = New TextBox()
+        TextBox6 = New TextBox()
+        TextBox7 = New TextBox()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelVentaRepuestos.SuspendLayout()
+        pnregistroCliente.SuspendLayout()
         pnlBoleta.SuspendLayout()
         gpBoleta.SuspendLayout()
         GroupBox2.SuspendLayout()
@@ -319,6 +335,21 @@ Partial Class Menu
         ' 
         ' pnregistroCliente
         ' 
+        pnregistroCliente.Controls.Add(TextBox7)
+        pnregistroCliente.Controls.Add(TextBox6)
+        pnregistroCliente.Controls.Add(TextBox5)
+        pnregistroCliente.Controls.Add(TextBox4)
+        pnregistroCliente.Controls.Add(TextBox3)
+        pnregistroCliente.Controls.Add(TextBox2)
+        pnregistroCliente.Controls.Add(TextBox1)
+        pnregistroCliente.Controls.Add(Label19)
+        pnregistroCliente.Controls.Add(Label18)
+        pnregistroCliente.Controls.Add(Label16)
+        pnregistroCliente.Controls.Add(Label15)
+        pnregistroCliente.Controls.Add(Label14)
+        pnregistroCliente.Controls.Add(Label13)
+        pnregistroCliente.Controls.Add(Label12)
+        pnregistroCliente.Controls.Add(btCerrarRegistroCli)
         pnregistroCliente.Location = New Point(0, 11)
         pnregistroCliente.Name = "pnregistroCliente"
         pnregistroCliente.Size = New Size(893, 393)
@@ -450,7 +481,7 @@ Partial Class Menu
         GroupBox2.Controls.Add(lblCliente)
         GroupBox2.Controls.Add(dgvResumenVentas)
         GroupBox2.Controls.Add(Label17)
-        GroupBox2.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        GroupBox2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBox2.Location = New Point(501, 11)
         GroupBox2.Name = "GroupBox2"
         GroupBox2.Size = New Size(392, 496)
@@ -517,7 +548,7 @@ Partial Class Menu
         ' lblrepuesto
         ' 
         lblrepuesto.AutoSize = True
-        lblrepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblrepuesto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblrepuesto.Location = New Point(36, 340)
         lblrepuesto.Name = "lblrepuesto"
         lblrepuesto.Size = New Size(75, 20)
@@ -527,7 +558,7 @@ Partial Class Menu
         ' lblTermino
         ' 
         lblTermino.AutoSize = True
-        lblTermino.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblTermino.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblTermino.Location = New Point(36, 298)
         lblTermino.Name = "lblTermino"
         lblTermino.Size = New Size(67, 20)
@@ -537,7 +568,7 @@ Partial Class Menu
         ' lblInicio
         ' 
         lblInicio.AutoSize = True
-        lblInicio.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblInicio.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblInicio.Location = New Point(36, 260)
         lblInicio.Name = "lblInicio"
         lblInicio.Size = New Size(47, 20)
@@ -547,7 +578,7 @@ Partial Class Menu
         ' lblCliente
         ' 
         lblCliente.AutoSize = True
-        lblCliente.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblCliente.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblCliente.Location = New Point(36, 383)
         lblCliente.Name = "lblCliente"
         lblCliente.Size = New Size(57, 20)
@@ -602,7 +633,7 @@ Partial Class Menu
         GroupBox1.Controls.Add(lblFecVenta)
         GroupBox1.Controls.Add(lblNeto)
         GroupBox1.Controls.Add(Label7)
-        GroupBox1.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        GroupBox1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBox1.Location = New Point(14, 11)
         GroupBox1.Name = "GroupBox1"
         GroupBox1.Size = New Size(481, 496)
@@ -637,7 +668,7 @@ Partial Class Menu
         ' lblStock
         ' 
         lblStock.AutoSize = True
-        lblStock.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblStock.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblStock.Location = New Point(345, 97)
         lblStock.Name = "lblStock"
         lblStock.Size = New Size(47, 20)
@@ -699,7 +730,7 @@ Partial Class Menu
         ' lblID
         ' 
         lblID.AutoSize = True
-        lblID.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblID.Location = New Point(358, 57)
         lblID.Name = "lblID"
         lblID.Size = New Size(25, 20)
@@ -762,7 +793,7 @@ Partial Class Menu
         ' lblTotal
         ' 
         lblTotal.AutoSize = True
-        lblTotal.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblTotal.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblTotal.Location = New Point(17, 305)
         lblTotal.Name = "lblTotal"
         lblTotal.Size = New Size(93, 20)
@@ -772,7 +803,7 @@ Partial Class Menu
         ' lblNomRepuesto
         ' 
         lblNomRepuesto.AutoSize = True
-        lblNomRepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNomRepuesto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblNomRepuesto.Location = New Point(17, 65)
         lblNomRepuesto.Name = "lblNomRepuesto"
         lblNomRepuesto.Size = New Size(158, 20)
@@ -782,7 +813,7 @@ Partial Class Menu
         ' lblCntVender
         ' 
         lblCntVender.AutoSize = True
-        lblCntVender.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblCntVender.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblCntVender.Location = New Point(17, 108)
         lblCntVender.Name = "lblCntVender"
         lblCntVender.Size = New Size(135, 20)
@@ -792,7 +823,7 @@ Partial Class Menu
         ' lblRut
         ' 
         lblRut.AutoSize = True
-        lblRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblRut.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblRut.Location = New Point(17, 152)
         lblRut.Name = "lblRut"
         lblRut.Size = New Size(86, 20)
@@ -802,7 +833,7 @@ Partial Class Menu
         ' lblFecVenta
         ' 
         lblFecVenta.AutoSize = True
-        lblFecVenta.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblFecVenta.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblFecVenta.Location = New Point(17, 200)
         lblFecVenta.Name = "lblFecVenta"
         lblFecVenta.Size = New Size(113, 20)
@@ -812,7 +843,7 @@ Partial Class Menu
         ' lblNeto
         ' 
         lblNeto.AutoSize = True
-        lblNeto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNeto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblNeto.Location = New Point(17, 240)
         lblNeto.Name = "lblNeto"
         lblNeto.Size = New Size(92, 20)
@@ -1120,7 +1151,7 @@ Partial Class Menu
         ' 
         LabelTipo.AutoSize = True
         LabelTipo.BackColor = Color.Transparent
-        LabelTipo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelTipo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTipo.ForeColor = SystemColors.ControlLight
         LabelTipo.Location = New Point(515, 227)
         LabelTipo.Name = "LabelTipo"
@@ -1132,7 +1163,7 @@ Partial Class Menu
         ' 
         LabelCorreo.AutoSize = True
         LabelCorreo.BackColor = Color.Transparent
-        LabelCorreo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelCorreo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelCorreo.ForeColor = SystemColors.ControlLight
         LabelCorreo.Location = New Point(501, 309)
         LabelCorreo.Name = "LabelCorreo"
@@ -1151,7 +1182,7 @@ Partial Class Menu
         ' 
         LabelContraseña.AutoSize = True
         LabelContraseña.BackColor = Color.Transparent
-        LabelContraseña.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelContraseña.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelContraseña.ForeColor = SystemColors.ControlLight
         LabelContraseña.Location = New Point(71, 309)
         LabelContraseña.Name = "LabelContraseña"
@@ -1171,7 +1202,7 @@ Partial Class Menu
         ' 
         LabelRutUsuario.AutoSize = True
         LabelRutUsuario.BackColor = Color.Transparent
-        LabelRutUsuario.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelRutUsuario.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelRutUsuario.ForeColor = SystemColors.Control
         LabelRutUsuario.Location = New Point(48, 231)
         LabelRutUsuario.Name = "LabelRutUsuario"
@@ -1189,7 +1220,7 @@ Partial Class Menu
         ' buttonConsultarRut
         ' 
         buttonConsultarRut.BackColor = Color.Transparent
-        buttonConsultarRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonConsultarRut.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonConsultarRut.Location = New Point(459, 72)
         buttonConsultarRut.Name = "buttonConsultarRut"
         buttonConsultarRut.Size = New Size(123, 67)
@@ -1211,7 +1242,7 @@ Partial Class Menu
         ' 
         ' limpiarCamposGestionUsuarios
         ' 
-        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         limpiarCamposGestionUsuarios.Location = New Point(610, 49)
         limpiarCamposGestionUsuarios.Margin = New Padding(3, 4, 3, 4)
         limpiarCamposGestionUsuarios.Name = "limpiarCamposGestionUsuarios"
@@ -1222,7 +1253,7 @@ Partial Class Menu
         ' 
         ' buttonMostrarUsuarios
         ' 
-        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonMostrarUsuarios.Location = New Point(736, 51)
         buttonMostrarUsuarios.Name = "buttonMostrarUsuarios"
         buttonMostrarUsuarios.Size = New Size(128, 65)
@@ -1241,9 +1272,144 @@ Partial Class Menu
         LabelRut.TabIndex = 3
         LabelRut.Text = "Rut"
         ' 
+        ' btCerrarRegistroCli
+        ' 
+        btCerrarRegistroCli.Location = New Point(433, 345)
+        btCerrarRegistroCli.Name = "btCerrarRegistroCli"
+        btCerrarRegistroCli.Size = New Size(94, 29)
+        btCerrarRegistroCli.TabIndex = 0
+        btCerrarRegistroCli.Text = "Cerrar"
+        btCerrarRegistroCli.UseVisualStyleBackColor = True
+        ' 
+        ' Label12
+        ' 
+        Label12.AutoSize = True
+        Label12.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label12.ForeColor = SystemColors.ButtonHighlight
+        Label12.Location = New Point(46, 45)
+        Label12.Name = "Label12"
+        Label12.Size = New Size(67, 20)
+        Label12.TabIndex = 1
+        Label12.Text = "Nombre"
+        ' 
+        ' Label13
+        ' 
+        Label13.AutoSize = True
+        Label13.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label13.ForeColor = SystemColors.ButtonHighlight
+        Label13.Location = New Point(46, 270)
+        Label13.Name = "Label13"
+        Label13.Size = New Size(67, 20)
+        Label13.TabIndex = 2
+        Label13.Text = "Comuna"
+        ' 
+        ' Label14
+        ' 
+        Label14.AutoSize = True
+        Label14.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label14.ForeColor = SystemColors.ButtonHighlight
+        Label14.Location = New Point(46, 223)
+        Label14.Name = "Label14"
+        Label14.Size = New Size(74, 20)
+        Label14.TabIndex = 3
+        Label14.Text = "Dirección"
+        ' 
+        ' Label15
+        ' 
+        Label15.AutoSize = True
+        Label15.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label15.ForeColor = SystemColors.ButtonHighlight
+        Label15.Location = New Point(46, 180)
+        Label15.Name = "Label15"
+        Label15.Size = New Size(131, 20)
+        Label15.TabIndex = 4
+        Label15.Text = "Apellido materno"
+        ' 
+        ' Label16
+        ' 
+        Label16.AutoSize = True
+        Label16.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label16.ForeColor = SystemColors.ButtonHighlight
+        Label16.Location = New Point(46, 132)
+        Label16.Name = "Label16"
+        Label16.Size = New Size(126, 20)
+        Label16.TabIndex = 5
+        Label16.Text = "Apellido paterno"
+        ' 
+        ' Label18
+        ' 
+        Label18.AutoSize = True
+        Label18.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label18.ForeColor = SystemColors.ButtonHighlight
+        Label18.Location = New Point(46, 84)
+        Label18.Name = "Label18"
+        Label18.Size = New Size(39, 20)
+        Label18.TabIndex = 6
+        Label18.Text = "RUT"
+        ' 
+        ' Label19
+        ' 
+        Label19.AutoSize = True
+        Label19.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label19.ForeColor = SystemColors.ButtonHighlight
+        Label19.Location = New Point(48, 312)
+        Label19.Name = "Label19"
+        Label19.Size = New Size(70, 20)
+        Label19.TabIndex = 7
+        Label19.Text = "Telefono"
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Location = New Point(241, 33)
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(201, 27)
+        TextBox1.TabIndex = 8
+        ' 
+        ' TextBox2
+        ' 
+        TextBox2.Location = New Point(241, 209)
+        TextBox2.Name = "TextBox2"
+        TextBox2.Size = New Size(201, 27)
+        TextBox2.TabIndex = 9
+        ' 
+        ' TextBox3
+        ' 
+        TextBox3.Location = New Point(241, 165)
+        TextBox3.Name = "TextBox3"
+        TextBox3.Size = New Size(201, 27)
+        TextBox3.TabIndex = 10
+        ' 
+        ' TextBox4
+        ' 
+        TextBox4.Location = New Point(241, 127)
+        TextBox4.Name = "TextBox4"
+        TextBox4.Size = New Size(201, 27)
+        TextBox4.TabIndex = 11
+        ' 
+        ' TextBox5
+        ' 
+        TextBox5.Location = New Point(241, 78)
+        TextBox5.Name = "TextBox5"
+        TextBox5.Size = New Size(201, 27)
+        TextBox5.TabIndex = 12
+        ' 
+        ' TextBox6
+        ' 
+        TextBox6.Location = New Point(241, 297)
+        TextBox6.Name = "TextBox6"
+        TextBox6.Size = New Size(201, 27)
+        TextBox6.TabIndex = 13
+        ' 
+        ' TextBox7
+        ' 
+        TextBox7.Location = New Point(241, 253)
+        TextBox7.Name = "TextBox7"
+        TextBox7.Size = New Size(201, 27)
+        TextBox7.TabIndex = 14
+        ' 
         ' Menu
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
@@ -1264,6 +1430,8 @@ Partial Class Menu
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
         panelVentaRepuestos.ResumeLayout(False)
+        pnregistroCliente.ResumeLayout(False)
+        pnregistroCliente.PerformLayout()
         pnlBoleta.ResumeLayout(False)
         gpBoleta.ResumeLayout(False)
         gpBoleta.PerformLayout()
@@ -1390,4 +1558,19 @@ Partial Class Menu
     Friend WithEvents btnEnviarBoleta As Button
     Friend WithEvents pnregistroCliente As Panel
     Friend WithEvents btRegistrarCli As Button
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents btCerrarRegistroCli As Button
+    Friend WithEvents TextBox7 As TextBox
+    Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label19 As Label
 End Class
