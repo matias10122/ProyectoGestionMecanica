@@ -1331,11 +1331,165 @@ Public Class Menu
                     txtDireRegistroCli.Clear()
                     txtTelRegistroCli.Clear()
                     txtComRegistroCli.Clear()
+
+                    CargarDatosClientes()
                 End Using
             Catch ex As Exception
                 MessageBox.Show("Error al registrar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Using
     End Sub
+
+    Private Sub CargarDatosClientes()
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                connection.Open()
+                Dim query As String = "SELECT Rut, Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna FROM clientes"
+                Dim adapter As New MySqlDataAdapter(query, connection)
+                Dim dt As New DataTable()
+                adapter.Fill(dt)
+                dgvDatosCliente.DataSource = dt
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar los datos de los clientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Llamar a CargarDatosClientes cuando el formulario se cargue para ver todos los registros existentes
+    Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CargarDatosClientes()
+    End Sub
+
+    Private Sub dgvDatosCliente_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDatosCliente.CellClick
+        Try
+            ' Verificar que se haya hecho clic en una fila válida
+            If e.RowIndex >= 0 Then
+                Dim row As DataGridViewRow = dgvDatosCliente.Rows(e.RowIndex)
+
+                ' Cargar los datos de la fila seleccionada en los campos de texto
+                txtRutRegistroCli.Text = row.Cells("Rut").Value.ToString()
+                txtNombreRegistroCli.Text = row.Cells("Nombre").Value.ToString()
+                txtApePaterno.Text = row.Cells("ApellidoP").Value.ToString()
+                txtApeMaterno.Text = row.Cells("ApellidoM").Value.ToString()
+                txtDireRegistroCli.Text = row.Cells("Direccion").Value.ToString()
+                txtTelRegistroCli.Text = row.Cells("Telefono").Value.ToString()
+                txtComRegistroCli.Text = row.Cells("Comuna").Value.ToString()
+
+                ' Desactivar el campo de RUT para evitar que se cambie accidentalmente
+                txtRutRegistroCli.ReadOnly = True
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al cargar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+    Private Sub btnEditarRegistroCli_Click(sender As Object, e As EventArgs) Handles btnEditarRegistroCli.Click
+
+
+        If String.IsNullOrEmpty(txtRutRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtNombreRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtApePaterno.Text) OrElse
+       String.IsNullOrEmpty(txtApeMaterno.Text) OrElse
+       String.IsNullOrEmpty(txtDireRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtTelRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtComRegistroCli.Text) Then
+            MessageBox.Show("Por favor, complete todos los campos.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Obtener los datos actualizados desde los campos de texto
+        Dim rut = txtRutRegistroCli.Text.Trim
+        Dim nombre = txtNombreRegistroCli.Text.Trim
+        Dim apellidoP = txtApePaterno.Text.Trim
+        Dim apellidoM = txtApeMaterno.Text.Trim
+        Dim direccion = txtDireRegistroCli.Text.Trim
+        Dim telefono = txtTelRegistroCli.Text.Trim
+        Dim comuna = txtComRegistroCli.Text.Trim
+
+        ' Conectar a la base de datos y actualizar el registro
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                connection.Open()
+                Dim query = "UPDATE clientes SET Nombre = @Nombre, ApellidoP = @ApellidoP, ApellidoM = @ApellidoM, " &
+                                  "Direccion = @Direccion, Telefono = @Telefono, Comuna = @Comuna WHERE Rut = @Rut"
+                Using cmd As New MySqlCommand(query, connection)
+                    cmd.Parameters.AddWithValue("@Rut", rut)
+                    cmd.Parameters.AddWithValue("@Nombre", nombre)
+                    cmd.Parameters.AddWithValue("@ApellidoP", apellidoP)
+                    cmd.Parameters.AddWithValue("@ApellidoM", apellidoM)
+                    cmd.Parameters.AddWithValue("@Direccion", direccion)
+                    cmd.Parameters.AddWithValue("@Telefono", telefono)
+                    cmd.Parameters.AddWithValue("@Comuna", comuna)
+
+                    ' Ejecutar el comando
+                    cmd.ExecuteNonQuery()
+                    MessageBox.Show("Cliente actualizado exitosamente.", "Actualización Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    ' Llamar a la función para actualizar el DataGridView
+                    CargarDatosClientes()
+
+                    ' Limpiar los campos de texto después de la actualización
+                    LimpiarCamposRegistro()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al actualizar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Función para limpiar los campos de texto
+    Private Sub LimpiarCamposRegistro()
+        txtRutRegistroCli.Clear()
+        txtNombreRegistroCli.Clear()
+        txtApePaterno.Clear()
+        txtApeMaterno.Clear()
+        txtDireRegistroCli.Clear()
+        txtTelRegistroCli.Clear()
+        txtComRegistroCli.Clear()
+        txtRutRegistroCli.ReadOnly = False
+    End Sub
+
+    Private Sub Button2_Click_2(sender As Object, e As EventArgs) Handles Button2.Click
+        ' Confirmación de eliminación
+        Dim confirmation = MessageBox.Show("¿Estás seguro de que deseas eliminar este cliente?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirmation = DialogResult.Yes Then
+            Try
+                Using connection As New MySqlConnection(connectionString)
+                    connection.Open()
+
+                    ' Consulta para eliminar el cliente basado en el Rut
+                    Dim query As String = "DELETE FROM clientes WHERE rut = @rut"
+                    Using cmd As New MySqlCommand(query, connection)
+                        cmd.Parameters.AddWithValue("@rut", txtRutRegistroCli.Text.Trim())
+
+                        ' Ejecutar la eliminación
+                        Dim rowsAffected = cmd.ExecuteNonQuery()
+                        If rowsAffected > 0 Then
+                            MessageBox.Show("Cliente eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                            ' Actualizar el DataGridView y limpiar los TextBox después de la eliminación
+                            CargarDatosClientes() ' Este método debe recargar los datos en el DataGridView
+                            LimpiarTextBox()
+                        Else
+                            MessageBox.Show("No se encontró el cliente para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al eliminar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+    End Sub
+    Private Sub LimpiarTextBox()
+        txtRutRegistroCli.Clear()
+        txtNombreRegistroCli.Clear()
+        txtApePaterno.Clear()
+        txtApeMaterno.Clear()
+        txtDireRegistroCli.Clear()
+        txtTelRegistroCli.Clear()
+        txtComRegistroCli.Clear()
+    End Sub
+
 
 End Class
