@@ -13,7 +13,7 @@ Public Class Menu
         panelHome.Visible = True
         CargarTiposEnComboBox()
         comboBoxTipo.DropDownStyle = ComboBoxStyle.DropDownList
-        CargarDatosEnTableLayoutPanel()
+        CargarDatosEnDataGridView()
     End Sub
 
     Private Sub CargarTiposEnComboBox()
@@ -1279,80 +1279,254 @@ Public Class Menu
         pnregistroCliente.Visible = True
     End Sub
 
-
-    Private Sub TextBoxRutUsuario_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRutUsuario.TextChanged
-
-    End Sub
-
-    Private Sub CargarDatosEnTableLayoutPanel()
-        ' Conexión a la base de datos
+    Private Sub CargarDatosEnDataGridView()
         Dim connectionString As String = "Server=localhost;Database=taller;Uid=root;Pwd=;"
-        Dim connection As New MySqlConnection(connectionString)
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                connection.Open()
+                ' Cambia la consulta para seleccionar Estado_Siniestro en lugar de SiniestroID
+                Dim query As String = "SELECT Estado_Siniestro, Detalle, Fecha_Siniestro, RutCompania, Rut, Estado_seguro FROM siniestro"
+                Dim command As New MySqlCommand(query, connection)
+                Dim adapter As New MySqlDataAdapter(command)
+                Dim table As New DataTable()
+                adapter.Fill(table)
 
-        Try
-            connection.Open()
-            Dim query As String = "SELECT SiniestroID, Detalle, Fecha_Siniestro, RutCompania, Rut, Estado_seguro, Estado_Siniestro FROM siniestro"
-            Dim command As New MySqlCommand(query, connection)
-            Dim adapter As New MySqlDataAdapter(command)
-            Dim table As New DataTable()
-            adapter.Fill(table)
+                ' Asigna la tabla como fuente de datos del DataGridView
+                dataGridViewSiniestro.DataSource = table
 
-            ' Limpiar el panel antes de agregar nuevos datos
-            tableLayoutPanelSiniestro.Controls.Clear()
-
-            ' Agregar los títulos en la primera fila de cada columna
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "SiniestroID", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 0, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Detalle", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 1, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Fecha_Siniestro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 2, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "RutCompania", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 3, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Rut", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 4, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Estado_seguro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 5, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Estado_Siniestro", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 6, 0)
-            tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = "Ícono", .AutoSize = True, .Font = New Font("Arial", 10, FontStyle.Bold)}, 7, 0)
-
-            ' Ruta de la carpeta de imágenes en el directorio de salida
-            Dim imagePath As String = Path.Combine(Application.StartupPath, "images")
-
-            ' Llenar los datos debajo de cada título
-            Dim currentRow As Integer = 1
-            For Each row As DataRow In table.Rows
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("SiniestroID").ToString(), .AutoSize = True}, 0, currentRow)
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Detalle").ToString(), .AutoSize = True}, 1, currentRow)
-
-                ' Convertir la fecha a solo día, mes y año
-                Dim fechaSiniestro As DateTime = Convert.ToDateTime(row("Fecha_Siniestro"))
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = fechaSiniestro.ToString("dd/MM/yyyy"), .AutoSize = True}, 2, currentRow)
-
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("RutCompania").ToString(), .AutoSize = True}, 3, currentRow)
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Rut").ToString(), .AutoSize = True}, 4, currentRow)
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Estado_seguro").ToString(), .AutoSize = True}, 5, currentRow)
-                tableLayoutPanelSiniestro.Controls.Add(New Label() With {.Text = row("Estado_Siniestro").ToString(), .AutoSize = True}, 6, currentRow)
-
-                ' Determinar el ícono basado en el Estado_Siniestro
-                Dim icono As PictureBox = New PictureBox() With {
-                .Size = New Size(32, 32),
-                .SizeMode = PictureBoxSizeMode.Zoom
-            }
-                Dim estadoSiniestro As String = row("Estado_Siniestro").ToString().ToLower()
-                Dim iconPath As String = Path.Combine(imagePath, $"{estadoSiniestro}.ico")
-
-                ' Verificar existencia del archivo y cargarlo si existe
-                If File.Exists(iconPath) Then
-                    icono.Image = New Icon(iconPath).ToBitmap()
-                Else
-                    MessageBox.Show("No se encontró el archivo de icono: " & iconPath)
+                ' Verifica si la columna de icono existe, si no, la agrega
+                If dataGridViewSiniestro.Columns("Icono") Is Nothing Then
+                    Dim iconColumn As New DataGridViewImageColumn()
+                    iconColumn.Name = "Icono"
+                    iconColumn.HeaderText = "Icono"
+                    dataGridViewSiniestro.Columns.Insert(0, iconColumn)
                 End If
 
-                ' Agregar el PictureBox en la columna de íconos
-                tableLayoutPanelSiniestro.Controls.Add(icono, 7, currentRow)
-                currentRow += 1
+                ' Llama a la función para asignar los iconos según el estado
+                AsignarIconos()
+
+            Catch ex As Exception
+                MessageBox.Show("Error al cargar datos: " & ex.Message)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub AsignarIconos()
+        ' Verifica si la columna "Icono" existe; si no, la crea
+        If dataGridViewSiniestro.Columns("Icono") Is Nothing Then
+            Dim iconColumn As New DataGridViewImageColumn()
+            iconColumn.Name = "Icono"
+            iconColumn.HeaderText = "Icono"
+            dataGridViewSiniestro.Columns.Insert(0, iconColumn)
+        End If
+
+        ' Define la ruta donde están los iconos
+        Dim imagePath As String = Path.Combine(Application.StartupPath, "images")
+
+        ' Itera sobre cada fila y asigna el icono según el Estado_Siniestro
+        For Each row As DataGridViewRow In dataGridViewSiniestro.Rows
+            If row.Cells("Estado_Siniestro").Value IsNot Nothing AndAlso Not String.IsNullOrEmpty(row.Cells("Estado_Siniestro").Value.ToString()) Then
+                Dim estadoSiniestro As String = row.Cells("Estado_Siniestro").Value.ToString().ToLower()
+                Dim iconPath As String = Path.Combine(imagePath, $"{estadoSiniestro}.ico")
+
+                If File.Exists(iconPath) Then
+                    row.Cells("Icono").Value = New Bitmap(iconPath)
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub AplicarFiltro(filtro As String)
+        ' Lógica para aplicar el filtro en el DataGridViewSiniestro
+        ' Por ejemplo, puedes usar DataView para filtrar el DataTable
+        Dim table As DataTable = CType(dataGridViewSiniestro.DataSource, DataTable)
+        Dim view As New DataView(table)
+        view.RowFilter = filtro
+        dataGridViewSiniestro.DataSource = view
+
+        ' Vuelve a asignar los iconos después de filtrar
+        AsignarIconos()
+    End Sub
+
+    Private Sub dataGridViewSiniestro_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dataGridViewSiniestro.CellFormatting
+        If dataGridViewSiniestro.Rows(e.RowIndex).Selected Then
+            e.CellStyle.BackColor = Color.LightBlue  ' Color de fondo para la selección
+            e.CellStyle.ForeColor = Color.Black      ' Color de texto para la selección
+        End If
+    End Sub
+
+    Private Sub dataGridViewSiniestro_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dataGridViewSiniestro.CellClick
+        ' Verifica que la fila seleccionada sea válida
+        If e.RowIndex >= 0 Then
+            ' Desmarca todas las filas antes de aplicar la nueva selección
+            For Each row As DataGridViewRow In dataGridViewSiniestro.Rows
+                row.Selected = False
             Next
 
-        Catch ex As Exception
-            MessageBox.Show("Error al cargar datos: " & ex.Message)
-        Finally
-            connection.Close()
-        End Try
+            ' Selecciona solo la fila actual
+            dataGridViewSiniestro.Rows(e.RowIndex).Selected = True
+
+            ' Obtiene el valor de la columna "Detalle" y lo asigna al labelDetalleSin
+            Dim detalle As String = dataGridViewSiniestro.Rows(e.RowIndex).Cells("Detalle").Value.ToString()
+            labelDetalleSin.Text = detalle
+        End If
     End Sub
+
+    Private Sub dataGridViewSiniestro_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dataGridViewSiniestro.DataBindingComplete
+        ' Llama a AsignarIconos() después de que los datos se hayan enlazado o filtrado
+        AsignarIconos()
+    End Sub
+
+    Private Sub buttonVerDetallesSiniestro_Click(sender As Object, e As EventArgs) Handles buttonVerDetallesSiniestro.Click
+        ' Verificar si hay una fila seleccionada en el DataGridView
+        If dataGridViewSiniestro.SelectedRows.Count = 0 Then
+            MessageBox.Show("Por favor, seleccione un siniestro para ver los detalles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Obtener el Rut, Estado_Siniestro y RutCompania de la fila seleccionada
+        Dim selectedRow As DataGridViewRow = dataGridViewSiniestro.SelectedRows(0)
+        Dim rut As String = selectedRow.Cells("Rut").Value.ToString()
+        Dim estadoSiniestro As String = selectedRow.Cells("Estado_Siniestro").Value.ToString().ToLower()
+        Dim rutCompania As String = selectedRow.Cells("RutCompania").Value.ToString()
+
+        ' Hacer visibles ambos paneles de detalles
+        panelDetalleSinSelec.Visible = True
+        panelDetalleSiniestro.Visible = True
+
+        ' Mostrar el RutCompania en labelNomCompDetSin
+        labelNomCompDetSin.Text = rutCompania
+
+        ' Ruta de la imagen basada en el estado
+        Dim iconPath As String = Path.Combine(Application.StartupPath, "images", $"{estadoSiniestro}.ico")
+
+        ' Cargar la imagen en el PictureBox del panel si existe
+        If File.Exists(iconPath) Then
+            pictureBoxEstadSin.Image = Image.FromFile(iconPath)
+            pictureBoxEstadSin.SizeMode = PictureBoxSizeMode.StretchImage ' Ajustar imagen al PictureBox
+        Else
+            MessageBox.Show("No se encontró el icono para el estado seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+        ' Cambiar el texto de labelEstadoSeguSis al valor de Estado_Siniestro
+        labelEstadDetSin.Text = estadoSiniestro
+
+        ' Realizar la consulta en la tabla clientes para obtener los datos asociados al Rut
+        Dim connectionString As String = "Server=localhost;Database=taller;Uid=root;Pwd=;"
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                ' Consultar la tabla clientes para obtener los datos del cliente
+                Dim clienteQuery As String = "SELECT Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna FROM clientes WHERE Rut = @Rut"
+                Dim clienteCommand As New MySqlCommand(clienteQuery, connection)
+                clienteCommand.Parameters.AddWithValue("@Rut", rut)
+
+                connection.Open()
+                Dim clienteReader As MySqlDataReader = clienteCommand.ExecuteReader()
+
+                If clienteReader.Read() Then
+                    ' Rellenar los TextBox con los datos obtenidos de la consulta
+                    textBoxNomDetSis.Text = clienteReader("Nombre").ToString()
+                    textBoxApePatDetSis.Text = clienteReader("ApellidoP").ToString()
+                    textBoxApeMatDetSis.Text = clienteReader("ApellidoM").ToString()
+                    textBoxRutDetSis.Text = rut
+                    textBoxDireDetSis.Text = clienteReader("Direccion").ToString()
+                    textBoxTelDetSis.Text = clienteReader("Telefono").ToString()
+                    textBoxComuDetSis.Text = clienteReader("Comuna").ToString()
+                Else
+                    MessageBox.Show("No se encontraron datos para el cliente con el Rut proporcionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+                clienteReader.Close()
+
+                ' Consultar la tabla compañía para obtener la descripción de la compañía asociada
+                Dim companiaQuery As String = "SELECT Descripcion FROM compania WHERE Rut = @RutCompania"
+                Dim companiaCommand As New MySqlCommand(companiaQuery, connection)
+                companiaCommand.Parameters.AddWithValue("@RutCompania", rutCompania)
+
+                Dim companiaReader As MySqlDataReader = companiaCommand.ExecuteReader()
+                If companiaReader.Read() Then
+                    ' Mostrar la descripción de la compañía en nomCompSin
+                    nomCompSin.Text = companiaReader("Descripcion").ToString()
+                Else
+                    MessageBox.Show("No se encontró la descripción de la compañía asociada.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+                companiaReader.Close()
+            Catch ex As Exception
+                MessageBox.Show("Error al consultar los detalles: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Ruta base para los iconos
+    Private iconBasePath As String = Path.Combine(Application.StartupPath, "images")
+
+    ' Función para actualizar el estado en la BD y cambiar la interfaz
+    Private Sub CambiarEstadoSiniestro(nuevoEstado As String)
+        ' Verificar si hay una fila seleccionada en el DataGridView
+        If dataGridViewSiniestro.SelectedRows.Count = 0 Then
+            MessageBox.Show("Por favor, seleccione un siniestro antes de cambiar el estado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Obtener el valor de Rut de la fila seleccionada para identificar el siniestro
+        Dim selectedRow As DataGridViewRow = dataGridViewSiniestro.SelectedRows(0)
+        Dim rut As String = selectedRow.Cells("Rut").Value.ToString()
+
+        ' Ruta de la imagen del nuevo estado
+        Dim iconPath As String = Path.Combine(iconBasePath, $"{nuevoEstado.ToLower()}.ico")
+
+        ' Actualizar label y PictureBox
+        labelEstadDetSin.Text = nuevoEstado
+        If File.Exists(iconPath) Then
+            pictureBoxEstadSin.Image = Image.FromFile(iconPath)
+            pictureBoxEstadSin.SizeMode = PictureBoxSizeMode.StretchImage
+        Else
+            MessageBox.Show("No se encontró el icono para el estado seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
+
+        ' Actualizar en la base de datos usando Rut como criterio único
+        Dim connectionString As String = "Server=localhost;Database=taller;Uid=root;Pwd=;"
+        Using connection As New MySqlConnection(connectionString)
+            Dim query As String = "UPDATE siniestro SET Estado_Siniestro = @NuevoEstado WHERE Rut = @Rut"
+            Dim command As New MySqlCommand(query, connection)
+            command.Parameters.AddWithValue("@NuevoEstado", nuevoEstado)
+            command.Parameters.AddWithValue("@Rut", rut)
+
+            Try
+                connection.Open()
+                Dim rowsAffected As Integer = command.ExecuteNonQuery()
+                If rowsAffected > 0 Then
+                    MessageBox.Show("Estado del siniestro actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBox.Show("No se pudo actualizar el estado del siniestro.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Error al actualizar el estado del siniestro: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Manejo de los botones para cambiar el estado
+
+    Private Sub buttonPendiente_Click(sender As Object, e As EventArgs) Handles buttonPendiente.Click
+        CambiarEstadoSiniestro("Pendiente")
+    End Sub
+
+    Private Sub buttonActivo_Click(sender As Object, e As EventArgs) Handles buttonActivo.Click
+        CambiarEstadoSiniestro("Activo")
+    End Sub
+
+    Private Sub buttonFinalizado_Click(sender As Object, e As EventArgs) Handles buttonFinalizado.Click
+        CambiarEstadoSiniestro("Finalizado")
+    End Sub
+
+    Private Sub buttonCerrarPanDetSin_Click(sender As Object, e As EventArgs) Handles buttonCerrarPanDetSin.Click
+        ' Ocultar los paneles de detalles
+        panelDetalleSinSelec.Visible = False
+        panelDetalleSiniestro.Visible = False
+
+        ' Actualizar el DataGridView
+        CargarDatosEnDataGridView()
+    End Sub
+
 
 End Class
