@@ -1267,6 +1267,7 @@ Public Class Menu
         dgvResumenVentas.ReadOnly = True
     End Sub
 
+    'Aqui comienza el panel de registro cliente'
     Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Ocultar el panel de registro de cliente al iniciar el formulario
         pnregistroCliente.Visible = False
@@ -1277,8 +1278,64 @@ Public Class Menu
         pnregistroCliente.Visible = True
     End Sub
 
-
-    Private Sub TextBoxRutUsuario_TextChanged(sender As Object, e As EventArgs) Handles TextBoxRutUsuario.TextChanged
-
+    Private Sub btCerrarRegistroCli_Click(sender As Object, e As EventArgs) Handles btCerrarRegistroCli.Click
+        pnregistroCliente.Visible = False
     End Sub
+
+    Private Sub btRegistroIngresar_Click(sender As Object, e As EventArgs) Handles btRegistroIngresar.Click
+        ' Validar que todos los campos requeridos estén llenos
+        If String.IsNullOrEmpty(txtRutRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtNombreRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtApePaterno.Text) OrElse
+       String.IsNullOrEmpty(txtApeMaterno.Text) OrElse
+       String.IsNullOrEmpty(txtDireRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtTelRegistroCli.Text) OrElse
+       String.IsNullOrEmpty(txtComRegistroCli.Text) Then
+            MessageBox.Show("Por favor, complete todos los campos.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Obtener los datos ingresados
+        Dim rut As String = txtRutRegistroCli.Text.Trim()
+        Dim nombre As String = txtNombreRegistroCli.Text.Trim()
+        Dim apellidoP As String = txtApePaterno.Text.Trim()
+        Dim apellidoM As String = txtApeMaterno.Text.Trim()
+        Dim direccion As String = txtDireRegistroCli.Text.Trim()
+        Dim telefono As String = txtTelRegistroCli.Text.Trim()
+        Dim comuna As String = txtComRegistroCli.Text.Trim()
+
+        ' Conectar a la base de datos e insertar el registro en la tabla clientes
+        Using connection As New MySqlConnection(connectionString)
+            Try
+                connection.Open()
+                Dim query As String = "INSERT INTO clientes (Rut, Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna) " &
+                                  "VALUES (@Rut, @Nombre, @ApellidoP, @ApellidoM, @Direccion, @Telefono, @Comuna)"
+                Using cmd As New MySqlCommand(query, connection)
+                    cmd.Parameters.AddWithValue("@Rut", rut)
+                    cmd.Parameters.AddWithValue("@Nombre", nombre)
+                    cmd.Parameters.AddWithValue("@ApellidoP", apellidoP)
+                    cmd.Parameters.AddWithValue("@ApellidoM", apellidoM)
+                    cmd.Parameters.AddWithValue("@Direccion", direccion)
+                    cmd.Parameters.AddWithValue("@Telefono", telefono)
+                    cmd.Parameters.AddWithValue("@Comuna", comuna)
+
+                    ' Ejecutar el comando
+                    cmd.ExecuteNonQuery()
+                    MessageBox.Show("Cliente registrado exitosamente.", "Registro Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    ' Limpiar los campos de texto después de guardar el registro
+                    txtRutRegistroCli.Clear()
+                    txtNombreRegistroCli.Clear()
+                    txtApePaterno.Clear()
+                    txtApeMaterno.Clear()
+                    txtDireRegistroCli.Clear()
+                    txtTelRegistroCli.Clear()
+                    txtComRegistroCli.Clear()
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al registrar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
 End Class

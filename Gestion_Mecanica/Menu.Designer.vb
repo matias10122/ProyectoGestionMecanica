@@ -39,6 +39,22 @@ Partial Class Menu
         panelHome = New Panel()
         panelVentaRepuestos = New Panel()
         pnregistroCliente = New Panel()
+        DataGridView1 = New DataGridView()
+        txtComRegistroCli = New TextBox()
+        txtTelRegistroCli = New TextBox()
+        txtRutRegistroCli = New TextBox()
+        txtApePaterno = New TextBox()
+        txtApeMaterno = New TextBox()
+        txtDireRegistroCli = New TextBox()
+        txtNombreRegistroCli = New TextBox()
+        Label19 = New Label()
+        Label18 = New Label()
+        Label16 = New Label()
+        Label15 = New Label()
+        Label14 = New Label()
+        Label13 = New Label()
+        Label12 = New Label()
+        btCerrarRegistroCli = New Button()
         pnlBoleta = New Panel()
         gpBoleta = New GroupBox()
         btnEnviarBoleta = New Button()
@@ -131,25 +147,12 @@ Partial Class Menu
         limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
-        btCerrarRegistroCli = New Button()
-        Label12 = New Label()
-        Label13 = New Label()
-        Label14 = New Label()
-        Label15 = New Label()
-        Label16 = New Label()
-        Label18 = New Label()
-        Label19 = New Label()
-        TextBox1 = New TextBox()
-        TextBox2 = New TextBox()
-        TextBox3 = New TextBox()
-        TextBox4 = New TextBox()
-        TextBox5 = New TextBox()
-        TextBox6 = New TextBox()
-        TextBox7 = New TextBox()
+        btRegistroIngresar = New Button()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelVentaRepuestos.SuspendLayout()
         pnregistroCliente.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         pnlBoleta.SuspendLayout()
         gpBoleta.SuspendLayout()
         GroupBox2.SuspendLayout()
@@ -323,7 +326,6 @@ Partial Class Menu
         ' panelVentaRepuestos
         ' 
         panelVentaRepuestos.BackColor = Color.DarkSlateGray
-        panelVentaRepuestos.Controls.Add(pnregistroCliente)
         panelVentaRepuestos.Controls.Add(pnlBoleta)
         panelVentaRepuestos.Controls.Add(GroupBox2)
         panelVentaRepuestos.Controls.Add(GroupBox1)
@@ -335,13 +337,16 @@ Partial Class Menu
         ' 
         ' pnregistroCliente
         ' 
-        pnregistroCliente.Controls.Add(TextBox7)
-        pnregistroCliente.Controls.Add(TextBox6)
-        pnregistroCliente.Controls.Add(TextBox5)
-        pnregistroCliente.Controls.Add(TextBox4)
-        pnregistroCliente.Controls.Add(TextBox3)
-        pnregistroCliente.Controls.Add(TextBox2)
-        pnregistroCliente.Controls.Add(TextBox1)
+        pnregistroCliente.BackColor = Color.Teal
+        pnregistroCliente.Controls.Add(btRegistroIngresar)
+        pnregistroCliente.Controls.Add(DataGridView1)
+        pnregistroCliente.Controls.Add(txtComRegistroCli)
+        pnregistroCliente.Controls.Add(txtTelRegistroCli)
+        pnregistroCliente.Controls.Add(txtRutRegistroCli)
+        pnregistroCliente.Controls.Add(txtApePaterno)
+        pnregistroCliente.Controls.Add(txtApeMaterno)
+        pnregistroCliente.Controls.Add(txtDireRegistroCli)
+        pnregistroCliente.Controls.Add(txtNombreRegistroCli)
         pnregistroCliente.Controls.Add(Label19)
         pnregistroCliente.Controls.Add(Label18)
         pnregistroCliente.Controls.Add(Label16)
@@ -350,10 +355,154 @@ Partial Class Menu
         pnregistroCliente.Controls.Add(Label13)
         pnregistroCliente.Controls.Add(Label12)
         pnregistroCliente.Controls.Add(btCerrarRegistroCli)
-        pnregistroCliente.Location = New Point(0, 11)
+        pnregistroCliente.Location = New Point(9, 93)
         pnregistroCliente.Name = "pnregistroCliente"
-        pnregistroCliente.Size = New Size(893, 393)
+        pnregistroCliente.Size = New Size(912, 475)
         pnregistroCliente.TabIndex = 24
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Location = New Point(475, 17)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.RowHeadersWidth = 51
+        DataGridView1.Size = New Size(417, 260)
+        DataGridView1.TabIndex = 15
+        ' 
+        ' txtComRegistroCli
+        ' 
+        txtComRegistroCli.Location = New Point(241, 253)
+        txtComRegistroCli.Name = "txtComRegistroCli"
+        txtComRegistroCli.Size = New Size(201, 27)
+        txtComRegistroCli.TabIndex = 14
+        ' 
+        ' txtTelRegistroCli
+        ' 
+        txtTelRegistroCli.Location = New Point(241, 297)
+        txtTelRegistroCli.Name = "txtTelRegistroCli"
+        txtTelRegistroCli.Size = New Size(201, 27)
+        txtTelRegistroCli.TabIndex = 13
+        ' 
+        ' txtRutRegistroCli
+        ' 
+        txtRutRegistroCli.Location = New Point(241, 78)
+        txtRutRegistroCli.Name = "txtRutRegistroCli"
+        txtRutRegistroCli.Size = New Size(201, 27)
+        txtRutRegistroCli.TabIndex = 12
+        ' 
+        ' txtApePaterno
+        ' 
+        txtApePaterno.Location = New Point(241, 127)
+        txtApePaterno.Name = "txtApePaterno"
+        txtApePaterno.Size = New Size(201, 27)
+        txtApePaterno.TabIndex = 11
+        ' 
+        ' txtApeMaterno
+        ' 
+        txtApeMaterno.Location = New Point(241, 165)
+        txtApeMaterno.Name = "txtApeMaterno"
+        txtApeMaterno.Size = New Size(201, 27)
+        txtApeMaterno.TabIndex = 10
+        ' 
+        ' txtDireRegistroCli
+        ' 
+        txtDireRegistroCli.Location = New Point(241, 209)
+        txtDireRegistroCli.Name = "txtDireRegistroCli"
+        txtDireRegistroCli.Size = New Size(201, 27)
+        txtDireRegistroCli.TabIndex = 9
+        ' 
+        ' txtNombreRegistroCli
+        ' 
+        txtNombreRegistroCli.Location = New Point(241, 33)
+        txtNombreRegistroCli.Name = "txtNombreRegistroCli"
+        txtNombreRegistroCli.Size = New Size(201, 27)
+        txtNombreRegistroCli.TabIndex = 8
+        ' 
+        ' Label19
+        ' 
+        Label19.AutoSize = True
+        Label19.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label19.ForeColor = SystemColors.ButtonHighlight
+        Label19.Location = New Point(48, 312)
+        Label19.Name = "Label19"
+        Label19.Size = New Size(70, 20)
+        Label19.TabIndex = 7
+        Label19.Text = "Telefono"
+        ' 
+        ' Label18
+        ' 
+        Label18.AutoSize = True
+        Label18.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label18.ForeColor = SystemColors.ButtonHighlight
+        Label18.Location = New Point(46, 84)
+        Label18.Name = "Label18"
+        Label18.Size = New Size(39, 20)
+        Label18.TabIndex = 6
+        Label18.Text = "RUT"
+        ' 
+        ' Label16
+        ' 
+        Label16.AutoSize = True
+        Label16.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label16.ForeColor = SystemColors.ButtonHighlight
+        Label16.Location = New Point(46, 132)
+        Label16.Name = "Label16"
+        Label16.Size = New Size(126, 20)
+        Label16.TabIndex = 5
+        Label16.Text = "Apellido paterno"
+        ' 
+        ' Label15
+        ' 
+        Label15.AutoSize = True
+        Label15.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label15.ForeColor = SystemColors.ButtonHighlight
+        Label15.Location = New Point(46, 180)
+        Label15.Name = "Label15"
+        Label15.Size = New Size(131, 20)
+        Label15.TabIndex = 4
+        Label15.Text = "Apellido materno"
+        ' 
+        ' Label14
+        ' 
+        Label14.AutoSize = True
+        Label14.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label14.ForeColor = SystemColors.ButtonHighlight
+        Label14.Location = New Point(46, 223)
+        Label14.Name = "Label14"
+        Label14.Size = New Size(74, 20)
+        Label14.TabIndex = 3
+        Label14.Text = "Dirección"
+        ' 
+        ' Label13
+        ' 
+        Label13.AutoSize = True
+        Label13.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label13.ForeColor = SystemColors.ButtonHighlight
+        Label13.Location = New Point(46, 270)
+        Label13.Name = "Label13"
+        Label13.Size = New Size(67, 20)
+        Label13.TabIndex = 2
+        Label13.Text = "Comuna"
+        ' 
+        ' Label12
+        ' 
+        Label12.AutoSize = True
+        Label12.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label12.ForeColor = SystemColors.ButtonHighlight
+        Label12.Location = New Point(46, 45)
+        Label12.Name = "Label12"
+        Label12.Size = New Size(67, 20)
+        Label12.TabIndex = 1
+        Label12.Text = "Nombre"
+        ' 
+        ' btCerrarRegistroCli
+        ' 
+        btCerrarRegistroCli.Location = New Point(439, 418)
+        btCerrarRegistroCli.Name = "btCerrarRegistroCli"
+        btCerrarRegistroCli.Size = New Size(94, 29)
+        btCerrarRegistroCli.TabIndex = 0
+        btCerrarRegistroCli.Text = "Cerrar"
+        btCerrarRegistroCli.UseVisualStyleBackColor = True
         ' 
         ' pnlBoleta
         ' 
@@ -1272,140 +1421,15 @@ Partial Class Menu
         LabelRut.TabIndex = 3
         LabelRut.Text = "Rut"
         ' 
-        ' btCerrarRegistroCli
+        ' btRegistroIngresar
         ' 
-        btCerrarRegistroCli.Location = New Point(433, 345)
-        btCerrarRegistroCli.Name = "btCerrarRegistroCli"
-        btCerrarRegistroCli.Size = New Size(94, 29)
-        btCerrarRegistroCli.TabIndex = 0
-        btCerrarRegistroCli.Text = "Cerrar"
-        btCerrarRegistroCli.UseVisualStyleBackColor = True
-        ' 
-        ' Label12
-        ' 
-        Label12.AutoSize = True
-        Label12.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label12.ForeColor = SystemColors.ButtonHighlight
-        Label12.Location = New Point(46, 45)
-        Label12.Name = "Label12"
-        Label12.Size = New Size(67, 20)
-        Label12.TabIndex = 1
-        Label12.Text = "Nombre"
-        ' 
-        ' Label13
-        ' 
-        Label13.AutoSize = True
-        Label13.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label13.ForeColor = SystemColors.ButtonHighlight
-        Label13.Location = New Point(46, 270)
-        Label13.Name = "Label13"
-        Label13.Size = New Size(67, 20)
-        Label13.TabIndex = 2
-        Label13.Text = "Comuna"
-        ' 
-        ' Label14
-        ' 
-        Label14.AutoSize = True
-        Label14.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label14.ForeColor = SystemColors.ButtonHighlight
-        Label14.Location = New Point(46, 223)
-        Label14.Name = "Label14"
-        Label14.Size = New Size(74, 20)
-        Label14.TabIndex = 3
-        Label14.Text = "Dirección"
-        ' 
-        ' Label15
-        ' 
-        Label15.AutoSize = True
-        Label15.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label15.ForeColor = SystemColors.ButtonHighlight
-        Label15.Location = New Point(46, 180)
-        Label15.Name = "Label15"
-        Label15.Size = New Size(131, 20)
-        Label15.TabIndex = 4
-        Label15.Text = "Apellido materno"
-        ' 
-        ' Label16
-        ' 
-        Label16.AutoSize = True
-        Label16.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label16.ForeColor = SystemColors.ButtonHighlight
-        Label16.Location = New Point(46, 132)
-        Label16.Name = "Label16"
-        Label16.Size = New Size(126, 20)
-        Label16.TabIndex = 5
-        Label16.Text = "Apellido paterno"
-        ' 
-        ' Label18
-        ' 
-        Label18.AutoSize = True
-        Label18.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label18.ForeColor = SystemColors.ButtonHighlight
-        Label18.Location = New Point(46, 84)
-        Label18.Name = "Label18"
-        Label18.Size = New Size(39, 20)
-        Label18.TabIndex = 6
-        Label18.Text = "RUT"
-        ' 
-        ' Label19
-        ' 
-        Label19.AutoSize = True
-        Label19.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label19.ForeColor = SystemColors.ButtonHighlight
-        Label19.Location = New Point(48, 312)
-        Label19.Name = "Label19"
-        Label19.Size = New Size(70, 20)
-        Label19.TabIndex = 7
-        Label19.Text = "Telefono"
-        ' 
-        ' TextBox1
-        ' 
-        TextBox1.Location = New Point(241, 33)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(201, 27)
-        TextBox1.TabIndex = 8
-        ' 
-        ' TextBox2
-        ' 
-        TextBox2.Location = New Point(241, 209)
-        TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(201, 27)
-        TextBox2.TabIndex = 9
-        ' 
-        ' TextBox3
-        ' 
-        TextBox3.Location = New Point(241, 165)
-        TextBox3.Name = "TextBox3"
-        TextBox3.Size = New Size(201, 27)
-        TextBox3.TabIndex = 10
-        ' 
-        ' TextBox4
-        ' 
-        TextBox4.Location = New Point(241, 127)
-        TextBox4.Name = "TextBox4"
-        TextBox4.Size = New Size(201, 27)
-        TextBox4.TabIndex = 11
-        ' 
-        ' TextBox5
-        ' 
-        TextBox5.Location = New Point(241, 78)
-        TextBox5.Name = "TextBox5"
-        TextBox5.Size = New Size(201, 27)
-        TextBox5.TabIndex = 12
-        ' 
-        ' TextBox6
-        ' 
-        TextBox6.Location = New Point(241, 297)
-        TextBox6.Name = "TextBox6"
-        TextBox6.Size = New Size(201, 27)
-        TextBox6.TabIndex = 13
-        ' 
-        ' TextBox7
-        ' 
-        TextBox7.Location = New Point(241, 253)
-        TextBox7.Name = "TextBox7"
-        TextBox7.Size = New Size(201, 27)
-        TextBox7.TabIndex = 14
+        btRegistroIngresar.Location = New Point(257, 353)
+        btRegistroIngresar.Name = "btRegistroIngresar"
+        btRegistroIngresar.RightToLeft = RightToLeft.Yes
+        btRegistroIngresar.Size = New Size(150, 29)
+        btRegistroIngresar.TabIndex = 16
+        btRegistroIngresar.Text = "Ingresar Cliente"
+        btRegistroIngresar.UseVisualStyleBackColor = True
         ' 
         ' Menu
         ' 
@@ -1413,6 +1437,7 @@ Partial Class Menu
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
+        Controls.Add(pnregistroCliente)
         Controls.Add(panelVentaRepuestos)
         Controls.Add(panelUsuario)
         Controls.Add(panelRepuestos)
@@ -1432,6 +1457,7 @@ Partial Class Menu
         panelVentaRepuestos.ResumeLayout(False)
         pnregistroCliente.ResumeLayout(False)
         pnregistroCliente.PerformLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         pnlBoleta.ResumeLayout(False)
         gpBoleta.ResumeLayout(False)
         gpBoleta.PerformLayout()
@@ -1565,12 +1591,14 @@ Partial Class Menu
     Friend WithEvents Label13 As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents btCerrarRegistroCli As Button
-    Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtComRegistroCli As TextBox
+    Friend WithEvents txtTelRegistroCli As TextBox
+    Friend WithEvents txtRutRegistroCli As TextBox
+    Friend WithEvents txtApePaterno As TextBox
+    Friend WithEvents txtApeMaterno As TextBox
+    Friend WithEvents txtDireRegistroCli As TextBox
+    Friend WithEvents txtNombreRegistroCli As TextBox
     Friend WithEvents Label19 As Label
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents btRegistroIngresar As Button
 End Class
