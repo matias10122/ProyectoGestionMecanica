@@ -14,6 +14,62 @@ Public Class Menu
         CargarTiposEnComboBox()
         comboBoxTipo.DropDownStyle = ComboBoxStyle.DropDownList
         CargarDatosEnDataGridView()
+        LlenarComboBoxRut()
+        LlenarComboBoxCompaAgrSin()
+    End Sub
+
+    Private Sub CargarDatosCliente(rut As String)
+        ' Conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Nombre, ApellidoP, ApellidoM, Telefono FROM clientes WHERE Rut = @Rut"
+            Dim command As New MySqlCommand(query, connection)
+            command.Parameters.AddWithValue("@Rut", rut)
+
+            Try
+                connection.Open()
+                Using reader As MySqlDataReader = command.ExecuteReader()
+                    ' Verificar si se encontró un resultado y llenar los TextBox
+                    If reader.Read() Then
+                        textBoxNomAgrSin.Text = If(reader("Nombre") IsNot DBNull.Value, reader("Nombre").ToString(), "")
+                        textBoxApePatAgrSin.Text = If(reader("ApellidoP") IsNot DBNull.Value, reader("ApellidoP").ToString(), "")
+                        textBoxApeMatAgrSin.Text = If(reader("ApellidoM") IsNot DBNull.Value, reader("ApellidoM").ToString(), "")
+                        textBoxTelAgrSin.Text = If(reader("Telefono") IsNot DBNull.Value, reader("Telefono").ToString(), "")
+                    Else
+                        MessageBox.Show("No se encontraron datos para el RUT seleccionado.")
+                        ' Limpiar los campos si no hay resultados
+                        textBoxNomAgrSin.Clear()
+                        textBoxApePatAgrSin.Clear()
+                        textBoxApeMatAgrSin.Clear()
+                        textBoxTelAgrSin.Clear()
+                    End If
+                End Using
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar los datos del cliente: " & ex.Message)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub LlenarComboBoxCompaAgrSin()
+        ' Conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Descripcion FROM compania"
+            Dim command As New MySqlCommand(query, connection)
+
+            Try
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Llenar el comboBox con cada Descripcion obtenido de la tabla compania
+                While reader.Read()
+                    comboBoxCompaAgrSin.Items.Add(reader("Descripcion").ToString())
+                End While
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar las descripciones de compañías: " & ex.Message)
+            Finally
+                connection.Close()
+            End Try
+        End Using
     End Sub
 
     Private Sub CargarTiposEnComboBox()
@@ -1284,8 +1340,7 @@ Public Class Menu
         Using connection As New MySqlConnection(connectionString)
             Try
                 connection.Open()
-                ' Cambia la consulta para seleccionar Estado_Siniestro en lugar de SiniestroID
-                Dim query As String = "SELECT Estado_Siniestro, Detalle, Fecha_Siniestro, RutCompania, Rut, Estado_seguro FROM siniestro"
+                Dim query As String = "SELECT SiniestroID, Estado_Siniestro, Detalle, Fecha_Siniestro, RutCompania, Rut, Estado_seguro FROM siniestro"
                 Dim command As New MySqlCommand(query, connection)
                 Dim adapter As New MySqlDataAdapter(command)
                 Dim table As New DataTable()
@@ -1294,17 +1349,13 @@ Public Class Menu
                 ' Asigna la tabla como fuente de datos del DataGridView
                 dataGridViewSiniestro.DataSource = table
 
-                ' Verifica si la columna de icono existe, si no, la agrega
-                If dataGridViewSiniestro.Columns("Icono") Is Nothing Then
-                    Dim iconColumn As New DataGridViewImageColumn()
-                    iconColumn.Name = "Icono"
-                    iconColumn.HeaderText = "Icono"
-                    dataGridViewSiniestro.Columns.Insert(0, iconColumn)
+                ' Ocultar la columna de SiniestroID
+                If dataGridViewSiniestro.Columns("SiniestroID") IsNot Nothing Then
+                    dataGridViewSiniestro.Columns("SiniestroID").Visible = False
                 End If
 
-                ' Llama a la función para asignar los iconos según el estado
+                ' Llama a la función para asignar los iconos según el estado, si es necesario
                 AsignarIconos()
-
             Catch ex As Exception
                 MessageBox.Show("Error al cargar datos: " & ex.Message)
             End Try
@@ -1378,6 +1429,7 @@ Public Class Menu
     End Sub
 
     Private Sub buttonVerDetallesSiniestro_Click(sender As Object, e As EventArgs) Handles buttonVerDetallesSiniestro.Click
+
         ' Verificar si hay una fila seleccionada en el DataGridView
         If dataGridViewSiniestro.SelectedRows.Count = 0 Then
             MessageBox.Show("Por favor, seleccione un siniestro para ver los detalles.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
@@ -1520,6 +1572,11 @@ Public Class Menu
     End Sub
 
     Private Sub buttonCerrarPanDetSin_Click(sender As Object, e As EventArgs) Handles buttonCerrarPanDetSin.Click
+        ' Habilitar los botones nuevamente
+        buttonAgregarSiniestro.Enabled = True
+        buttonVerDetallesSiniestro.Enabled = True
+        buttonEliminarSiniestro.Enabled = True
+
         ' Ocultar los paneles de detalles
         panelDetalleSinSelec.Visible = False
         panelDetalleSiniestro.Visible = False
@@ -1528,5 +1585,220 @@ Public Class Menu
         CargarDatosEnDataGridView()
     End Sub
 
+    Private Sub buttonAgregarSiniestro_Click(sender As Object, e As EventArgs) Handles buttonAgregarSiniestro.Click
+        ' Mostrar una ventana emergente de confirmación
+        Dim result As DialogResult = MessageBox.Show("Vas a agregar un nuevo siniestro, ¿quieres continuar?",
+                                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        ' Verificar la respuesta del usuario
+        If result = DialogResult.Yes Then
+            ' Mostrar el panelAgreSis
+            panelAgreSis.Visible = True
+            panelDetalleSiniestro.Visible = True
+
+            ' Deshabilitar botones
+            buttonAgregarSiniestro.Visible = False
+            buttonVerDetallesSiniestro.Visible = False
+            buttonEliminarSiniestro.Visible = False
+
+        Else
+            ' Si el usuario selecciona No, puedes ocultar el panel si es necesario
+            panelAgreSis.Visible = False
+            panelDetalleSiniestro.Visible = False
+
+        End If
+    End Sub
+
+    Private Sub LlenarComboBoxRut()
+        ' Conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Rut FROM clientes"
+            Dim command As New MySqlCommand(query, connection)
+
+            Try
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Llenar el comboBox con cada Rut obtenido de la tabla clientes
+                While reader.Read()
+                    comboBoxRutAgrSin.Items.Add(reader("Rut").ToString())
+                End While
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar los RUTs: " & ex.Message)
+            Finally
+                connection.Close()
+            End Try
+        End Using
+    End Sub
+
+    Private mostrarMensajeSeleccionRut As Boolean = True
+
+    Private Sub comboBoxRutAgrSin_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxRutAgrSin.SelectedIndexChanged
+        ' Solo mostrar el mensaje si se permite (controlado desde buttonAgrSinConf_Click)
+        If comboBoxRutAgrSin.SelectedItem Is Nothing AndAlso mostrarMensajeSeleccionRut Then
+            MessageBox.Show("Por favor, seleccione un RUT válido.")
+            Return
+        End If
+
+        ' Si hay un RUT seleccionado, cargar los datos del cliente
+        If comboBoxRutAgrSin.SelectedItem IsNot Nothing Then
+            Dim selectedRut As String = comboBoxRutAgrSin.SelectedItem.ToString()
+            CargarDatosCliente(selectedRut)
+        End If
+    End Sub
+
+
+
+    Private Sub buttonAgrSinConf_Click(sender As Object, e As EventArgs) Handles buttonAgrSinConf.Click
+        ' Desactivar la advertencia de selección de RUT durante esta operación
+        mostrarMensajeSeleccionRut = False
+
+        ' Verificar que todos los campos requeridos estén llenos
+        If String.IsNullOrEmpty(textBoxDetallAgrSin.Text) Then
+            MessageBox.Show("El campo 'Detalle' no puede estar vacío.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            mostrarMensajeSeleccionRut = True ' Volver a activar el mensaje antes de salir
+            Return
+        End If
+
+        ' Validar que cada ComboBox tenga elementos y una selección válida
+        If comboBoxEstadSegAgrSin.Items.Count = 0 OrElse comboBoxEstadSegAgrSin.SelectedItem Is Nothing Then
+            MessageBox.Show("Seleccione un estado de seguro válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            mostrarMensajeSeleccionRut = True
+            Return
+        End If
+
+        If comboBoxCompaAgrSin.Items.Count = 0 OrElse comboBoxCompaAgrSin.SelectedItem Is Nothing Then
+            MessageBox.Show("Seleccione una compañía válida.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            mostrarMensajeSeleccionRut = True
+            Return
+        End If
+
+        If comboBoxRutAgrSin.Items.Count = 0 OrElse comboBoxRutAgrSin.SelectedItem Is Nothing Then
+            MessageBox.Show("Seleccione un RUT válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            mostrarMensajeSeleccionRut = True
+            Return
+        End If
+
+        ' Proceder con la conexión a la base de datos y la inserción
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Try
+                connection.Open()
+                Dim descripcionCompania As String = comboBoxCompaAgrSin.SelectedItem.ToString()
+
+                ' Obtener RutCompania
+                Using commandCompania As New MySqlCommand("SELECT Rut FROM compania WHERE Descripcion = @Descripcion", connection)
+                    commandCompania.Parameters.AddWithValue("@Descripcion", descripcionCompania)
+                    Dim rutCompania As String = commandCompania.ExecuteScalar()?.ToString()
+
+                    If String.IsNullOrEmpty(rutCompania) Then
+                        MessageBox.Show("Compañía seleccionada no encontrada en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        mostrarMensajeSeleccionRut = True
+                        Return
+                    End If
+
+                    ' Insertar siniestro con el Estado_Seguro de comboBoxEstadSegAgrSin
+                    Using commandSiniestro As New MySqlCommand("INSERT INTO siniestro (Detalle, Estado_Siniestro, Estado_Seguro, Fecha_Siniestro, RutCompania, Rut) VALUES (@Detalle, @Estado_Siniestro, @Estado_Seguro, @Fecha_Siniestro, @RutCompania, @Rut)", connection)
+                        commandSiniestro.Parameters.AddWithValue("@Detalle", textBoxDetallAgrSin.Text)
+                        commandSiniestro.Parameters.AddWithValue("@Estado_Siniestro", "Pendiente")
+                        commandSiniestro.Parameters.AddWithValue("@Estado_Seguro", comboBoxEstadSegAgrSin.SelectedItem.ToString()) ' Nuevo parámetro para Estado_Seguro
+                        commandSiniestro.Parameters.AddWithValue("@Fecha_Siniestro", dateTimePickerFecSin.Value)
+                        commandSiniestro.Parameters.AddWithValue("@RutCompania", rutCompania)
+                        commandSiniestro.Parameters.AddWithValue("@Rut", comboBoxRutAgrSin.SelectedItem.ToString())
+
+                        ' Ejecutar la inserción
+                        Dim rowsAffected As Integer = commandSiniestro.ExecuteNonQuery()
+
+                        If rowsAffected > 0 Then
+                            MessageBox.Show("Siniestro agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            ' Limpiar campos después de guardar
+                            textBoxDetallAgrSin.Clear()
+                            comboBoxEstadSegAgrSin.SelectedIndex = -1
+                            comboBoxCompaAgrSin.SelectedIndex = -1
+                            comboBoxRutAgrSin.SelectedIndex = -1
+                            dateTimePickerFecSin.Value = DateTime.Now
+
+                            ' Limpiar campos de información del cliente
+                            textBoxNomAgrSin.Clear()
+                            textBoxApePatAgrSin.Clear()
+                            textBoxApeMatAgrSin.Clear()
+                            textBoxTelAgrSin.Clear()
+
+                            ' Ocultar el panel de agregar siniestro
+                            panelAgreSis.Visible = False
+                            panelDetalleSiniestro.Visible = False
+
+                            buttonAgregarSiniestro.Visible = True
+                            buttonVerDetallesSiniestro.Visible = True
+                            buttonEliminarSiniestro.Visible = True
+
+                            ' Actualizar el DataGridView después de guardar el siniestro
+                            CargarDatosEnDataGridView()
+                        Else
+                            MessageBox.Show("No se pudo agregar el siniestro.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Error al agregar el siniestro: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+
+        ' Reactivar la verificación de selección de RUT después de la operación
+        mostrarMensajeSeleccionRut = True
+    End Sub
+
+    Private Sub buttonEliminarSiniestro_Click(sender As Object, e As EventArgs) Handles buttonEliminarSiniestro.Click
+        ' Verificar que hay una fila seleccionada en el DataGridView
+        If dataGridViewSiniestro.SelectedRows.Count = 0 Then
+            MessageBox.Show("Por favor, seleccione un siniestro para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Confirmación de eliminación
+        Dim confirmResult As DialogResult = MessageBox.Show("¿Está seguro de que desea eliminar el siniestro seleccionado?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If confirmResult = DialogResult.No Then
+            Return
+        End If
+
+        ' Obtener el SiniestroID de la fila seleccionada
+        Dim selectedRow As DataGridViewRow = dataGridViewSiniestro.SelectedRows(0)
+        Dim siniestroID As Integer = Convert.ToInt32(selectedRow.Cells("SiniestroID").Value)
+
+        ' Conexión a la base de datos para eliminar el registro
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "DELETE FROM siniestro WHERE SiniestroID = @SiniestroID"
+            Using command As New MySqlCommand(query, connection)
+                command.Parameters.AddWithValue("@SiniestroID", siniestroID)
+
+                Try
+                    connection.Open()
+                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
+
+                    If rowsAffected > 0 Then
+                        MessageBox.Show("Siniestro eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        ' Refrescar el DataGridView para mostrar los cambios
+                        CargarDatosEnDataGridView()
+                    Else
+                        MessageBox.Show("No se pudo encontrar el siniestro para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    End If
+                Catch ex As Exception
+                    MessageBox.Show("Error al eliminar el siniestro: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Private Sub buttonCancelSin_Click(sender As Object, e As EventArgs) Handles buttonCancelSin.Click
+        panelAgreSis.Visible = False
+        panelDetalleSiniestro.Visible = False
+
+        ' Habilitar los botones nuevamente
+        buttonAgregarSiniestro.Visible = True
+        buttonVerDetallesSiniestro.Visible = True
+        buttonEliminarSiniestro.Visible = True
+
+    End Sub
 
 End Class
