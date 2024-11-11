@@ -18,59 +18,7 @@ Public Class Menu
         LlenarComboBoxCompaAgrSin()
     End Sub
 
-    Private Sub CargarDatosCliente(rut As String)
-        ' Conexión a la base de datos
-        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
-            Dim query As String = "SELECT Nombre, ApellidoP, ApellidoM, Telefono FROM clientes WHERE Rut = @Rut"
-            Dim command As New MySqlCommand(query, connection)
-            command.Parameters.AddWithValue("@Rut", rut)
 
-            Try
-                connection.Open()
-                Using reader As MySqlDataReader = command.ExecuteReader()
-                    ' Verificar si se encontró un resultado y llenar los TextBox
-                    If reader.Read() Then
-                        textBoxNomAgrSin.Text = If(reader("Nombre") IsNot DBNull.Value, reader("Nombre").ToString(), "")
-                        textBoxApePatAgrSin.Text = If(reader("ApellidoP") IsNot DBNull.Value, reader("ApellidoP").ToString(), "")
-                        textBoxApeMatAgrSin.Text = If(reader("ApellidoM") IsNot DBNull.Value, reader("ApellidoM").ToString(), "")
-                        textBoxTelAgrSin.Text = If(reader("Telefono") IsNot DBNull.Value, reader("Telefono").ToString(), "")
-                    Else
-                        MessageBox.Show("No se encontraron datos para el RUT seleccionado.")
-                        ' Limpiar los campos si no hay resultados
-                        textBoxNomAgrSin.Clear()
-                        textBoxApePatAgrSin.Clear()
-                        textBoxApeMatAgrSin.Clear()
-                        textBoxTelAgrSin.Clear()
-                    End If
-                End Using
-            Catch ex As MySqlException
-                MessageBox.Show("Error al cargar los datos del cliente: " & ex.Message)
-            End Try
-        End Using
-    End Sub
-
-    Private Sub LlenarComboBoxCompaAgrSin()
-        ' Conexión a la base de datos
-        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
-            Dim query As String = "SELECT Descripcion FROM compania"
-            Dim command As New MySqlCommand(query, connection)
-
-            Try
-                connection.Open()
-                Dim reader As MySqlDataReader = command.ExecuteReader()
-
-                ' Llenar el comboBox con cada Descripcion obtenido de la tabla compania
-                While reader.Read()
-                    comboBoxCompaAgrSin.Items.Add(reader("Descripcion").ToString())
-                End While
-
-            Catch ex As MySqlException
-                MessageBox.Show("Error al cargar las descripciones de compañías: " & ex.Message)
-            Finally
-                connection.Close()
-            End Try
-        End Using
-    End Sub
 
     Private Sub CargarTiposEnComboBox()
         comboBoxTipo.Items.Clear()
@@ -1787,6 +1735,60 @@ Public Class Menu
                     MessageBox.Show("Error al eliminar el siniestro: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End Using
+        End Using
+    End Sub
+
+    Private Sub CargarDatosCliente(rut As String)
+        ' Conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Nombre, ApellidoP, ApellidoM, Telefono FROM clientes WHERE Rut = @Rut"
+            Dim command As New MySqlCommand(query, connection)
+            command.Parameters.AddWithValue("@Rut", rut)
+
+            Try
+                connection.Open()
+                Using reader As MySqlDataReader = command.ExecuteReader()
+                    ' Verificar si se encontró un resultado y llenar los TextBox
+                    If reader.Read() Then
+                        textBoxNomAgrSin.Text = If(reader("Nombre") IsNot DBNull.Value, reader("Nombre").ToString(), "")
+                        textBoxApePatAgrSin.Text = If(reader("ApellidoP") IsNot DBNull.Value, reader("ApellidoP").ToString(), "")
+                        textBoxApeMatAgrSin.Text = If(reader("ApellidoM") IsNot DBNull.Value, reader("ApellidoM").ToString(), "")
+                        textBoxTelAgrSin.Text = If(reader("Telefono") IsNot DBNull.Value, reader("Telefono").ToString(), "")
+                    Else
+                        MessageBox.Show("No se encontraron datos para el RUT seleccionado.")
+                        ' Limpiar los campos si no hay resultados
+                        textBoxNomAgrSin.Clear()
+                        textBoxApePatAgrSin.Clear()
+                        textBoxApeMatAgrSin.Clear()
+                        textBoxTelAgrSin.Clear()
+                    End If
+                End Using
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar los datos del cliente: " & ex.Message)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub LlenarComboBoxCompaAgrSin()
+        ' Conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Descripcion FROM compania"
+            Dim command As New MySqlCommand(query, connection)
+
+            Try
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Llenar el comboBox con cada Descripcion obtenido de la tabla compania
+                While reader.Read()
+                    comboBoxCompaAgrSin.Items.Add(reader("Descripcion").ToString())
+                End While
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar las descripciones de compañías: " & ex.Message)
+            Finally
+                connection.Close()
+            End Try
         End Using
     End Sub
 
