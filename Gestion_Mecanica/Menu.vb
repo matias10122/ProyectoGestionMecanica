@@ -1450,7 +1450,7 @@ Public Class Menu
         txtRutRegistroCli.ReadOnly = False
     End Sub
 
-    Private Sub Button2_Click_2(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click_2(sender As Object, e As EventArgs) Handles btnEliminarRegistro.Click
         ' Confirmación de eliminación
         Dim confirmation = MessageBox.Show("¿Estás seguro de que deseas eliminar este cliente?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If confirmation = DialogResult.Yes Then
