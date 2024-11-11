@@ -92,6 +92,28 @@ Partial Class Menu
         Label7 = New Label()
         panelSiniestro = New Panel()
         panelDetalleSiniestro = New Panel()
+        panelAgreSis = New Panel()
+        buttonCancelSin = New Button()
+        buttonAgrSinConf = New Button()
+        labelTituloAgrSin = New Label()
+        comboBoxEstadSegAgrSin = New ComboBox()
+        labelEstadSeguSin = New Label()
+        comboBoxCompaAgrSin = New ComboBox()
+        labelCompSin = New Label()
+        dateTimePickerFecSin = New DateTimePicker()
+        labelFechaSin = New Label()
+        textBoxDetallAgrSin = New TextBox()
+        labelDetaSin = New Label()
+        textBoxTelAgrSin = New TextBox()
+        labelTelAgrSis = New Label()
+        textBoxApeMatAgrSin = New TextBox()
+        labelApeMatAgrSin = New Label()
+        textBoxApePatAgrSin = New TextBox()
+        labelApelliPatAgrSin = New Label()
+        comboBoxRutAgrSin = New ComboBox()
+        textBoxNomAgrSin = New TextBox()
+        labelNomAgrSin = New Label()
+        labelRutAgrSin = New Label()
         panelDetalleSinSelec = New Panel()
         Label13 = New Label()
         labelDetalleSin = New Label()
@@ -118,32 +140,10 @@ Partial Class Menu
         labelComuDetSin = New Label()
         labelTelDetSin = New Label()
         labelDirPanSin = New Label()
-        Label14 = New Label()
-        Label12 = New Label()
+        labelRutVerSin = New Label()
+        labelApeMatVerSin = New Label()
         labelNomSin = New Label()
         labelApePatSin = New Label()
-        panelAgreSis = New Panel()
-        buttonCancelSin = New Button()
-        buttonAgrSinConf = New Button()
-        Label21 = New Label()
-        comboBoxEstadSegAgrSin = New ComboBox()
-        Label20 = New Label()
-        comboBoxCompaAgrSin = New ComboBox()
-        Label19 = New Label()
-        dateTimePickerFecSin = New DateTimePicker()
-        Label18 = New Label()
-        textBoxDetallAgrSin = New TextBox()
-        Label15 = New Label()
-        textBoxTelAgrSin = New TextBox()
-        labelTelAgrSis = New Label()
-        textBoxApeMatAgrSin = New TextBox()
-        labelApeMatAgrSin = New Label()
-        textBoxApePatAgrSin = New TextBox()
-        labelApelliPatAgrSin = New Label()
-        comboBoxRutAgrSin = New ComboBox()
-        textBoxNomAgrSin = New TextBox()
-        labelNomAgrSin = New Label()
-        labelRutAgrSin = New Label()
         tituloVerDetalleSiniestros = New Label()
         labelTituloSiniestros = New Label()
         dataGridViewSiniestro = New DataGridView()
@@ -200,10 +200,10 @@ Partial Class Menu
         GroupBox1.SuspendLayout()
         panelSiniestro.SuspendLayout()
         panelDetalleSiniestro.SuspendLayout()
+        panelAgreSis.SuspendLayout()
         panelDetalleSinSelec.SuspendLayout()
         CType(pictureBoxEstadSin, ComponentModel.ISupportInitialize).BeginInit()
         panelDatoDetSin.SuspendLayout()
-        panelAgreSis.SuspendLayout()
         CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).BeginInit()
         panelRepuestos.SuspendLayout()
         panelUsuario.SuspendLayout()
@@ -939,6 +939,234 @@ Partial Class Menu
         panelDetalleSiniestro.TabIndex = 6
         panelDetalleSiniestro.Visible = False
         ' 
+        ' panelAgreSis
+        ' 
+        panelAgreSis.Controls.Add(buttonCancelSin)
+        panelAgreSis.Controls.Add(buttonAgrSinConf)
+        panelAgreSis.Controls.Add(labelTituloAgrSin)
+        panelAgreSis.Controls.Add(comboBoxEstadSegAgrSin)
+        panelAgreSis.Controls.Add(labelEstadSeguSin)
+        panelAgreSis.Controls.Add(comboBoxCompaAgrSin)
+        panelAgreSis.Controls.Add(labelCompSin)
+        panelAgreSis.Controls.Add(dateTimePickerFecSin)
+        panelAgreSis.Controls.Add(labelFechaSin)
+        panelAgreSis.Controls.Add(textBoxDetallAgrSin)
+        panelAgreSis.Controls.Add(labelDetaSin)
+        panelAgreSis.Controls.Add(textBoxTelAgrSin)
+        panelAgreSis.Controls.Add(labelTelAgrSis)
+        panelAgreSis.Controls.Add(textBoxApeMatAgrSin)
+        panelAgreSis.Controls.Add(labelApeMatAgrSin)
+        panelAgreSis.Controls.Add(textBoxApePatAgrSin)
+        panelAgreSis.Controls.Add(labelApelliPatAgrSin)
+        panelAgreSis.Controls.Add(comboBoxRutAgrSin)
+        panelAgreSis.Controls.Add(textBoxNomAgrSin)
+        panelAgreSis.Controls.Add(labelNomAgrSin)
+        panelAgreSis.Controls.Add(labelRutAgrSin)
+        panelAgreSis.Location = New Point(0, 0)
+        panelAgreSis.Name = "panelAgreSis"
+        panelAgreSis.Size = New Size(763, 292)
+        panelAgreSis.TabIndex = 2
+        panelAgreSis.Visible = False
+        ' 
+        ' buttonCancelSin
+        ' 
+        buttonCancelSin.Location = New Point(50, 260)
+        buttonCancelSin.Name = "buttonCancelSin"
+        buttonCancelSin.Size = New Size(75, 23)
+        buttonCancelSin.TabIndex = 21
+        buttonCancelSin.Text = "Cancelar"
+        buttonCancelSin.UseVisualStyleBackColor = True
+        ' 
+        ' buttonAgrSinConf
+        ' 
+        buttonAgrSinConf.Location = New Point(654, 257)
+        buttonAgrSinConf.Name = "buttonAgrSinConf"
+        buttonAgrSinConf.Size = New Size(75, 23)
+        buttonAgrSinConf.TabIndex = 20
+        buttonAgrSinConf.Text = "Agregar"
+        buttonAgrSinConf.UseVisualStyleBackColor = True
+        ' 
+        ' labelTituloAgrSin
+        ' 
+        labelTituloAgrSin.AutoSize = True
+        labelTituloAgrSin.BackColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
+        labelTituloAgrSin.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloAgrSin.ForeColor = SystemColors.Control
+        labelTituloAgrSin.Location = New Point(281, 7)
+        labelTituloAgrSin.Name = "labelTituloAgrSin"
+        labelTituloAgrSin.Size = New Size(168, 25)
+        labelTituloAgrSin.TabIndex = 19
+        labelTituloAgrSin.Text = "Agregar Siniestro"
+        ' 
+        ' comboBoxEstadSegAgrSin
+        ' 
+        comboBoxEstadSegAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxEstadSegAgrSin.FormattingEnabled = True
+        comboBoxEstadSegAgrSin.Items.AddRange(New Object() {"Seguro Vigente", "Seguro Caducado"})
+        comboBoxEstadSegAgrSin.Location = New Point(448, 163)
+        comboBoxEstadSegAgrSin.Name = "comboBoxEstadSegAgrSin"
+        comboBoxEstadSegAgrSin.Size = New Size(228, 23)
+        comboBoxEstadSegAgrSin.TabIndex = 18
+        ' 
+        ' labelEstadSeguSin
+        ' 
+        labelEstadSeguSin.AutoSize = True
+        labelEstadSeguSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelEstadSeguSin.Location = New Point(353, 171)
+        labelEstadSeguSin.Name = "labelEstadSeguSin"
+        labelEstadSeguSin.Size = New Size(84, 15)
+        labelEstadSeguSin.TabIndex = 17
+        labelEstadSeguSin.Text = "Estado seguro:"
+        ' 
+        ' comboBoxCompaAgrSin
+        ' 
+        comboBoxCompaAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxCompaAgrSin.FormattingEnabled = True
+        comboBoxCompaAgrSin.Location = New Point(448, 125)
+        comboBoxCompaAgrSin.Name = "comboBoxCompaAgrSin"
+        comboBoxCompaAgrSin.Size = New Size(228, 23)
+        comboBoxCompaAgrSin.TabIndex = 16
+        ' 
+        ' labelCompSin
+        ' 
+        labelCompSin.AutoSize = True
+        labelCompSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelCompSin.Location = New Point(372, 130)
+        labelCompSin.Name = "labelCompSin"
+        labelCompSin.Size = New Size(65, 15)
+        labelCompSin.TabIndex = 15
+        labelCompSin.Text = "Compañia:"
+        ' 
+        ' dateTimePickerFecSin
+        ' 
+        dateTimePickerFecSin.Location = New Point(448, 87)
+        dateTimePickerFecSin.Name = "dateTimePickerFecSin"
+        dateTimePickerFecSin.Size = New Size(228, 23)
+        dateTimePickerFecSin.TabIndex = 14
+        dateTimePickerFecSin.Value = New Date(2024, 11, 11, 0, 0, 0, 0)
+        ' 
+        ' labelFechaSin
+        ' 
+        labelFechaSin.AutoSize = True
+        labelFechaSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelFechaSin.Location = New Point(396, 94)
+        labelFechaSin.Name = "labelFechaSin"
+        labelFechaSin.Size = New Size(41, 15)
+        labelFechaSin.TabIndex = 13
+        labelFechaSin.Text = "Fecha:"
+        ' 
+        ' textBoxDetallAgrSin
+        ' 
+        textBoxDetallAgrSin.Location = New Point(448, 48)
+        textBoxDetallAgrSin.Name = "textBoxDetallAgrSin"
+        textBoxDetallAgrSin.Size = New Size(228, 23)
+        textBoxDetallAgrSin.TabIndex = 12
+        ' 
+        ' labelDetaSin
+        ' 
+        labelDetaSin.AutoSize = True
+        labelDetaSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelDetaSin.Location = New Point(391, 56)
+        labelDetaSin.Name = "labelDetaSin"
+        labelDetaSin.Size = New Size(46, 15)
+        labelDetaSin.TabIndex = 11
+        labelDetaSin.Text = "Detalle:"
+        ' 
+        ' textBoxTelAgrSin
+        ' 
+        textBoxTelAgrSin.Enabled = False
+        textBoxTelAgrSin.Location = New Point(137, 211)
+        textBoxTelAgrSin.Name = "textBoxTelAgrSin"
+        textBoxTelAgrSin.ReadOnly = True
+        textBoxTelAgrSin.Size = New Size(121, 23)
+        textBoxTelAgrSin.TabIndex = 10
+        ' 
+        ' labelTelAgrSis
+        ' 
+        labelTelAgrSis.AutoSize = True
+        labelTelAgrSis.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelTelAgrSis.Location = New Point(60, 214)
+        labelTelAgrSis.Name = "labelTelAgrSis"
+        labelTelAgrSis.Size = New Size(55, 15)
+        labelTelAgrSis.TabIndex = 9
+        labelTelAgrSis.Text = "Telefono:"
+        ' 
+        ' textBoxApeMatAgrSin
+        ' 
+        textBoxApeMatAgrSin.Enabled = False
+        textBoxApeMatAgrSin.Location = New Point(137, 171)
+        textBoxApeMatAgrSin.Name = "textBoxApeMatAgrSin"
+        textBoxApeMatAgrSin.ReadOnly = True
+        textBoxApeMatAgrSin.Size = New Size(121, 23)
+        textBoxApeMatAgrSin.TabIndex = 8
+        ' 
+        ' labelApeMatAgrSin
+        ' 
+        labelApeMatAgrSin.AutoSize = True
+        labelApeMatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelApeMatAgrSin.Location = New Point(50, 176)
+        labelApeMatAgrSin.Name = "labelApeMatAgrSin"
+        labelApeMatAgrSin.Size = New Size(65, 15)
+        labelApeMatAgrSin.TabIndex = 7
+        labelApeMatAgrSin.Text = "ApellidoM:"
+        ' 
+        ' textBoxApePatAgrSin
+        ' 
+        textBoxApePatAgrSin.Enabled = False
+        textBoxApePatAgrSin.Location = New Point(137, 133)
+        textBoxApePatAgrSin.Name = "textBoxApePatAgrSin"
+        textBoxApePatAgrSin.ReadOnly = True
+        textBoxApePatAgrSin.Size = New Size(121, 23)
+        textBoxApePatAgrSin.TabIndex = 6
+        ' 
+        ' labelApelliPatAgrSin
+        ' 
+        labelApelliPatAgrSin.AutoSize = True
+        labelApelliPatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelApelliPatAgrSin.Location = New Point(54, 138)
+        labelApelliPatAgrSin.Name = "labelApelliPatAgrSin"
+        labelApelliPatAgrSin.Size = New Size(61, 15)
+        labelApelliPatAgrSin.TabIndex = 5
+        labelApelliPatAgrSin.Text = "ApellidoP:"
+        ' 
+        ' comboBoxRutAgrSin
+        ' 
+        comboBoxRutAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxRutAgrSin.FormattingEnabled = True
+        comboBoxRutAgrSin.Location = New Point(137, 46)
+        comboBoxRutAgrSin.Name = "comboBoxRutAgrSin"
+        comboBoxRutAgrSin.Size = New Size(121, 23)
+        comboBoxRutAgrSin.TabIndex = 4
+        ' 
+        ' textBoxNomAgrSin
+        ' 
+        textBoxNomAgrSin.Enabled = False
+        textBoxNomAgrSin.Location = New Point(137, 90)
+        textBoxNomAgrSin.Name = "textBoxNomAgrSin"
+        textBoxNomAgrSin.ReadOnly = True
+        textBoxNomAgrSin.Size = New Size(121, 23)
+        textBoxNomAgrSin.TabIndex = 3
+        ' 
+        ' labelNomAgrSin
+        ' 
+        labelNomAgrSin.AutoSize = True
+        labelNomAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelNomAgrSin.Location = New Point(61, 97)
+        labelNomAgrSin.Name = "labelNomAgrSin"
+        labelNomAgrSin.Size = New Size(54, 15)
+        labelNomAgrSin.TabIndex = 2
+        labelNomAgrSin.Text = "Nombre:"
+        ' 
+        ' labelRutAgrSin
+        ' 
+        labelRutAgrSin.AutoSize = True
+        labelRutAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelRutAgrSin.Location = New Point(87, 51)
+        labelRutAgrSin.Name = "labelRutAgrSin"
+        labelRutAgrSin.Size = New Size(28, 15)
+        labelRutAgrSin.TabIndex = 0
+        labelRutAgrSin.Text = "Rut:"
+        ' 
         ' panelDetalleSinSelec
         ' 
         panelDetalleSinSelec.BackColor = Color.LightSlateGray
@@ -1162,8 +1390,8 @@ Partial Class Menu
         panelDatoDetSin.Controls.Add(labelComuDetSin)
         panelDatoDetSin.Controls.Add(labelTelDetSin)
         panelDatoDetSin.Controls.Add(labelDirPanSin)
-        panelDatoDetSin.Controls.Add(Label14)
-        panelDatoDetSin.Controls.Add(Label12)
+        panelDatoDetSin.Controls.Add(labelRutVerSin)
+        panelDatoDetSin.Controls.Add(labelApeMatVerSin)
         panelDatoDetSin.Controls.Add(labelNomSin)
         panelDatoDetSin.Controls.Add(labelApePatSin)
         panelDatoDetSin.Location = New Point(15, 8)
@@ -1201,25 +1429,25 @@ Partial Class Menu
         labelDirPanSin.TabIndex = 5
         labelDirPanSin.Text = "Direccion:"
         ' 
-        ' Label14
+        ' labelRutVerSin
         ' 
-        Label14.AutoSize = True
-        Label14.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label14.Location = New Point(34, 103)
-        Label14.Name = "Label14"
-        Label14.Size = New Size(34, 15)
-        Label14.TabIndex = 4
-        Label14.Text = "RUT:"
+        labelRutVerSin.AutoSize = True
+        labelRutVerSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelRutVerSin.Location = New Point(34, 103)
+        labelRutVerSin.Name = "labelRutVerSin"
+        labelRutVerSin.Size = New Size(34, 15)
+        labelRutVerSin.TabIndex = 4
+        labelRutVerSin.Text = "RUT:"
         ' 
-        ' Label12
+        ' labelApeMatVerSin
         ' 
-        Label12.AutoSize = True
-        Label12.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label12.Location = New Point(5, 75)
-        Label12.Name = "Label12"
-        Label12.Size = New Size(106, 15)
-        Label12.TabIndex = 3
-        Label12.Text = "Apellido Materno:"
+        labelApeMatVerSin.AutoSize = True
+        labelApeMatVerSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelApeMatVerSin.Location = New Point(5, 75)
+        labelApeMatVerSin.Name = "labelApeMatVerSin"
+        labelApeMatVerSin.Size = New Size(106, 15)
+        labelApeMatVerSin.TabIndex = 3
+        labelApeMatVerSin.Text = "Apellido Materno:"
         ' 
         ' labelNomSin
         ' 
@@ -1240,234 +1468,6 @@ Partial Class Menu
         labelApePatSin.Size = New Size(102, 15)
         labelApePatSin.TabIndex = 2
         labelApePatSin.Text = "Apellido Paterno:"
-        ' 
-        ' panelAgreSis
-        ' 
-        panelAgreSis.Controls.Add(buttonCancelSin)
-        panelAgreSis.Controls.Add(buttonAgrSinConf)
-        panelAgreSis.Controls.Add(Label21)
-        panelAgreSis.Controls.Add(comboBoxEstadSegAgrSin)
-        panelAgreSis.Controls.Add(Label20)
-        panelAgreSis.Controls.Add(comboBoxCompaAgrSin)
-        panelAgreSis.Controls.Add(Label19)
-        panelAgreSis.Controls.Add(dateTimePickerFecSin)
-        panelAgreSis.Controls.Add(Label18)
-        panelAgreSis.Controls.Add(textBoxDetallAgrSin)
-        panelAgreSis.Controls.Add(Label15)
-        panelAgreSis.Controls.Add(textBoxTelAgrSin)
-        panelAgreSis.Controls.Add(labelTelAgrSis)
-        panelAgreSis.Controls.Add(textBoxApeMatAgrSin)
-        panelAgreSis.Controls.Add(labelApeMatAgrSin)
-        panelAgreSis.Controls.Add(textBoxApePatAgrSin)
-        panelAgreSis.Controls.Add(labelApelliPatAgrSin)
-        panelAgreSis.Controls.Add(comboBoxRutAgrSin)
-        panelAgreSis.Controls.Add(textBoxNomAgrSin)
-        panelAgreSis.Controls.Add(labelNomAgrSin)
-        panelAgreSis.Controls.Add(labelRutAgrSin)
-        panelAgreSis.Location = New Point(0, 0)
-        panelAgreSis.Name = "panelAgreSis"
-        panelAgreSis.Size = New Size(763, 292)
-        panelAgreSis.TabIndex = 2
-        panelAgreSis.Visible = False
-        ' 
-        ' buttonCancelSin
-        ' 
-        buttonCancelSin.Location = New Point(50, 260)
-        buttonCancelSin.Name = "buttonCancelSin"
-        buttonCancelSin.Size = New Size(75, 23)
-        buttonCancelSin.TabIndex = 21
-        buttonCancelSin.Text = "Cancelar"
-        buttonCancelSin.UseVisualStyleBackColor = True
-        ' 
-        ' buttonAgrSinConf
-        ' 
-        buttonAgrSinConf.Location = New Point(654, 257)
-        buttonAgrSinConf.Name = "buttonAgrSinConf"
-        buttonAgrSinConf.Size = New Size(75, 23)
-        buttonAgrSinConf.TabIndex = 20
-        buttonAgrSinConf.Text = "Agregar"
-        buttonAgrSinConf.UseVisualStyleBackColor = True
-        ' 
-        ' Label21
-        ' 
-        Label21.AutoSize = True
-        Label21.BackColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
-        Label21.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label21.ForeColor = SystemColors.Control
-        Label21.Location = New Point(281, 7)
-        Label21.Name = "Label21"
-        Label21.Size = New Size(168, 25)
-        Label21.TabIndex = 19
-        Label21.Text = "Agregar Siniestro"
-        ' 
-        ' comboBoxEstadSegAgrSin
-        ' 
-        comboBoxEstadSegAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
-        comboBoxEstadSegAgrSin.FormattingEnabled = True
-        comboBoxEstadSegAgrSin.Items.AddRange(New Object() {"Seguro Vigente", "Seguro Caducado"})
-        comboBoxEstadSegAgrSin.Location = New Point(448, 163)
-        comboBoxEstadSegAgrSin.Name = "comboBoxEstadSegAgrSin"
-        comboBoxEstadSegAgrSin.Size = New Size(228, 23)
-        comboBoxEstadSegAgrSin.TabIndex = 18
-        ' 
-        ' Label20
-        ' 
-        Label20.AutoSize = True
-        Label20.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        Label20.Location = New Point(353, 171)
-        Label20.Name = "Label20"
-        Label20.Size = New Size(84, 15)
-        Label20.TabIndex = 17
-        Label20.Text = "Estado seguro:"
-        ' 
-        ' comboBoxCompaAgrSin
-        ' 
-        comboBoxCompaAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
-        comboBoxCompaAgrSin.FormattingEnabled = True
-        comboBoxCompaAgrSin.Location = New Point(448, 125)
-        comboBoxCompaAgrSin.Name = "comboBoxCompaAgrSin"
-        comboBoxCompaAgrSin.Size = New Size(228, 23)
-        comboBoxCompaAgrSin.TabIndex = 16
-        ' 
-        ' Label19
-        ' 
-        Label19.AutoSize = True
-        Label19.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        Label19.Location = New Point(372, 130)
-        Label19.Name = "Label19"
-        Label19.Size = New Size(65, 15)
-        Label19.TabIndex = 15
-        Label19.Text = "Compañia:"
-        ' 
-        ' dateTimePickerFecSin
-        ' 
-        dateTimePickerFecSin.Location = New Point(448, 87)
-        dateTimePickerFecSin.Name = "dateTimePickerFecSin"
-        dateTimePickerFecSin.Size = New Size(228, 23)
-        dateTimePickerFecSin.TabIndex = 14
-        dateTimePickerFecSin.Value = New Date(2024, 11, 11, 0, 0, 0, 0)
-        ' 
-        ' Label18
-        ' 
-        Label18.AutoSize = True
-        Label18.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        Label18.Location = New Point(396, 94)
-        Label18.Name = "Label18"
-        Label18.Size = New Size(41, 15)
-        Label18.TabIndex = 13
-        Label18.Text = "Fecha:"
-        ' 
-        ' textBoxDetallAgrSin
-        ' 
-        textBoxDetallAgrSin.Location = New Point(448, 48)
-        textBoxDetallAgrSin.Name = "textBoxDetallAgrSin"
-        textBoxDetallAgrSin.Size = New Size(228, 23)
-        textBoxDetallAgrSin.TabIndex = 12
-        ' 
-        ' Label15
-        ' 
-        Label15.AutoSize = True
-        Label15.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        Label15.Location = New Point(391, 56)
-        Label15.Name = "Label15"
-        Label15.Size = New Size(46, 15)
-        Label15.TabIndex = 11
-        Label15.Text = "Detalle:"
-        ' 
-        ' textBoxTelAgrSin
-        ' 
-        textBoxTelAgrSin.Enabled = False
-        textBoxTelAgrSin.Location = New Point(137, 211)
-        textBoxTelAgrSin.Name = "textBoxTelAgrSin"
-        textBoxTelAgrSin.ReadOnly = True
-        textBoxTelAgrSin.Size = New Size(121, 23)
-        textBoxTelAgrSin.TabIndex = 10
-        ' 
-        ' labelTelAgrSis
-        ' 
-        labelTelAgrSis.AutoSize = True
-        labelTelAgrSis.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        labelTelAgrSis.Location = New Point(60, 214)
-        labelTelAgrSis.Name = "labelTelAgrSis"
-        labelTelAgrSis.Size = New Size(55, 15)
-        labelTelAgrSis.TabIndex = 9
-        labelTelAgrSis.Text = "Telefono:"
-        ' 
-        ' textBoxApeMatAgrSin
-        ' 
-        textBoxApeMatAgrSin.Enabled = False
-        textBoxApeMatAgrSin.Location = New Point(137, 171)
-        textBoxApeMatAgrSin.Name = "textBoxApeMatAgrSin"
-        textBoxApeMatAgrSin.ReadOnly = True
-        textBoxApeMatAgrSin.Size = New Size(121, 23)
-        textBoxApeMatAgrSin.TabIndex = 8
-        ' 
-        ' labelApeMatAgrSin
-        ' 
-        labelApeMatAgrSin.AutoSize = True
-        labelApeMatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        labelApeMatAgrSin.Location = New Point(50, 176)
-        labelApeMatAgrSin.Name = "labelApeMatAgrSin"
-        labelApeMatAgrSin.Size = New Size(65, 15)
-        labelApeMatAgrSin.TabIndex = 7
-        labelApeMatAgrSin.Text = "ApellidoM:"
-        ' 
-        ' textBoxApePatAgrSin
-        ' 
-        textBoxApePatAgrSin.Enabled = False
-        textBoxApePatAgrSin.Location = New Point(137, 133)
-        textBoxApePatAgrSin.Name = "textBoxApePatAgrSin"
-        textBoxApePatAgrSin.ReadOnly = True
-        textBoxApePatAgrSin.Size = New Size(121, 23)
-        textBoxApePatAgrSin.TabIndex = 6
-        ' 
-        ' labelApelliPatAgrSin
-        ' 
-        labelApelliPatAgrSin.AutoSize = True
-        labelApelliPatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        labelApelliPatAgrSin.Location = New Point(54, 138)
-        labelApelliPatAgrSin.Name = "labelApelliPatAgrSin"
-        labelApelliPatAgrSin.Size = New Size(61, 15)
-        labelApelliPatAgrSin.TabIndex = 5
-        labelApelliPatAgrSin.Text = "ApellidoP:"
-        ' 
-        ' comboBoxRutAgrSin
-        ' 
-        comboBoxRutAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
-        comboBoxRutAgrSin.FormattingEnabled = True
-        comboBoxRutAgrSin.Location = New Point(137, 46)
-        comboBoxRutAgrSin.Name = "comboBoxRutAgrSin"
-        comboBoxRutAgrSin.Size = New Size(121, 23)
-        comboBoxRutAgrSin.TabIndex = 4
-        ' 
-        ' textBoxNomAgrSin
-        ' 
-        textBoxNomAgrSin.Enabled = False
-        textBoxNomAgrSin.Location = New Point(137, 90)
-        textBoxNomAgrSin.Name = "textBoxNomAgrSin"
-        textBoxNomAgrSin.ReadOnly = True
-        textBoxNomAgrSin.Size = New Size(121, 23)
-        textBoxNomAgrSin.TabIndex = 3
-        ' 
-        ' labelNomAgrSin
-        ' 
-        labelNomAgrSin.AutoSize = True
-        labelNomAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        labelNomAgrSin.Location = New Point(61, 97)
-        labelNomAgrSin.Name = "labelNomAgrSin"
-        labelNomAgrSin.Size = New Size(54, 15)
-        labelNomAgrSin.TabIndex = 2
-        labelNomAgrSin.Text = "Nombre:"
-        ' 
-        ' labelRutAgrSin
-        ' 
-        labelRutAgrSin.AutoSize = True
-        labelRutAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
-        labelRutAgrSin.Location = New Point(87, 51)
-        labelRutAgrSin.Name = "labelRutAgrSin"
-        labelRutAgrSin.Size = New Size(28, 15)
-        labelRutAgrSin.TabIndex = 0
-        labelRutAgrSin.Text = "Rut:"
         ' 
         ' tituloVerDetalleSiniestros
         ' 
@@ -1980,13 +1980,13 @@ Partial Class Menu
         panelSiniestro.PerformLayout()
         panelDetalleSiniestro.ResumeLayout(False)
         panelDetalleSiniestro.PerformLayout()
+        panelAgreSis.ResumeLayout(False)
+        panelAgreSis.PerformLayout()
         panelDetalleSinSelec.ResumeLayout(False)
         panelDetalleSinSelec.PerformLayout()
         CType(pictureBoxEstadSin, ComponentModel.ISupportInitialize).EndInit()
         panelDatoDetSin.ResumeLayout(False)
         panelDatoDetSin.PerformLayout()
-        panelAgreSis.ResumeLayout(False)
-        panelAgreSis.PerformLayout()
         CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).EndInit()
         panelRepuestos.ResumeLayout(False)
         panelRepuestos.PerformLayout()
@@ -2117,12 +2117,12 @@ Partial Class Menu
     Friend WithEvents panelDatoDetSin As Panel
     Friend WithEvents labelApePatSin As Label
     Friend WithEvents labelNomSin As Label
-    Friend WithEvents Label12 As Label
+    Friend WithEvents labelApeMatVerSin As Label
     Friend WithEvents textBoxRutDetSis As TextBox
     Friend WithEvents textBoxApeMatDetSis As TextBox
     Friend WithEvents textBoxApePatDetSis As TextBox
     Friend WithEvents textBoxNomDetSis As TextBox
-    Friend WithEvents Label14 As Label
+    Friend WithEvents labelRutVerSin As Label
     Friend WithEvents textBoxDireDetSis As TextBox
     Friend WithEvents labelDirPanSin As Label
     Friend WithEvents labelTelDetSin As Label
@@ -2155,15 +2155,15 @@ Partial Class Menu
     Friend WithEvents textBoxApePatAgrSin As TextBox
     Friend WithEvents labelApelliPatAgrSin As Label
     Friend WithEvents comboBoxRutAgrSin As ComboBox
-    Friend WithEvents Label19 As Label
+    Friend WithEvents labelCompSin As Label
     Friend WithEvents dateTimePickerFecSin As DateTimePicker
-    Friend WithEvents Label18 As Label
+    Friend WithEvents labelFechaSin As Label
     Friend WithEvents textBoxDetallAgrSin As TextBox
-    Friend WithEvents Label15 As Label
+    Friend WithEvents labelDetaSin As Label
     Friend WithEvents comboBoxCompaAgrSin As ComboBox
     Friend WithEvents comboBoxEstadSegAgrSin As ComboBox
-    Friend WithEvents Label20 As Label
-    Friend WithEvents Label21 As Label
+    Friend WithEvents labelEstadSeguSin As Label
+    Friend WithEvents labelTituloAgrSin As Label
     Friend WithEvents buttonCancelSin As Button
     Friend WithEvents buttonAgrSinConf As Button
 End Class
