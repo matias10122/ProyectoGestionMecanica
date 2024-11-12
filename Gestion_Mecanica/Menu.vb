@@ -8,7 +8,7 @@ Public Class Menu
         ' Ocultar todos los paneles al inicio
         OcultarTodosLosPaneles()
 
-        ' Mostrar solo el panelHome
+        ' Mostrar solo el panelHome !
         panelHome.Visible = True
         CargarTiposEnComboBox()
         comboBoxTipo.DropDownStyle = ComboBoxStyle.DropDownList
