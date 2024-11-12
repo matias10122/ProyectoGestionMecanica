@@ -16,6 +16,7 @@ Public Class Menu
         CargarDatosEnDataGridView()
         LlenarComboBoxRut()
         LlenarComboBoxCompaAgrSin()
+        LlenarComboBoxBuscCli()
     End Sub
 
 
@@ -38,7 +39,7 @@ Public Class Menu
         panelRepuestos.Visible = False
         panelVentaRepuestos.Visible = False
         panelSiniestro.Visible = False
-        panelSoliServicios.Visible = False
+        panelClientes.Visible = False
         panelGestionServicios.Visible = False
         panelUsuario.Visible = False
     End Sub
@@ -58,9 +59,9 @@ Public Class Menu
         panelSiniestro.Visible = True
     End Sub
 
-    Private Sub buttonSoliServicios_Click(sender As Object, e As EventArgs) Handles buttonSoliServicios.Click
+    Private Sub buttonClientes_Click(sender As Object, e As EventArgs) Handles buttonClientes.Click
         OcultarTodosLosPaneles()
-        panelSoliServicios.Visible = True
+        panelClientes.Visible = True
     End Sub
 
     Private Sub buttonGestionServicios_Click(sender As Object, e As EventArgs) Handles buttonGestionServicios.Click
@@ -1802,5 +1803,337 @@ Public Class Menu
         buttonEliminarSiniestro.Visible = True
 
     End Sub
+
+    Private Sub buttonVerCli_Click(sender As Object, e As EventArgs) Handles buttonVerCli.Click
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Rut, Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna FROM clientes"
+            Dim command As New MySqlCommand(query, connection)
+            Dim clientesInfo As String = "Clientes:" & vbCrLf & vbCrLf
+
+            Try
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Construir la cadena de texto para mostrar los datos de cada cliente de forma más ordenada
+                While reader.Read()
+                    clientesInfo &= "Rut: " & reader("Rut").ToString() & vbCrLf &
+                                    "Nombre: " & reader("Nombre").ToString() & vbCrLf &
+                                    "Apellido Paterno: " & reader("ApellidoP").ToString() & vbCrLf &
+                                    "Apellido Materno: " & reader("ApellidoM").ToString() & vbCrLf &
+                                    "Dirección: " & reader("Direccion").ToString() & vbCrLf &
+                                    "Teléfono: " & reader("Telefono").ToString() & vbCrLf &
+                                    "Comuna: " & reader("Comuna").ToString() & vbCrLf &
+                                    "------------------------" & vbCrLf
+                End While
+                reader.Close()
+
+                ' Mostrar todos los datos en un MessageBox
+                MessageBox.Show(clientesInfo, "Datos de Clientes", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al consultar los datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub buttonAgreCli_Click(sender As Object, e As EventArgs) Handles buttonAgreCli.Click
+        ' Verificar si todos los campos están completos
+        If String.IsNullOrWhiteSpace(textBoxRutCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxNomCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxApePatCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxApeMatCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxDirecCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxTelefCli.Text) OrElse
+           String.IsNullOrWhiteSpace(textBoxComuCli.Text) Then
+
+            MessageBox.Show("Todos los campos son obligatorios. Por favor, completa todos los campos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Establecer la conexión a la base de datos MySQL
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            ' Consulta para verificar si el Rut ya existe en la base de datos
+            Dim checkQuery As String = "SELECT COUNT(*) FROM clientes WHERE Rut = @Rut"
+            Dim checkCommand As New MySqlCommand(checkQuery, connection)
+            checkCommand.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+
+            Try
+                ' Abrir la conexión y verificar si el Rut ya existe
+                connection.Open()
+                Dim rutExists As Integer = Convert.ToInt32(checkCommand.ExecuteScalar())
+
+                ' Si el Rut existe, mostrar advertencia y salir del procedimiento
+                If rutExists > 0 Then
+                    MessageBox.Show("El Rut ingresado ya existe en la base de datos. No se puede duplicar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
+
+                ' Si el Rut no existe, preguntar si desea crear un nuevo usuario
+                Dim result As DialogResult = MessageBox.Show("¿Deseas agregar un nuevo cliente con el Rut ingresado?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+                ' Si el usuario confirma, proceder con la inserción
+                If result = DialogResult.Yes Then
+                    ' Definir la consulta de inserción con parámetros
+                    Dim insertQuery As String = "INSERT INTO clientes (Rut, Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna) " &
+                                                "VALUES (@Rut, @Nombre, @ApellidoP, @ApellidoM, @Direccion, @Telefono, @Comuna)"
+                    Dim insertCommand As New MySqlCommand(insertQuery, connection)
+
+                    ' Asignar valores a los parámetros desde los TextBox
+                    insertCommand.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+                    insertCommand.Parameters.AddWithValue("@Nombre", textBoxNomCli.Text)
+                    insertCommand.Parameters.AddWithValue("@ApellidoP", textBoxApePatCli.Text)
+                    insertCommand.Parameters.AddWithValue("@ApellidoM", textBoxApeMatCli.Text)
+                    insertCommand.Parameters.AddWithValue("@Direccion", textBoxDirecCli.Text)
+                    insertCommand.Parameters.AddWithValue("@Telefono", textBoxTelefCli.Text)
+                    insertCommand.Parameters.AddWithValue("@Comuna", textBoxComuCli.Text)
+
+                    ' Ejecutar el comando de inserción
+                    Dim rowsAffected As Integer = insertCommand.ExecuteNonQuery()
+
+                    ' Confirmar si se insertó el registro correctamente
+                    If rowsAffected > 0 Then
+                        MessageBox.Show("Cliente agregado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        LlenarComboBoxBuscCli()
+                    Else
+                        MessageBox.Show("No se pudo agregar el cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    End If
+                End If
+            Catch ex As MySqlException
+                MessageBox.Show("Error al agregar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Finally
+                connection.Close()
+            End Try
+        End Using
+    End Sub
+
+    Private Sub buttonLimpCli_Click(sender As Object, e As EventArgs) Handles buttonLimpCli.Click
+        ' Limpiar todos los campos de texto relacionados con el cliente
+        textBoxRutCli.Clear()
+        textBoxNomCli.Clear()
+        textBoxApePatCli.Clear()
+        textBoxApeMatCli.Clear()
+        textBoxDirecCli.Clear()
+        textBoxTelefCli.Clear()
+        textBoxComuCli.Clear()
+    End Sub
+
+    Private Sub comboBoxBuscCli_SelectedIndexChanged(sender As Object, e As EventArgs) Handles comboBoxBuscCli.SelectedIndexChanged
+        ' Verificar que haya un Rut seleccionado
+        If comboBoxBuscCli.SelectedItem Is Nothing Then
+            Return
+        End If
+
+        ' Obtener el Rut seleccionado
+        Dim selectedRut As String = comboBoxBuscCli.SelectedItem.ToString()
+
+        ' Llenar el textBoxRutCli con el Rut seleccionado
+        textBoxRutCli.Text = selectedRut
+
+        ' Establecer la conexión a la base de datos MySQL
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Nombre, ApellidoP, ApellidoM, Direccion, Telefono, Comuna FROM clientes WHERE Rut = @Rut"
+            Dim command As New MySqlCommand(query, connection)
+            command.Parameters.AddWithValue("@Rut", selectedRut)
+
+            Try
+                ' Abrir la conexión y ejecutar la consulta
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Si se encontró el cliente, llenar los TextBox con sus datos
+                If reader.Read() Then
+                    textBoxNomCli.Text = reader("Nombre").ToString()
+                    textBoxApePatCli.Text = reader("ApellidoP").ToString()
+                    textBoxApeMatCli.Text = reader("ApellidoM").ToString()
+                    textBoxDirecCli.Text = reader("Direccion").ToString()
+                    textBoxTelefCli.Text = reader("Telefono").ToString()
+                    textBoxComuCli.Text = reader("Comuna").ToString()
+                Else
+                    MessageBox.Show("No se encontraron datos para el Rut seleccionado.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+                reader.Close()
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar los datos del cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    ' Variable de estado para controlar si estamos en modo de edición
+    Private isEditing As Boolean = False
+
+    Private Sub buttonEditCli_Click(sender As Object, e As EventArgs) Handles buttonEditCli.Click
+        ' Verificar si estamos entrando o saliendo del modo de edición
+        If Not isEditing Then
+            ' Entrando en modo de edición
+            ' Verificar si el Rut en textBoxRutCli existe en la base de datos
+            Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+                Dim query As String = "SELECT COUNT(*) FROM clientes WHERE Rut = @Rut"
+                Dim command As New MySqlCommand(query, connection)
+                command.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+
+                Try
+                    connection.Open()
+                    Dim rutExists As Integer = Convert.ToInt32(command.ExecuteScalar())
+
+                    If rutExists = 0 Then
+                        MessageBox.Show("El Rut ingresado no existe. No se puede editar un cliente inexistente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return
+                    End If
+                Catch ex As MySqlException
+                    MessageBox.Show("Error al verificar el Rut: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End Try
+            End Using
+
+            ' Confirmar si el usuario desea entrar en modo de edición
+            Dim result As DialogResult = MessageBox.Show("¿Deseas editar el cliente con el Rut ingresado?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If result = DialogResult.No Then
+                Return
+            End If
+
+            ' Bloquear los controles y habilitar el modo de edición
+            buttonVerCli.Enabled = False
+            buttonAgreCli.Enabled = False
+            buttonElimCli.Enabled = False
+            buttonLimpCli.Enabled = False
+            comboBoxBuscCli.Enabled = False
+            textBoxRutCli.Enabled = False
+
+            isEditing = True
+            buttonEditCli.Text = "Terminar Edición"
+        Else
+            ' Saliendo del modo de edición, guardando cambios
+            ' Establecer la conexión y ejecutar la actualización
+            Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+                Dim updateQuery As String = "UPDATE clientes SET Nombre = @Nombre, ApellidoP = @ApellidoP, ApellidoM = @ApellidoM, " &
+                                        "Direccion = @Direccion, Telefono = @Telefono, Comuna = @Comuna WHERE Rut = @Rut"
+                Dim updateCommand As New MySqlCommand(updateQuery, connection)
+
+                ' Asignar valores a los parámetros desde los TextBox
+                updateCommand.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+                updateCommand.Parameters.AddWithValue("@Nombre", textBoxNomCli.Text)
+                updateCommand.Parameters.AddWithValue("@ApellidoP", textBoxApePatCli.Text)
+                updateCommand.Parameters.AddWithValue("@ApellidoM", textBoxApeMatCli.Text)
+                updateCommand.Parameters.AddWithValue("@Direccion", textBoxDirecCli.Text)
+                updateCommand.Parameters.AddWithValue("@Telefono", textBoxTelefCli.Text)
+                updateCommand.Parameters.AddWithValue("@Comuna", textBoxComuCli.Text)
+
+                Try
+                    connection.Open()
+                    Dim rowsAffected As Integer = updateCommand.ExecuteNonQuery()
+
+                    ' Verificar si la actualización se realizó correctamente
+                    If rowsAffected > 0 Then
+                        MessageBox.Show("Cliente editado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        LlenarComboBoxBuscCli()
+                    Else
+                        MessageBox.Show("No se pudo editar el cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    End If
+                Catch ex As MySqlException
+                    MessageBox.Show("Error al editar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+
+            ' Desbloquear los controles y salir del modo de edición
+            buttonVerCli.Enabled = True
+            buttonAgreCli.Enabled = True
+            buttonElimCli.Enabled = True
+            buttonLimpCli.Enabled = True
+            comboBoxBuscCli.Enabled = True
+            textBoxRutCli.Enabled = True
+
+            isEditing = False
+            buttonEditCli.Text = "Editar Cliente"
+        End If
+    End Sub
+
+    Private Sub buttonElimCli_Click(sender As Object, e As EventArgs) Handles buttonElimCli.Click
+        ' Verificar si el Rut en textBoxRutCli está vacío
+        If String.IsNullOrWhiteSpace(textBoxRutCli.Text) Then
+            MessageBox.Show("Por favor, ingresa un Rut para eliminar un cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Establecer la conexión a la base de datos MySQL
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            ' Verificar si el Rut existe en la base de datos
+            Dim checkQuery As String = "SELECT COUNT(*) FROM clientes WHERE Rut = @Rut"
+            Dim checkCommand As New MySqlCommand(checkQuery, connection)
+            checkCommand.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+
+            Try
+                connection.Open()
+                Dim rutExists As Integer = Convert.ToInt32(checkCommand.ExecuteScalar())
+
+                If rutExists = 0 Then
+                    MessageBox.Show("El Rut ingresado no existe en la base de datos. No se puede eliminar un cliente inexistente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
+            Catch ex As MySqlException
+                MessageBox.Show("Error al verificar el Rut: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End Try
+
+            ' Confirmar si el usuario desea eliminar el cliente
+            Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que deseas eliminar el cliente con el Rut ingresado?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If result = DialogResult.No Then
+                Return
+            End If
+
+            ' Eliminar el cliente
+            Dim deleteQuery As String = "DELETE FROM clientes WHERE Rut = @Rut"
+            Dim deleteCommand As New MySqlCommand(deleteQuery, connection)
+            deleteCommand.Parameters.AddWithValue("@Rut", textBoxRutCli.Text)
+
+            Try
+                Dim rowsAffected As Integer = deleteCommand.ExecuteNonQuery()
+
+                ' Verificar si la eliminación se realizó correctamente
+                If rowsAffected > 0 Then
+                    MessageBox.Show("Cliente eliminado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    LlenarComboBoxBuscCli()
+
+                    ' Limpiar los campos de texto después de la eliminación
+                    textBoxRutCli.Clear()
+                    textBoxNomCli.Clear()
+                    textBoxApePatCli.Clear()
+                    textBoxApeMatCli.Clear()
+                    textBoxDirecCli.Clear()
+                    textBoxTelefCli.Clear()
+                    textBoxComuCli.Clear()
+                Else
+                    MessageBox.Show("No se pudo eliminar el cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            Catch ex As MySqlException
+                MessageBox.Show("Error al eliminar el cliente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub LlenarComboBoxBuscCli()
+        ' Establecer la conexión a la base de datos MySQL
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT Rut FROM clientes"
+            Dim command As New MySqlCommand(query, connection)
+
+            Try
+                ' Abrir la conexión y ejecutar la consulta
+                connection.Open()
+                Dim reader As MySqlDataReader = command.ExecuteReader()
+
+                ' Limpiar el comboBox antes de llenarlo para evitar duplicados
+                comboBoxBuscCli.Items.Clear()
+
+                ' Llenar el comboBox con cada Rut de la tabla clientes
+                While reader.Read()
+                    comboBoxBuscCli.Items.Add(reader("Rut").ToString())
+                End While
+                reader.Close()
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar los RUTs: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
 
 End Class
