@@ -1490,6 +1490,6 @@ Public Class Menu
         txtTelRegistroCli.Clear()
         txtComRegistroCli.Clear()
     End Sub
-
+    'FIN DEL PANEL'
 
 End Class
