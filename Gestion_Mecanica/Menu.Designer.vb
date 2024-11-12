@@ -45,11 +45,11 @@ Partial Class Menu
         lblTotalBoleta = New Label()
         lblProducto = New Label()
         lblRutCliente_nombre = New Label()
-        Label11 = New Label()
-        Label10 = New Label()
-        Label9 = New Label()
-        Label8 = New Label()
-        GroupBox2 = New GroupBox()
+        lblGiro = New Label()
+        lblDirBoleta = New Label()
+        lblrutBoleta = New Label()
+        lbltitulouno = New Label()
+        gpBoxDos = New GroupBox()
         btnVer = New Button()
         btnRestaurarFiltros = New Button()
         btnAplicarFiltros = New Button()
@@ -62,11 +62,10 @@ Partial Class Menu
         lblInicio = New Label()
         lblCliente = New Label()
         dgvResumenVentas = New DataGridView()
-        Label17 = New Label()
-        GroupBox1 = New GroupBox()
+        lbltitulodos = New Label()
+        gpBoxUno = New GroupBox()
         btRegistrarCli = New Button()
         txtStock = New TextBox()
-        lblBoleta = New Label()
         lblStock = New Label()
         btnGenerarBoleta = New Button()
         btnEliminarVenta = New Button()
@@ -88,9 +87,9 @@ Partial Class Menu
         lblRut = New Label()
         lblFecVenta = New Label()
         lblNeto = New Label()
-        Label7 = New Label()
+        lbltitulo3 = New Label()
         pnregistroCliente = New Panel()
-        Label20 = New Label()
+        lbltitulo4 = New Label()
         btnEliminarRegistro = New Button()
         btnEditarRegistroCli = New Button()
         btRegistroIngresar = New Button()
@@ -105,7 +104,7 @@ Partial Class Menu
         lblTelRegistro = New Label()
         lblRUTRegistro = New Label()
         lblApePaRegistro = New Label()
-        Label15 = New Label()
+        lblApeMaterno = New Label()
         lblDirRegistro = New Label()
         lblComRegistro = New Label()
         lblNomRegistro = New Label()
@@ -156,9 +155,9 @@ Partial Class Menu
         panelVentaRepuestos.SuspendLayout()
         pnlBoleta.SuspendLayout()
         gpBoleta.SuspendLayout()
-        GroupBox2.SuspendLayout()
+        gpBoxDos.SuspendLayout()
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).BeginInit()
-        GroupBox1.SuspendLayout()
+        gpBoxUno.SuspendLayout()
         pnregistroCliente.SuspendLayout()
         CType(dgvDatosCliente, ComponentModel.ISupportInitialize).BeginInit()
         panelRepuestos.SuspendLayout()
@@ -329,9 +328,8 @@ Partial Class Menu
         ' panelVentaRepuestos
         ' 
         panelVentaRepuestos.BackColor = Color.DarkSlateGray
-        panelVentaRepuestos.Controls.Add(pnlBoleta)
-        panelVentaRepuestos.Controls.Add(GroupBox2)
-        panelVentaRepuestos.Controls.Add(GroupBox1)
+        panelVentaRepuestos.Controls.Add(gpBoxDos)
+        panelVentaRepuestos.Controls.Add(gpBoxUno)
         panelVentaRepuestos.Location = New Point(9, 76)
         panelVentaRepuestos.Margin = New Padding(3, 4, 3, 4)
         panelVentaRepuestos.Name = "panelVentaRepuestos"
@@ -341,7 +339,7 @@ Partial Class Menu
         ' pnlBoleta
         ' 
         pnlBoleta.Controls.Add(gpBoleta)
-        pnlBoleta.Location = New Point(507, 3)
+        pnlBoleta.Location = New Point(1, 0)
         pnlBoleta.Name = "pnlBoleta"
         pnlBoleta.Size = New Size(398, 504)
         pnlBoleta.TabIndex = 24
@@ -354,11 +352,11 @@ Partial Class Menu
         gpBoleta.Controls.Add(lblTotalBoleta)
         gpBoleta.Controls.Add(lblProducto)
         gpBoleta.Controls.Add(lblRutCliente_nombre)
-        gpBoleta.Controls.Add(Label11)
-        gpBoleta.Controls.Add(Label10)
-        gpBoleta.Controls.Add(Label9)
-        gpBoleta.Controls.Add(Label8)
-        gpBoleta.Location = New Point(11, 8)
+        gpBoleta.Controls.Add(lblGiro)
+        gpBoleta.Controls.Add(lblDirBoleta)
+        gpBoleta.Controls.Add(lblrutBoleta)
+        gpBoleta.Controls.Add(lbltitulouno)
+        gpBoleta.Location = New Point(12, 12)
         gpBoleta.Name = "gpBoleta"
         gpBoleta.Size = New Size(380, 481)
         gpBoleta.TabIndex = 8
@@ -380,7 +378,7 @@ Partial Class Menu
         lblGracias.AutoSize = True
         lblGracias.Location = New Point(43, 378)
         lblGracias.Name = "lblGracias"
-        lblGracias.Size = New Size(241, 20)
+        lblGracias.Size = New Size(256, 20)
         lblGracias.TabIndex = 7
         lblGracias.Text = "¡Gracias por comprar con nosotros!"
         ' 
@@ -389,7 +387,7 @@ Partial Class Menu
         lblTotalBoleta.AutoSize = True
         lblTotalBoleta.Location = New Point(21, 300)
         lblTotalBoleta.Name = "lblTotalBoleta"
-        lblTotalBoleta.Size = New Size(42, 20)
+        lblTotalBoleta.Size = New Size(44, 20)
         lblTotalBoleta.TabIndex = 6
         lblTotalBoleta.Text = "Total"
         ' 
@@ -398,7 +396,7 @@ Partial Class Menu
         lblProducto.AutoSize = True
         lblProducto.Location = New Point(14, 184)
         lblProducto.Name = "lblProducto"
-        lblProducto.Size = New Size(70, 20)
+        lblProducto.Size = New Size(73, 20)
         lblProducto.TabIndex = 5
         lblProducto.Text = "producto"
         ' 
@@ -407,69 +405,70 @@ Partial Class Menu
         lblRutCliente_nombre.AutoSize = True
         lblRutCliente_nombre.Location = New Point(14, 118)
         lblRutCliente_nombre.Name = "lblRutCliente_nombre"
-        lblRutCliente_nombre.Size = New Size(55, 20)
+        lblRutCliente_nombre.Size = New Size(57, 20)
         lblRutCliente_nombre.TabIndex = 4
         lblRutCliente_nombre.Text = "Cliente"
         ' 
-        ' Label11
+        ' lblGiro
         ' 
-        Label11.AutoSize = True
-        Label11.Location = New Point(224, 56)
-        Label11.Name = "Label11"
-        Label11.Size = New Size(114, 20)
-        Label11.TabIndex = 3
-        Label11.Text = "Giro: Automotiz"
+        lblGiro.AutoSize = True
+        lblGiro.Location = New Point(224, 56)
+        lblGiro.Name = "lblGiro"
+        lblGiro.Size = New Size(122, 20)
+        lblGiro.TabIndex = 3
+        lblGiro.Text = "Giro: Automotiz"
         ' 
-        ' Label10
+        ' lblDirBoleta
         ' 
-        Label10.AutoSize = True
-        Label10.Location = New Point(16, 81)
-        Label10.Name = "Label10"
-        Label10.Size = New Size(173, 20)
-        Label10.TabIndex = 2
-        Label10.Text = "Dirección: Republica 100"
+        lblDirBoleta.AutoSize = True
+        lblDirBoleta.Location = New Point(16, 81)
+        lblDirBoleta.Name = "lblDirBoleta"
+        lblDirBoleta.Size = New Size(181, 20)
+        lblDirBoleta.TabIndex = 2
+        lblDirBoleta.Text = "Dirección: Republica 100"
         ' 
-        ' Label9
+        ' lblrutBoleta
         ' 
-        Label9.AutoSize = True
-        Label9.Location = New Point(18, 54)
-        Label9.Name = "Label9"
-        Label9.Size = New Size(116, 20)
-        Label9.TabIndex = 1
-        Label9.Text = "Rut: 11111111-1"
+        lblrutBoleta.AutoSize = True
+        lblrutBoleta.Location = New Point(18, 54)
+        lblrutBoleta.Name = "lblrutBoleta"
+        lblrutBoleta.Size = New Size(129, 20)
+        lblrutBoleta.TabIndex = 1
+        lblrutBoleta.Text = "Rut: 11111111-1"
         ' 
-        ' Label8
+        ' lbltitulouno
         ' 
-        Label8.AutoSize = True
-        Label8.Font = New Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label8.Location = New Point(114, 24)
-        Label8.Name = "Label8"
-        Label8.Size = New Size(149, 23)
-        Label8.TabIndex = 0
-        Label8.Text = "Gestión Mecánica"
+        lbltitulouno.AutoSize = True
+        lbltitulouno.Font = New Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltitulouno.Location = New Point(114, 24)
+        lbltitulouno.Name = "lbltitulouno"
+        lbltitulouno.Size = New Size(149, 23)
+        lbltitulouno.TabIndex = 0
+        lbltitulouno.Text = "Gestión Mecánica"
         ' 
-        ' GroupBox2
+        ' gpBoxDos
         ' 
-        GroupBox2.BackColor = Color.DarkCyan
-        GroupBox2.Controls.Add(btnVer)
-        GroupBox2.Controls.Add(btnRestaurarFiltros)
-        GroupBox2.Controls.Add(btnAplicarFiltros)
-        GroupBox2.Controls.Add(cmbFiltroCliente)
-        GroupBox2.Controls.Add(cmbFiltroRepuesto)
-        GroupBox2.Controls.Add(dtpFechaFin)
-        GroupBox2.Controls.Add(dtpFechaInicio)
-        GroupBox2.Controls.Add(lblrepuesto)
-        GroupBox2.Controls.Add(lblTermino)
-        GroupBox2.Controls.Add(lblInicio)
-        GroupBox2.Controls.Add(lblCliente)
-        GroupBox2.Controls.Add(dgvResumenVentas)
-        GroupBox2.Controls.Add(Label17)
-        GroupBox2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        GroupBox2.Location = New Point(501, 11)
-        GroupBox2.Name = "GroupBox2"
-        GroupBox2.Size = New Size(392, 496)
-        GroupBox2.TabIndex = 1
-        GroupBox2.TabStop = False
+        gpBoxDos.BackColor = Color.DarkCyan
+        gpBoxDos.Controls.Add(pnlBoleta)
+        gpBoxDos.Controls.Add(btnVer)
+        gpBoxDos.Controls.Add(btnRestaurarFiltros)
+        gpBoxDos.Controls.Add(btnAplicarFiltros)
+        gpBoxDos.Controls.Add(cmbFiltroCliente)
+        gpBoxDos.Controls.Add(cmbFiltroRepuesto)
+        gpBoxDos.Controls.Add(dtpFechaFin)
+        gpBoxDos.Controls.Add(dtpFechaInicio)
+        gpBoxDos.Controls.Add(lblrepuesto)
+        gpBoxDos.Controls.Add(lblTermino)
+        gpBoxDos.Controls.Add(lblInicio)
+        gpBoxDos.Controls.Add(lblCliente)
+        gpBoxDos.Controls.Add(dgvResumenVentas)
+        gpBoxDos.Controls.Add(lbltitulodos)
+        gpBoxDos.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        gpBoxDos.Location = New Point(501, 11)
+        gpBoxDos.Name = "gpBoxDos"
+        gpBoxDos.Size = New Size(392, 496)
+        gpBoxDos.TabIndex = 1
+        gpBoxDos.TabStop = False
         ' 
         ' btnVer
         ' 
@@ -578,50 +577,49 @@ Partial Class Menu
         dgvResumenVentas.Size = New Size(362, 199)
         dgvResumenVentas.TabIndex = 2
         ' 
-        ' Label17
+        ' lbltitulodos
         ' 
-        Label17.AutoSize = True
-        Label17.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label17.Location = New Point(97, 0)
-        Label17.Name = "Label17"
-        Label17.Size = New Size(169, 25)
-        Label17.TabIndex = 1
-        Label17.Text = "Resumen de venta"
+        lbltitulodos.AutoSize = True
+        lbltitulodos.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltitulodos.Location = New Point(97, 0)
+        lbltitulodos.Name = "lbltitulodos"
+        lbltitulodos.Size = New Size(169, 25)
+        lbltitulodos.TabIndex = 1
+        lbltitulodos.Text = "Resumen de venta"
         ' 
-        ' GroupBox1
+        ' gpBoxUno
         ' 
-        GroupBox1.BackColor = Color.CadetBlue
-        GroupBox1.Controls.Add(btRegistrarCli)
-        GroupBox1.Controls.Add(txtStock)
-        GroupBox1.Controls.Add(lblBoleta)
-        GroupBox1.Controls.Add(lblStock)
-        GroupBox1.Controls.Add(btnGenerarBoleta)
-        GroupBox1.Controls.Add(btnEliminarVenta)
-        GroupBox1.Controls.Add(lblDatosCliente)
-        GroupBox1.Controls.Add(btEditarVenta)
-        GroupBox1.Controls.Add(btnRegistrarVenta)
-        GroupBox1.Controls.Add(txtId)
-        GroupBox1.Controls.Add(lblID)
-        GroupBox1.Controls.Add(txtTotal)
-        GroupBox1.Controls.Add(lblmensajeIVA)
-        GroupBox1.Controls.Add(txtMontoNeto)
-        GroupBox1.Controls.Add(dtpFechaVenta)
-        GroupBox1.Controls.Add(txtCliente)
-        GroupBox1.Controls.Add(txtCantidadVendida)
-        GroupBox1.Controls.Add(cmbNombreRepuesto)
-        GroupBox1.Controls.Add(lblTotal)
-        GroupBox1.Controls.Add(lblNomRepuesto)
-        GroupBox1.Controls.Add(lblCntVender)
-        GroupBox1.Controls.Add(lblRut)
-        GroupBox1.Controls.Add(lblFecVenta)
-        GroupBox1.Controls.Add(lblNeto)
-        GroupBox1.Controls.Add(Label7)
-        GroupBox1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
-        GroupBox1.Location = New Point(14, 11)
-        GroupBox1.Name = "GroupBox1"
-        GroupBox1.Size = New Size(481, 496)
-        GroupBox1.TabIndex = 0
-        GroupBox1.TabStop = False
+        gpBoxUno.BackColor = Color.CadetBlue
+        gpBoxUno.Controls.Add(btRegistrarCli)
+        gpBoxUno.Controls.Add(txtStock)
+        gpBoxUno.Controls.Add(lblStock)
+        gpBoxUno.Controls.Add(btnGenerarBoleta)
+        gpBoxUno.Controls.Add(btnEliminarVenta)
+        gpBoxUno.Controls.Add(lblDatosCliente)
+        gpBoxUno.Controls.Add(btEditarVenta)
+        gpBoxUno.Controls.Add(btnRegistrarVenta)
+        gpBoxUno.Controls.Add(txtId)
+        gpBoxUno.Controls.Add(lblID)
+        gpBoxUno.Controls.Add(txtTotal)
+        gpBoxUno.Controls.Add(lblmensajeIVA)
+        gpBoxUno.Controls.Add(txtMontoNeto)
+        gpBoxUno.Controls.Add(dtpFechaVenta)
+        gpBoxUno.Controls.Add(txtCliente)
+        gpBoxUno.Controls.Add(txtCantidadVendida)
+        gpBoxUno.Controls.Add(cmbNombreRepuesto)
+        gpBoxUno.Controls.Add(lblTotal)
+        gpBoxUno.Controls.Add(lblNomRepuesto)
+        gpBoxUno.Controls.Add(lblCntVender)
+        gpBoxUno.Controls.Add(lblRut)
+        gpBoxUno.Controls.Add(lblFecVenta)
+        gpBoxUno.Controls.Add(lblNeto)
+        gpBoxUno.Controls.Add(lbltitulo3)
+        gpBoxUno.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        gpBoxUno.Location = New Point(14, 11)
+        gpBoxUno.Name = "gpBoxUno"
+        gpBoxUno.Size = New Size(481, 496)
+        gpBoxUno.TabIndex = 0
+        gpBoxUno.TabStop = False
         ' 
         ' btRegistrarCli
         ' 
@@ -638,15 +636,6 @@ Partial Class Menu
         txtStock.Name = "txtStock"
         txtStock.Size = New Size(56, 27)
         txtStock.TabIndex = 17
-        ' 
-        ' lblBoleta
-        ' 
-        lblBoleta.AutoSize = True
-        lblBoleta.Location = New Point(38, 12)
-        lblBoleta.Name = "lblBoleta"
-        lblBoleta.Size = New Size(71, 20)
-        lblBoleta.TabIndex = 23
-        lblBoleta.Text = "lblBoleta"
         ' 
         ' lblStock
         ' 
@@ -833,22 +822,22 @@ Partial Class Menu
         lblNeto.TabIndex = 1
         lblNeto.Text = "Monto neto"
         ' 
-        ' Label7
+        ' lbltitulo3
         ' 
-        Label7.AutoSize = True
-        Label7.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(173, 0)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(219, 25)
-        Label7.TabIndex = 0
-        Label7.Text = "Registro de nueva venta"
+        lbltitulo3.AutoSize = True
+        lbltitulo3.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltitulo3.Location = New Point(173, 0)
+        lbltitulo3.Name = "lbltitulo3"
+        lbltitulo3.Size = New Size(219, 25)
+        lbltitulo3.TabIndex = 0
+        lbltitulo3.Text = "Registro de nueva venta"
         ' 
         ' pnregistroCliente
         ' 
         pnregistroCliente.BackColor = Color.Teal
-        pnregistroCliente.Controls.Add(Label20)
-        pnregistroCliente.Controls.Add(btnEliminarRegistro)
+        pnregistroCliente.Controls.Add(lbltitulo4)
         pnregistroCliente.Controls.Add(btnEditarRegistroCli)
+        pnregistroCliente.Controls.Add(btnEliminarRegistro)
         pnregistroCliente.Controls.Add(btRegistroIngresar)
         pnregistroCliente.Controls.Add(dgvDatosCliente)
         pnregistroCliente.Controls.Add(txtComRegistroCli)
@@ -861,26 +850,26 @@ Partial Class Menu
         pnregistroCliente.Controls.Add(lblTelRegistro)
         pnregistroCliente.Controls.Add(lblRUTRegistro)
         pnregistroCliente.Controls.Add(lblApePaRegistro)
-        pnregistroCliente.Controls.Add(Label15)
+        pnregistroCliente.Controls.Add(lblApeMaterno)
         pnregistroCliente.Controls.Add(lblDirRegistro)
         pnregistroCliente.Controls.Add(lblComRegistro)
         pnregistroCliente.Controls.Add(lblNomRegistro)
         pnregistroCliente.Controls.Add(btCerrarRegistroCli)
-        pnregistroCliente.Location = New Point(9, 59)
+        pnregistroCliente.Location = New Point(12, 71)
         pnregistroCliente.Name = "pnregistroCliente"
-        pnregistroCliente.Size = New Size(912, 537)
+        pnregistroCliente.Size = New Size(892, 509)
         pnregistroCliente.TabIndex = 24
         ' 
-        ' Label20
+        ' lbltitulo4
         ' 
-        Label20.AutoSize = True
-        Label20.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label20.ForeColor = SystemColors.ButtonHighlight
-        Label20.Location = New Point(383, 20)
-        Label20.Name = "Label20"
-        Label20.Size = New Size(153, 25)
-        Label20.TabIndex = 19
-        Label20.Text = "Registro clientes"
+        lbltitulo4.AutoSize = True
+        lbltitulo4.Font = New Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltitulo4.ForeColor = SystemColors.ButtonHighlight
+        lbltitulo4.Location = New Point(383, 20)
+        lbltitulo4.Name = "lbltitulo4"
+        lbltitulo4.Size = New Size(153, 25)
+        lbltitulo4.TabIndex = 19
+        lbltitulo4.Text = "Registro clientes"
         ' 
         ' btnEliminarRegistro
         ' 
@@ -1004,16 +993,16 @@ Partial Class Menu
         lblApePaRegistro.TabIndex = 5
         lblApePaRegistro.Text = "Apellido paterno"
         ' 
-        ' Label15
+        ' lblApeMaterno
         ' 
-        Label15.AutoSize = True
-        Label15.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label15.ForeColor = SystemColors.ButtonHighlight
-        Label15.Location = New Point(46, 211)
-        Label15.Name = "Label15"
-        Label15.Size = New Size(131, 20)
-        Label15.TabIndex = 4
-        Label15.Text = "Apellido materno"
+        lblApeMaterno.AutoSize = True
+        lblApeMaterno.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblApeMaterno.ForeColor = SystemColors.ButtonHighlight
+        lblApeMaterno.Location = New Point(46, 211)
+        lblApeMaterno.Name = "lblApeMaterno"
+        lblApeMaterno.Size = New Size(131, 20)
+        lblApeMaterno.TabIndex = 4
+        lblApeMaterno.Text = "Apellido materno"
         ' 
         ' lblDirRegistro
         ' 
@@ -1051,7 +1040,7 @@ Partial Class Menu
         ' btCerrarRegistroCli
         ' 
         btCerrarRegistroCli.BackColor = Color.LightGray
-        btCerrarRegistroCli.Location = New Point(621, 489)
+        btCerrarRegistroCli.Location = New Point(630, 450)
         btCerrarRegistroCli.Name = "btCerrarRegistroCli"
         btCerrarRegistroCli.Size = New Size(94, 29)
         btCerrarRegistroCli.TabIndex = 0
@@ -1497,11 +1486,11 @@ Partial Class Menu
         pnlBoleta.ResumeLayout(False)
         gpBoleta.ResumeLayout(False)
         gpBoleta.PerformLayout()
-        GroupBox2.ResumeLayout(False)
-        GroupBox2.PerformLayout()
+        gpBoxDos.ResumeLayout(False)
+        gpBoxDos.PerformLayout()
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).EndInit()
-        GroupBox1.ResumeLayout(False)
-        GroupBox1.PerformLayout()
+        gpBoxUno.ResumeLayout(False)
+        gpBoxUno.PerformLayout()
         pnregistroCliente.ResumeLayout(False)
         pnregistroCliente.PerformLayout()
         CType(dgvDatosCliente, ComponentModel.ISupportInitialize).EndInit()
@@ -1571,14 +1560,14 @@ Partial Class Menu
     Friend WithEvents panelEncabezadoUsuario As Panel
     Friend WithEvents comboBoxTipo As ComboBox
     Friend WithEvents limpiarCamposGestionUsuarios As Button
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents gpBoxUno As GroupBox
     Friend WithEvents lblTotal As Label
     Friend WithEvents lblNomRepuesto As Label
     Friend WithEvents lblCntVender As Label
     Friend WithEvents lblRut As Label
     Friend WithEvents lblFecVenta As Label
     Friend WithEvents lblNeto As Label
-    Friend WithEvents Label7 As Label
+    Friend WithEvents lbltitulo3 As Label
     Friend WithEvents cmbNombreRepuesto As ComboBox
     Friend WithEvents txtCantidadVendida As TextBox
     Friend WithEvents txtCliente As TextBox
@@ -1591,8 +1580,8 @@ Partial Class Menu
     Friend WithEvents txtStock As TextBox
     Friend WithEvents txtId As TextBox
     Friend WithEvents btnRegistrarVenta As Button
-    Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents Label17 As Label
+    Friend WithEvents gpBoxDos As GroupBox
+    Friend WithEvents lbltitulodos As Label
     Friend WithEvents dgvResumenVentas As DataGridView
     Friend WithEvents dtpFechaInicio As DateTimePicker
     Friend WithEvents lblrepuesto As Label
@@ -1609,23 +1598,22 @@ Partial Class Menu
     Friend WithEvents btEditarVenta As Button
     Friend WithEvents btnEliminarVenta As Button
     Friend WithEvents btnGenerarBoleta As Button
-    Friend WithEvents lblBoleta As Label
     Friend WithEvents pnlBoleta As Panel
-    Friend WithEvents Label8 As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label9 As Label
+    Friend WithEvents lbltitulouno As Label
+    Friend WithEvents lblDirBoleta As Label
+    Friend WithEvents lblrutBoleta As Label
     Friend WithEvents lblGracias As Label
     Friend WithEvents lblTotalBoleta As Label
     Friend WithEvents lblProducto As Label
     Friend WithEvents lblRutCliente_nombre As Label
-    Friend WithEvents Label11 As Label
+    Friend WithEvents lblGiro As Label
     Friend WithEvents gpBoleta As GroupBox
     Friend WithEvents btnEnviarBoleta As Button
     Friend WithEvents pnregistroCliente As Panel
     Friend WithEvents btRegistrarCli As Button
     Friend WithEvents lblRUTRegistro As Label
     Friend WithEvents lblApePaRegistro As Label
-    Friend WithEvents Label15 As Label
+    Friend WithEvents lblApeMaterno As Label
     Friend WithEvents lblDirRegistro As Label
     Friend WithEvents lblComRegistro As Label
     Friend WithEvents lblNomRegistro As Label
@@ -1642,5 +1630,5 @@ Partial Class Menu
     Friend WithEvents btRegistroIngresar As Button
     Friend WithEvents btnEditarRegistroCli As Button
     Friend WithEvents btnEliminarRegistro As Button
-    Friend WithEvents Label20 As Label
+    Friend WithEvents lbltitulo4 As Label
 End Class
