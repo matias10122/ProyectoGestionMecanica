@@ -14,7 +14,7 @@ Partial Class Menu
         End Try
     End Sub
 
-    'Requerido por el Diseñador de Windows Forms
+    'Requerido por el Diseñador de Windows Forms !
     Private components As System.ComponentModel.IContainer
 
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
