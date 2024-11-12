@@ -38,6 +38,7 @@ Partial Class Menu
         Panel2 = New Panel()
         panelHome = New Panel()
         panelVentaRepuestos = New Panel()
+        pnregistroCliente = New Panel()
         pnlBoleta = New Panel()
         gpBoleta = New GroupBox()
         btnEnviarBoleta = New Button()
@@ -64,15 +65,16 @@ Partial Class Menu
         dgvResumenVentas = New DataGridView()
         Label17 = New Label()
         GroupBox1 = New GroupBox()
+        btRegistrarCli = New Button()
+        txtStock = New TextBox()
         lblBoleta = New Label()
+        lblStock = New Label()
         btnGenerarBoleta = New Button()
         btnEliminarVenta = New Button()
         lblDatosCliente = New Label()
         btEditarVenta = New Button()
         btnRegistrarVenta = New Button()
-        txtStock = New TextBox()
         txtId = New TextBox()
-        lblStock = New Label()
         lblID = New Label()
         txtTotal = New TextBox()
         lblmensajeIVA = New Label()
@@ -89,6 +91,65 @@ Partial Class Menu
         lblNeto = New Label()
         Label7 = New Label()
         panelSiniestro = New Panel()
+        panelDetalleSiniestro = New Panel()
+        panelAgreSis = New Panel()
+        buttonCancelSin = New Button()
+        buttonAgrSinConf = New Button()
+        labelTituloAgrSin = New Label()
+        comboBoxEstadSegAgrSin = New ComboBox()
+        labelEstadSeguSin = New Label()
+        comboBoxCompaAgrSin = New ComboBox()
+        labelCompSin = New Label()
+        dateTimePickerFecSin = New DateTimePicker()
+        labelFechaSin = New Label()
+        textBoxDetallAgrSin = New TextBox()
+        labelDetaSin = New Label()
+        textBoxTelAgrSin = New TextBox()
+        labelTelAgrSis = New Label()
+        textBoxApeMatAgrSin = New TextBox()
+        labelApeMatAgrSin = New Label()
+        textBoxApePatAgrSin = New TextBox()
+        labelApelliPatAgrSin = New Label()
+        comboBoxRutAgrSin = New ComboBox()
+        textBoxNomAgrSin = New TextBox()
+        labelNomAgrSin = New Label()
+        labelRutAgrSin = New Label()
+        panelDetalleSinSelec = New Panel()
+        label13PanSin = New Label()
+        labelDetalleSin = New Label()
+        labelTituloDetalleSin = New Label()
+        buttonCerrarPanDetSin = New Button()
+        buttonFinalizado = New Button()
+        buttonPendiente = New Button()
+        buttonActivo = New Button()
+        nomCompSin = New Label()
+        labelNomCompDetSin = New Label()
+        labelTituloCompDetSis = New Label()
+        labelEstadoSeguSis = New Label()
+        labelSegDetSin = New Label()
+        pictureBoxEstadSin = New PictureBox()
+        labelEstadDetSin = New Label()
+        textBoxComuDetSis = New TextBox()
+        textBoxTelDetSis = New TextBox()
+        textBoxDireDetSis = New TextBox()
+        textBoxRutDetSis = New TextBox()
+        textBoxApeMatDetSis = New TextBox()
+        textBoxApePatDetSis = New TextBox()
+        textBoxNomDetSis = New TextBox()
+        panelDatoDetSin = New Panel()
+        labelComuDetSin = New Label()
+        labelTelDetSin = New Label()
+        labelDirPanSin = New Label()
+        labelRutVerSin = New Label()
+        labelApeMatVerSin = New Label()
+        labelNomSin = New Label()
+        labelApePatSin = New Label()
+        tituloVerDetalleSiniestros = New Label()
+        labelTituloSiniestros = New Label()
+        dataGridViewSiniestro = New DataGridView()
+        buttonEliminarSiniestro = New Button()
+        buttonAgregarSiniestro = New Button()
+        buttonVerDetallesSiniestro = New Button()
         panelGestionServicios = New Panel()
         panelSoliServicios = New Panel()
         panelRepuestos = New Panel()
@@ -137,6 +198,13 @@ Partial Class Menu
         GroupBox2.SuspendLayout()
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).BeginInit()
         GroupBox1.SuspendLayout()
+        panelSiniestro.SuspendLayout()
+        panelDetalleSiniestro.SuspendLayout()
+        panelAgreSis.SuspendLayout()
+        panelDetalleSinSelec.SuspendLayout()
+        CType(pictureBoxEstadSin, ComponentModel.ISupportInitialize).BeginInit()
+        panelDatoDetSin.SuspendLayout()
+        CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).BeginInit()
         panelRepuestos.SuspendLayout()
         panelUsuario.SuspendLayout()
         panelEncabezadoUsuario.SuspendLayout()
@@ -305,6 +373,7 @@ Partial Class Menu
         ' panelVentaRepuestos
         ' 
         panelVentaRepuestos.BackColor = Color.DarkSlateGray
+        panelVentaRepuestos.Controls.Add(pnregistroCliente)
         panelVentaRepuestos.Controls.Add(pnlBoleta)
         panelVentaRepuestos.Controls.Add(GroupBox2)
         panelVentaRepuestos.Controls.Add(GroupBox1)
@@ -313,6 +382,13 @@ Partial Class Menu
         panelVentaRepuestos.Name = "panelVentaRepuestos"
         panelVentaRepuestos.Size = New Size(903, 523)
         panelVentaRepuestos.TabIndex = 1
+        ' 
+        ' pnregistroCliente
+        ' 
+        pnregistroCliente.Location = New Point(0, 11)
+        pnregistroCliente.Name = "pnregistroCliente"
+        pnregistroCliente.Size = New Size(893, 393)
+        pnregistroCliente.TabIndex = 24
         ' 
         ' pnlBoleta
         ' 
@@ -336,7 +412,7 @@ Partial Class Menu
         gpBoleta.Controls.Add(Label8)
         gpBoleta.Location = New Point(11, 8)
         gpBoleta.Name = "gpBoleta"
-        gpBoleta.Size = New Size(380, 481)
+        gpBoleta.Size = New Size(379, 481)
         gpBoleta.TabIndex = 8
         gpBoleta.TabStop = False
         gpBoleta.Text = "Boleta"
@@ -354,7 +430,7 @@ Partial Class Menu
         ' lblGracias
         ' 
         lblGracias.AutoSize = True
-        lblGracias.Location = New Point(43, 378)
+        lblGracias.Location = New Point(43, 379)
         lblGracias.Name = "lblGracias"
         lblGracias.Size = New Size(241, 20)
         lblGracias.TabIndex = 7
@@ -381,7 +457,7 @@ Partial Class Menu
         ' lblRutCliente_nombre
         ' 
         lblRutCliente_nombre.AutoSize = True
-        lblRutCliente_nombre.Location = New Point(14, 118)
+        lblRutCliente_nombre.Location = New Point(14, 117)
         lblRutCliente_nombre.Name = "lblRutCliente_nombre"
         lblRutCliente_nombre.Size = New Size(55, 20)
         lblRutCliente_nombre.TabIndex = 4
@@ -408,7 +484,7 @@ Partial Class Menu
         ' Label9
         ' 
         Label9.AutoSize = True
-        Label9.Location = New Point(18, 54)
+        Label9.Location = New Point(18, 53)
         Label9.Name = "Label9"
         Label9.Size = New Size(116, 20)
         Label9.TabIndex = 1
@@ -440,7 +516,7 @@ Partial Class Menu
         GroupBox2.Controls.Add(lblCliente)
         GroupBox2.Controls.Add(dgvResumenVentas)
         GroupBox2.Controls.Add(Label17)
-        GroupBox2.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        GroupBox2.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBox2.Location = New Point(501, 11)
         GroupBox2.Name = "GroupBox2"
         GroupBox2.Size = New Size(392, 496)
@@ -449,7 +525,7 @@ Partial Class Menu
         ' 
         ' btnVer
         ' 
-        btnVer.Location = New Point(323, 246)
+        btnVer.Location = New Point(323, 245)
         btnVer.Name = "btnVer"
         btnVer.Size = New Size(45, 44)
         btnVer.TabIndex = 20
@@ -458,7 +534,7 @@ Partial Class Menu
         ' 
         ' btnRestaurarFiltros
         ' 
-        btnRestaurarFiltros.Location = New Point(132, 448)
+        btnRestaurarFiltros.Location = New Point(133, 448)
         btnRestaurarFiltros.Name = "btnRestaurarFiltros"
         btnRestaurarFiltros.Size = New Size(185, 29)
         btnRestaurarFiltros.TabIndex = 20
@@ -467,7 +543,7 @@ Partial Class Menu
         ' 
         ' btnAplicarFiltros
         ' 
-        btnAplicarFiltros.Location = New Point(132, 413)
+        btnAplicarFiltros.Location = New Point(133, 413)
         btnAplicarFiltros.Name = "btnAplicarFiltros"
         btnAplicarFiltros.Size = New Size(185, 29)
         btnAplicarFiltros.TabIndex = 19
@@ -507,8 +583,8 @@ Partial Class Menu
         ' lblrepuesto
         ' 
         lblrepuesto.AutoSize = True
-        lblrepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblrepuesto.Location = New Point(36, 340)
+        lblrepuesto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblrepuesto.Location = New Point(37, 340)
         lblrepuesto.Name = "lblrepuesto"
         lblrepuesto.Size = New Size(75, 20)
         lblrepuesto.TabIndex = 10
@@ -517,8 +593,8 @@ Partial Class Menu
         ' lblTermino
         ' 
         lblTermino.AutoSize = True
-        lblTermino.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblTermino.Location = New Point(36, 298)
+        lblTermino.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblTermino.Location = New Point(37, 299)
         lblTermino.Name = "lblTermino"
         lblTermino.Size = New Size(67, 20)
         lblTermino.TabIndex = 9
@@ -527,8 +603,8 @@ Partial Class Menu
         ' lblInicio
         ' 
         lblInicio.AutoSize = True
-        lblInicio.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblInicio.Location = New Point(36, 260)
+        lblInicio.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblInicio.Location = New Point(37, 260)
         lblInicio.Name = "lblInicio"
         lblInicio.Size = New Size(47, 20)
         lblInicio.TabIndex = 8
@@ -537,8 +613,8 @@ Partial Class Menu
         ' lblCliente
         ' 
         lblCliente.AutoSize = True
-        lblCliente.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblCliente.Location = New Point(36, 383)
+        lblCliente.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblCliente.Location = New Point(37, 383)
         lblCliente.Name = "lblCliente"
         lblCliente.Size = New Size(57, 20)
         lblCliente.TabIndex = 7
@@ -567,15 +643,16 @@ Partial Class Menu
         ' GroupBox1
         ' 
         GroupBox1.BackColor = Color.CadetBlue
+        GroupBox1.Controls.Add(btRegistrarCli)
+        GroupBox1.Controls.Add(txtStock)
         GroupBox1.Controls.Add(lblBoleta)
+        GroupBox1.Controls.Add(lblStock)
         GroupBox1.Controls.Add(btnGenerarBoleta)
         GroupBox1.Controls.Add(btnEliminarVenta)
         GroupBox1.Controls.Add(lblDatosCliente)
         GroupBox1.Controls.Add(btEditarVenta)
         GroupBox1.Controls.Add(btnRegistrarVenta)
-        GroupBox1.Controls.Add(txtStock)
         GroupBox1.Controls.Add(txtId)
-        GroupBox1.Controls.Add(lblStock)
         GroupBox1.Controls.Add(lblID)
         GroupBox1.Controls.Add(txtTotal)
         GroupBox1.Controls.Add(lblmensajeIVA)
@@ -591,12 +668,28 @@ Partial Class Menu
         GroupBox1.Controls.Add(lblFecVenta)
         GroupBox1.Controls.Add(lblNeto)
         GroupBox1.Controls.Add(Label7)
-        GroupBox1.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        GroupBox1.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         GroupBox1.Location = New Point(14, 11)
         GroupBox1.Name = "GroupBox1"
         GroupBox1.Size = New Size(481, 496)
         GroupBox1.TabIndex = 0
         GroupBox1.TabStop = False
+        ' 
+        ' btRegistrarCli
+        ' 
+        btRegistrarCli.Location = New Point(181, 429)
+        btRegistrarCli.Name = "btRegistrarCli"
+        btRegistrarCli.Size = New Size(93, 29)
+        btRegistrarCli.TabIndex = 24
+        btRegistrarCli.Text = "Cliente"
+        btRegistrarCli.UseVisualStyleBackColor = True
+        ' 
+        ' txtStock
+        ' 
+        txtStock.Location = New Point(399, 93)
+        txtStock.Name = "txtStock"
+        txtStock.Size = New Size(57, 27)
+        txtStock.TabIndex = 17
         ' 
         ' lblBoleta
         ' 
@@ -606,6 +699,16 @@ Partial Class Menu
         lblBoleta.Size = New Size(71, 20)
         lblBoleta.TabIndex = 23
         lblBoleta.Text = "lblBoleta"
+        ' 
+        ' lblStock
+        ' 
+        lblStock.AutoSize = True
+        lblStock.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        lblStock.Location = New Point(345, 97)
+        lblStock.Name = "lblStock"
+        lblStock.Size = New Size(47, 20)
+        lblStock.TabIndex = 15
+        lblStock.Text = "Stock"
         ' 
         ' btnGenerarBoleta
         ' 
@@ -652,34 +755,17 @@ Partial Class Menu
         btnRegistrarVenta.Text = "Registrar "
         btnRegistrarVenta.UseVisualStyleBackColor = True
         ' 
-        ' txtStock
-        ' 
-        txtStock.Location = New Point(399, 90)
-        txtStock.Name = "txtStock"
-        txtStock.Size = New Size(56, 27)
-        txtStock.TabIndex = 17
-        ' 
         ' txtId
         ' 
-        txtId.Location = New Point(399, 50)
+        txtId.Location = New Point(399, 51)
         txtId.Name = "txtId"
-        txtId.Size = New Size(56, 27)
+        txtId.Size = New Size(57, 27)
         txtId.TabIndex = 16
-        ' 
-        ' lblStock
-        ' 
-        lblStock.AutoSize = True
-        lblStock.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        lblStock.Location = New Point(352, 97)
-        lblStock.Name = "lblStock"
-        lblStock.Size = New Size(47, 20)
-        lblStock.TabIndex = 15
-        lblStock.Text = "Stock"
         ' 
         ' lblID
         ' 
         lblID.AutoSize = True
-        lblID.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblID.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblID.Location = New Point(358, 57)
         lblID.Name = "lblID"
         lblID.Size = New Size(25, 20)
@@ -742,7 +828,7 @@ Partial Class Menu
         ' lblTotal
         ' 
         lblTotal.AutoSize = True
-        lblTotal.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblTotal.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblTotal.Location = New Point(17, 305)
         lblTotal.Name = "lblTotal"
         lblTotal.Size = New Size(93, 20)
@@ -752,7 +838,7 @@ Partial Class Menu
         ' lblNomRepuesto
         ' 
         lblNomRepuesto.AutoSize = True
-        lblNomRepuesto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNomRepuesto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblNomRepuesto.Location = New Point(17, 65)
         lblNomRepuesto.Name = "lblNomRepuesto"
         lblNomRepuesto.Size = New Size(158, 20)
@@ -762,7 +848,7 @@ Partial Class Menu
         ' lblCntVender
         ' 
         lblCntVender.AutoSize = True
-        lblCntVender.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblCntVender.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblCntVender.Location = New Point(17, 108)
         lblCntVender.Name = "lblCntVender"
         lblCntVender.Size = New Size(135, 20)
@@ -772,7 +858,7 @@ Partial Class Menu
         ' lblRut
         ' 
         lblRut.AutoSize = True
-        lblRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblRut.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblRut.Location = New Point(17, 152)
         lblRut.Name = "lblRut"
         lblRut.Size = New Size(86, 20)
@@ -782,7 +868,7 @@ Partial Class Menu
         ' lblFecVenta
         ' 
         lblFecVenta.AutoSize = True
-        lblFecVenta.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblFecVenta.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblFecVenta.Location = New Point(17, 200)
         lblFecVenta.Name = "lblFecVenta"
         lblFecVenta.Size = New Size(113, 20)
@@ -792,7 +878,7 @@ Partial Class Menu
         ' lblNeto
         ' 
         lblNeto.AutoSize = True
-        lblNeto.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        lblNeto.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
         lblNeto.Location = New Point(17, 240)
         lblNeto.Name = "lblNeto"
         lblNeto.Size = New Size(92, 20)
@@ -811,11 +897,651 @@ Partial Class Menu
         ' 
         ' panelSiniestro
         ' 
+        panelSiniestro.BackColor = Color.FromArgb(CByte(64), CByte(64), CByte(64))
+        panelSiniestro.Controls.Add(panelDetalleSiniestro)
+        panelSiniestro.Controls.Add(labelTituloSiniestros)
+        panelSiniestro.Controls.Add(dataGridViewSiniestro)
+        panelSiniestro.Controls.Add(buttonEliminarSiniestro)
+        panelSiniestro.Controls.Add(buttonAgregarSiniestro)
+        panelSiniestro.Controls.Add(buttonVerDetallesSiniestro)
         panelSiniestro.Location = New Point(9, 76)
         panelSiniestro.Margin = New Padding(3, 4, 3, 4)
         panelSiniestro.Name = "panelSiniestro"
         panelSiniestro.Size = New Size(903, 523)
         panelSiniestro.TabIndex = 2
+        ' 
+        ' panelDetalleSiniestro
+        ' 
+        panelDetalleSiniestro.BackColor = Color.Indigo
+        panelDetalleSiniestro.Controls.Add(panelAgreSis)
+        panelDetalleSiniestro.Controls.Add(panelDetalleSinSelec)
+        panelDetalleSiniestro.Controls.Add(tituloVerDetalleSiniestros)
+        panelDetalleSiniestro.Location = New Point(14, 27)
+        panelDetalleSiniestro.Margin = New Padding(3, 4, 3, 4)
+        panelDetalleSiniestro.Name = "panelDetalleSiniestro"
+        panelDetalleSiniestro.Size = New Size(872, 391)
+        panelDetalleSiniestro.TabIndex = 6
+        panelDetalleSiniestro.Visible = False
+        ' 
+        ' panelAgreSis
+        ' 
+        panelAgreSis.Controls.Add(buttonCancelSin)
+        panelAgreSis.Controls.Add(buttonAgrSinConf)
+        panelAgreSis.Controls.Add(labelTituloAgrSin)
+        panelAgreSis.Controls.Add(comboBoxEstadSegAgrSin)
+        panelAgreSis.Controls.Add(labelEstadSeguSin)
+        panelAgreSis.Controls.Add(comboBoxCompaAgrSin)
+        panelAgreSis.Controls.Add(labelCompSin)
+        panelAgreSis.Controls.Add(dateTimePickerFecSin)
+        panelAgreSis.Controls.Add(labelFechaSin)
+        panelAgreSis.Controls.Add(textBoxDetallAgrSin)
+        panelAgreSis.Controls.Add(labelDetaSin)
+        panelAgreSis.Controls.Add(textBoxTelAgrSin)
+        panelAgreSis.Controls.Add(labelTelAgrSis)
+        panelAgreSis.Controls.Add(textBoxApeMatAgrSin)
+        panelAgreSis.Controls.Add(labelApeMatAgrSin)
+        panelAgreSis.Controls.Add(textBoxApePatAgrSin)
+        panelAgreSis.Controls.Add(labelApelliPatAgrSin)
+        panelAgreSis.Controls.Add(comboBoxRutAgrSin)
+        panelAgreSis.Controls.Add(textBoxNomAgrSin)
+        panelAgreSis.Controls.Add(labelNomAgrSin)
+        panelAgreSis.Controls.Add(labelRutAgrSin)
+        panelAgreSis.Location = New Point(0, 0)
+        panelAgreSis.Margin = New Padding(3, 4, 3, 4)
+        panelAgreSis.Name = "panelAgreSis"
+        panelAgreSis.Size = New Size(872, 389)
+        panelAgreSis.TabIndex = 2
+        panelAgreSis.Visible = False
+        ' 
+        ' buttonCancelSin
+        ' 
+        buttonCancelSin.Location = New Point(57, 347)
+        buttonCancelSin.Margin = New Padding(3, 4, 3, 4)
+        buttonCancelSin.Name = "buttonCancelSin"
+        buttonCancelSin.Size = New Size(86, 31)
+        buttonCancelSin.TabIndex = 21
+        buttonCancelSin.Text = "Cancelar"
+        buttonCancelSin.UseVisualStyleBackColor = True
+        ' 
+        ' buttonAgrSinConf
+        ' 
+        buttonAgrSinConf.Location = New Point(747, 343)
+        buttonAgrSinConf.Margin = New Padding(3, 4, 3, 4)
+        buttonAgrSinConf.Name = "buttonAgrSinConf"
+        buttonAgrSinConf.Size = New Size(86, 31)
+        buttonAgrSinConf.TabIndex = 20
+        buttonAgrSinConf.Text = "Agregar"
+        buttonAgrSinConf.UseVisualStyleBackColor = True
+        ' 
+        ' labelTituloAgrSin
+        ' 
+        labelTituloAgrSin.AutoSize = True
+        labelTituloAgrSin.BackColor = Color.FromArgb(CByte(0), CByte(0), CByte(64))
+        labelTituloAgrSin.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloAgrSin.ForeColor = SystemColors.Control
+        labelTituloAgrSin.Location = New Point(321, 9)
+        labelTituloAgrSin.Name = "labelTituloAgrSin"
+        labelTituloAgrSin.Size = New Size(214, 32)
+        labelTituloAgrSin.TabIndex = 19
+        labelTituloAgrSin.Text = "Agregar Siniestro"
+        ' 
+        ' comboBoxEstadSegAgrSin
+        ' 
+        comboBoxEstadSegAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxEstadSegAgrSin.FormattingEnabled = True
+        comboBoxEstadSegAgrSin.Items.AddRange(New Object() {"Seguro Vigente", "Seguro Caducado"})
+        comboBoxEstadSegAgrSin.Location = New Point(512, 217)
+        comboBoxEstadSegAgrSin.Margin = New Padding(3, 4, 3, 4)
+        comboBoxEstadSegAgrSin.Name = "comboBoxEstadSegAgrSin"
+        comboBoxEstadSegAgrSin.Size = New Size(260, 28)
+        comboBoxEstadSegAgrSin.TabIndex = 18
+        ' 
+        ' labelEstadSeguSin
+        ' 
+        labelEstadSeguSin.AutoSize = True
+        labelEstadSeguSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelEstadSeguSin.Location = New Point(403, 228)
+        labelEstadSeguSin.Name = "labelEstadSeguSin"
+        labelEstadSeguSin.Size = New Size(106, 20)
+        labelEstadSeguSin.TabIndex = 17
+        labelEstadSeguSin.Text = "Estado seguro:"
+        ' 
+        ' comboBoxCompaAgrSin
+        ' 
+        comboBoxCompaAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxCompaAgrSin.FormattingEnabled = True
+        comboBoxCompaAgrSin.Location = New Point(512, 167)
+        comboBoxCompaAgrSin.Margin = New Padding(3, 4, 3, 4)
+        comboBoxCompaAgrSin.Name = "comboBoxCompaAgrSin"
+        comboBoxCompaAgrSin.Size = New Size(260, 28)
+        comboBoxCompaAgrSin.TabIndex = 16
+        ' 
+        ' labelCompSin
+        ' 
+        labelCompSin.AutoSize = True
+        labelCompSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelCompSin.Location = New Point(425, 173)
+        labelCompSin.Name = "labelCompSin"
+        labelCompSin.Size = New Size(80, 20)
+        labelCompSin.TabIndex = 15
+        labelCompSin.Text = "Compañia:"
+        ' 
+        ' dateTimePickerFecSin
+        ' 
+        dateTimePickerFecSin.Location = New Point(512, 116)
+        dateTimePickerFecSin.Margin = New Padding(3, 4, 3, 4)
+        dateTimePickerFecSin.Name = "dateTimePickerFecSin"
+        dateTimePickerFecSin.Size = New Size(260, 27)
+        dateTimePickerFecSin.TabIndex = 14
+        dateTimePickerFecSin.Value = New Date(2024, 11, 11, 0, 0, 0, 0)
+        ' 
+        ' labelFechaSin
+        ' 
+        labelFechaSin.AutoSize = True
+        labelFechaSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelFechaSin.Location = New Point(453, 125)
+        labelFechaSin.Name = "labelFechaSin"
+        labelFechaSin.Size = New Size(50, 20)
+        labelFechaSin.TabIndex = 13
+        labelFechaSin.Text = "Fecha:"
+        ' 
+        ' textBoxDetallAgrSin
+        ' 
+        textBoxDetallAgrSin.Location = New Point(512, 64)
+        textBoxDetallAgrSin.Margin = New Padding(3, 4, 3, 4)
+        textBoxDetallAgrSin.Name = "textBoxDetallAgrSin"
+        textBoxDetallAgrSin.Size = New Size(260, 27)
+        textBoxDetallAgrSin.TabIndex = 12
+        ' 
+        ' labelDetaSin
+        ' 
+        labelDetaSin.AutoSize = True
+        labelDetaSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelDetaSin.Location = New Point(447, 75)
+        labelDetaSin.Name = "labelDetaSin"
+        labelDetaSin.Size = New Size(60, 20)
+        labelDetaSin.TabIndex = 11
+        labelDetaSin.Text = "Detalle:"
+        ' 
+        ' textBoxTelAgrSin
+        ' 
+        textBoxTelAgrSin.Enabled = False
+        textBoxTelAgrSin.Location = New Point(157, 281)
+        textBoxTelAgrSin.Margin = New Padding(3, 4, 3, 4)
+        textBoxTelAgrSin.Name = "textBoxTelAgrSin"
+        textBoxTelAgrSin.ReadOnly = True
+        textBoxTelAgrSin.Size = New Size(138, 27)
+        textBoxTelAgrSin.TabIndex = 10
+        ' 
+        ' labelTelAgrSis
+        ' 
+        labelTelAgrSis.AutoSize = True
+        labelTelAgrSis.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelTelAgrSis.Location = New Point(69, 285)
+        labelTelAgrSis.Name = "labelTelAgrSis"
+        labelTelAgrSis.Size = New Size(70, 20)
+        labelTelAgrSis.TabIndex = 9
+        labelTelAgrSis.Text = "Telefono:"
+        ' 
+        ' textBoxApeMatAgrSin
+        ' 
+        textBoxApeMatAgrSin.Enabled = False
+        textBoxApeMatAgrSin.Location = New Point(157, 228)
+        textBoxApeMatAgrSin.Margin = New Padding(3, 4, 3, 4)
+        textBoxApeMatAgrSin.Name = "textBoxApeMatAgrSin"
+        textBoxApeMatAgrSin.ReadOnly = True
+        textBoxApeMatAgrSin.Size = New Size(138, 27)
+        textBoxApeMatAgrSin.TabIndex = 8
+        ' 
+        ' labelApeMatAgrSin
+        ' 
+        labelApeMatAgrSin.AutoSize = True
+        labelApeMatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelApeMatAgrSin.Location = New Point(57, 235)
+        labelApeMatAgrSin.Name = "labelApeMatAgrSin"
+        labelApeMatAgrSin.Size = New Size(82, 20)
+        labelApeMatAgrSin.TabIndex = 7
+        labelApeMatAgrSin.Text = "ApellidoM:"
+        ' 
+        ' textBoxApePatAgrSin
+        ' 
+        textBoxApePatAgrSin.Enabled = False
+        textBoxApePatAgrSin.Location = New Point(157, 177)
+        textBoxApePatAgrSin.Margin = New Padding(3, 4, 3, 4)
+        textBoxApePatAgrSin.Name = "textBoxApePatAgrSin"
+        textBoxApePatAgrSin.ReadOnly = True
+        textBoxApePatAgrSin.Size = New Size(138, 27)
+        textBoxApePatAgrSin.TabIndex = 6
+        ' 
+        ' labelApelliPatAgrSin
+        ' 
+        labelApelliPatAgrSin.AutoSize = True
+        labelApelliPatAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelApelliPatAgrSin.Location = New Point(62, 184)
+        labelApelliPatAgrSin.Name = "labelApelliPatAgrSin"
+        labelApelliPatAgrSin.Size = New Size(77, 20)
+        labelApelliPatAgrSin.TabIndex = 5
+        labelApelliPatAgrSin.Text = "ApellidoP:"
+        ' 
+        ' comboBoxRutAgrSin
+        ' 
+        comboBoxRutAgrSin.DropDownStyle = ComboBoxStyle.DropDownList
+        comboBoxRutAgrSin.FormattingEnabled = True
+        comboBoxRutAgrSin.Location = New Point(157, 61)
+        comboBoxRutAgrSin.Margin = New Padding(3, 4, 3, 4)
+        comboBoxRutAgrSin.Name = "comboBoxRutAgrSin"
+        comboBoxRutAgrSin.Size = New Size(138, 28)
+        comboBoxRutAgrSin.TabIndex = 4
+        ' 
+        ' textBoxNomAgrSin
+        ' 
+        textBoxNomAgrSin.Enabled = False
+        textBoxNomAgrSin.Location = New Point(157, 120)
+        textBoxNomAgrSin.Margin = New Padding(3, 4, 3, 4)
+        textBoxNomAgrSin.Name = "textBoxNomAgrSin"
+        textBoxNomAgrSin.ReadOnly = True
+        textBoxNomAgrSin.Size = New Size(138, 27)
+        textBoxNomAgrSin.TabIndex = 3
+        ' 
+        ' labelNomAgrSin
+        ' 
+        labelNomAgrSin.AutoSize = True
+        labelNomAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelNomAgrSin.Location = New Point(70, 129)
+        labelNomAgrSin.Name = "labelNomAgrSin"
+        labelNomAgrSin.Size = New Size(67, 20)
+        labelNomAgrSin.TabIndex = 2
+        labelNomAgrSin.Text = "Nombre:"
+        ' 
+        ' labelRutAgrSin
+        ' 
+        labelRutAgrSin.AutoSize = True
+        labelRutAgrSin.BackColor = Color.FromArgb(CByte(128), CByte(255), CByte(255))
+        labelRutAgrSin.Location = New Point(99, 68)
+        labelRutAgrSin.Name = "labelRutAgrSin"
+        labelRutAgrSin.Size = New Size(34, 20)
+        labelRutAgrSin.TabIndex = 0
+        labelRutAgrSin.Text = "Rut:"
+        ' 
+        ' panelDetalleSinSelec
+        ' 
+        panelDetalleSinSelec.BackColor = Color.LightSlateGray
+        panelDetalleSinSelec.Controls.Add(label13PanSin)
+        panelDetalleSinSelec.Controls.Add(labelDetalleSin)
+        panelDetalleSinSelec.Controls.Add(labelTituloDetalleSin)
+        panelDetalleSinSelec.Controls.Add(buttonCerrarPanDetSin)
+        panelDetalleSinSelec.Controls.Add(buttonFinalizado)
+        panelDetalleSinSelec.Controls.Add(buttonPendiente)
+        panelDetalleSinSelec.Controls.Add(buttonActivo)
+        panelDetalleSinSelec.Controls.Add(nomCompSin)
+        panelDetalleSinSelec.Controls.Add(labelNomCompDetSin)
+        panelDetalleSinSelec.Controls.Add(labelTituloCompDetSis)
+        panelDetalleSinSelec.Controls.Add(labelEstadoSeguSis)
+        panelDetalleSinSelec.Controls.Add(labelSegDetSin)
+        panelDetalleSinSelec.Controls.Add(pictureBoxEstadSin)
+        panelDetalleSinSelec.Controls.Add(labelEstadDetSin)
+        panelDetalleSinSelec.Controls.Add(textBoxComuDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxTelDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxDireDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxRutDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxApeMatDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxApePatDetSis)
+        panelDetalleSinSelec.Controls.Add(textBoxNomDetSis)
+        panelDetalleSinSelec.Controls.Add(panelDatoDetSin)
+        panelDetalleSinSelec.Location = New Point(26, 67)
+        panelDetalleSinSelec.Margin = New Padding(3, 4, 3, 4)
+        panelDetalleSinSelec.Name = "panelDetalleSinSelec"
+        panelDetalleSinSelec.Size = New Size(807, 307)
+        panelDetalleSinSelec.TabIndex = 1
+        panelDetalleSinSelec.Visible = False
+        ' 
+        ' label13PanSin
+        ' 
+        label13PanSin.AutoSize = True
+        label13PanSin.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        label13PanSin.Location = New Point(536, 19)
+        label13PanSin.Name = "label13PanSin"
+        label13PanSin.Size = New Size(183, 32)
+        label13PanSin.TabIndex = 25
+        label13PanSin.Text = "Rut Compañia:"
+        ' 
+        ' labelDetalleSin
+        ' 
+        labelDetalleSin.AutoSize = True
+        labelDetalleSin.Location = New Point(430, 127)
+        labelDetalleSin.Name = "labelDetalleSin"
+        labelDetalleSin.Size = New Size(167, 20)
+        labelDetalleSin.TabIndex = 24
+        labelDetalleSin.Text = "detalle choque ejemplo"
+        ' 
+        ' labelTituloDetalleSin
+        ' 
+        labelTituloDetalleSin.AutoSize = True
+        labelTituloDetalleSin.Font = New Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloDetalleSin.Location = New Point(352, 120)
+        labelTituloDetalleSin.Name = "labelTituloDetalleSin"
+        labelTituloDetalleSin.Size = New Size(85, 28)
+        labelTituloDetalleSin.TabIndex = 23
+        labelTituloDetalleSin.Text = "Detalle:"
+        ' 
+        ' buttonCerrarPanDetSin
+        ' 
+        buttonCerrarPanDetSin.Location = New Point(703, 265)
+        buttonCerrarPanDetSin.Margin = New Padding(3, 4, 3, 4)
+        buttonCerrarPanDetSin.Name = "buttonCerrarPanDetSin"
+        buttonCerrarPanDetSin.Size = New Size(86, 31)
+        buttonCerrarPanDetSin.TabIndex = 22
+        buttonCerrarPanDetSin.Text = "Cerrar"
+        buttonCerrarPanDetSin.UseVisualStyleBackColor = True
+        ' 
+        ' buttonFinalizado
+        ' 
+        buttonFinalizado.Location = New Point(593, 239)
+        buttonFinalizado.Margin = New Padding(3, 4, 3, 4)
+        buttonFinalizado.Name = "buttonFinalizado"
+        buttonFinalizado.Size = New Size(86, 31)
+        buttonFinalizado.TabIndex = 21
+        buttonFinalizado.Text = "Finalizado"
+        buttonFinalizado.UseVisualStyleBackColor = True
+        ' 
+        ' buttonPendiente
+        ' 
+        buttonPendiente.Location = New Point(593, 173)
+        buttonPendiente.Margin = New Padding(3, 4, 3, 4)
+        buttonPendiente.Name = "buttonPendiente"
+        buttonPendiente.Size = New Size(86, 31)
+        buttonPendiente.TabIndex = 20
+        buttonPendiente.Text = "Pendiente"
+        buttonPendiente.UseVisualStyleBackColor = True
+        ' 
+        ' buttonActivo
+        ' 
+        buttonActivo.Location = New Point(593, 207)
+        buttonActivo.Margin = New Padding(3, 4, 3, 4)
+        buttonActivo.Name = "buttonActivo"
+        buttonActivo.Size = New Size(86, 31)
+        buttonActivo.TabIndex = 19
+        buttonActivo.Text = "Activo"
+        buttonActivo.UseVisualStyleBackColor = True
+        ' 
+        ' nomCompSin
+        ' 
+        nomCompSin.AutoSize = True
+        nomCompSin.Location = New Point(453, 79)
+        nomCompSin.Name = "nomCompSin"
+        nomCompSin.Size = New Size(64, 20)
+        nomCompSin.TabIndex = 18
+        nomCompSin.Text = "Nombre"
+        ' 
+        ' labelNomCompDetSin
+        ' 
+        labelNomCompDetSin.AutoSize = True
+        labelNomCompDetSin.Location = New Point(696, 28)
+        labelNomCompDetSin.Name = "labelNomCompDetSin"
+        labelNomCompDetSin.Size = New Size(31, 20)
+        labelNomCompDetSin.TabIndex = 17
+        labelNomCompDetSin.Text = "Rut"
+        ' 
+        ' labelTituloCompDetSis
+        ' 
+        labelTituloCompDetSis.AutoSize = True
+        labelTituloCompDetSis.Font = New Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloCompDetSis.Location = New Point(343, 72)
+        labelTituloCompDetSis.Name = "labelTituloCompDetSis"
+        labelTituloCompDetSis.Size = New Size(111, 28)
+        labelTituloCompDetSis.TabIndex = 16
+        labelTituloCompDetSis.Text = "Compañia:"
+        ' 
+        ' labelEstadoSeguSis
+        ' 
+        labelEstadoSeguSis.AutoSize = True
+        labelEstadoSeguSis.Location = New Point(430, 28)
+        labelEstadoSeguSis.Name = "labelEstadoSeguSis"
+        labelEstadoSeguSis.Size = New Size(111, 20)
+        labelEstadoSeguSis.TabIndex = 15
+        labelEstadoSeguSis.Text = "Seguro Vigente"
+        ' 
+        ' labelSegDetSin
+        ' 
+        labelSegDetSin.AutoSize = True
+        labelSegDetSin.Font = New Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelSegDetSin.Location = New Point(352, 23)
+        labelSegDetSin.Name = "labelSegDetSin"
+        labelSegDetSin.Size = New Size(83, 28)
+        labelSegDetSin.TabIndex = 14
+        labelSegDetSin.Text = "Seguro:"
+        ' 
+        ' pictureBoxEstadSin
+        ' 
+        pictureBoxEstadSin.Location = New Point(512, 201)
+        pictureBoxEstadSin.Margin = New Padding(3, 4, 3, 4)
+        pictureBoxEstadSin.Name = "pictureBoxEstadSin"
+        pictureBoxEstadSin.Size = New Size(72, 56)
+        pictureBoxEstadSin.TabIndex = 13
+        pictureBoxEstadSin.TabStop = False
+        ' 
+        ' labelEstadDetSin
+        ' 
+        labelEstadDetSin.AutoSize = True
+        labelEstadDetSin.Font = New Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelEstadDetSin.Location = New Point(370, 207)
+        labelEstadDetSin.Name = "labelEstadDetSin"
+        labelEstadDetSin.Size = New Size(146, 37)
+        labelEstadDetSin.TabIndex = 12
+        labelEstadDetSin.Text = "Pendiente"
+        ' 
+        ' textBoxComuDetSis
+        ' 
+        textBoxComuDetSis.Enabled = False
+        textBoxComuDetSis.Location = New Point(151, 253)
+        textBoxComuDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxComuDetSis.Name = "textBoxComuDetSis"
+        textBoxComuDetSis.Size = New Size(180, 27)
+        textBoxComuDetSis.TabIndex = 11
+        ' 
+        ' textBoxTelDetSis
+        ' 
+        textBoxTelDetSis.Enabled = False
+        textBoxTelDetSis.Location = New Point(151, 215)
+        textBoxTelDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxTelDetSis.Name = "textBoxTelDetSis"
+        textBoxTelDetSis.Size = New Size(180, 27)
+        textBoxTelDetSis.TabIndex = 10
+        ' 
+        ' textBoxDireDetSis
+        ' 
+        textBoxDireDetSis.Enabled = False
+        textBoxDireDetSis.Location = New Point(151, 179)
+        textBoxDireDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxDireDetSis.Name = "textBoxDireDetSis"
+        textBoxDireDetSis.Size = New Size(180, 27)
+        textBoxDireDetSis.TabIndex = 9
+        ' 
+        ' textBoxRutDetSis
+        ' 
+        textBoxRutDetSis.Enabled = False
+        textBoxRutDetSis.Location = New Point(151, 140)
+        textBoxRutDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxRutDetSis.Name = "textBoxRutDetSis"
+        textBoxRutDetSis.Size = New Size(180, 27)
+        textBoxRutDetSis.TabIndex = 8
+        ' 
+        ' textBoxApeMatDetSis
+        ' 
+        textBoxApeMatDetSis.Enabled = False
+        textBoxApeMatDetSis.Location = New Point(151, 101)
+        textBoxApeMatDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxApeMatDetSis.Name = "textBoxApeMatDetSis"
+        textBoxApeMatDetSis.Size = New Size(180, 27)
+        textBoxApeMatDetSis.TabIndex = 7
+        ' 
+        ' textBoxApePatDetSis
+        ' 
+        textBoxApePatDetSis.Enabled = False
+        textBoxApePatDetSis.Location = New Point(151, 64)
+        textBoxApePatDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxApePatDetSis.Name = "textBoxApePatDetSis"
+        textBoxApePatDetSis.Size = New Size(180, 27)
+        textBoxApePatDetSis.TabIndex = 6
+        ' 
+        ' textBoxNomDetSis
+        ' 
+        textBoxNomDetSis.Enabled = False
+        textBoxNomDetSis.Location = New Point(151, 25)
+        textBoxNomDetSis.Margin = New Padding(3, 4, 3, 4)
+        textBoxNomDetSis.Name = "textBoxNomDetSis"
+        textBoxNomDetSis.Size = New Size(180, 27)
+        textBoxNomDetSis.TabIndex = 5
+        ' 
+        ' panelDatoDetSin
+        ' 
+        panelDatoDetSin.BackColor = Color.DarkTurquoise
+        panelDatoDetSin.Controls.Add(labelComuDetSin)
+        panelDatoDetSin.Controls.Add(labelTelDetSin)
+        panelDatoDetSin.Controls.Add(labelDirPanSin)
+        panelDatoDetSin.Controls.Add(labelRutVerSin)
+        panelDatoDetSin.Controls.Add(labelApeMatVerSin)
+        panelDatoDetSin.Controls.Add(labelNomSin)
+        panelDatoDetSin.Controls.Add(labelApePatSin)
+        panelDatoDetSin.Location = New Point(17, 11)
+        panelDatoDetSin.Margin = New Padding(3, 4, 3, 4)
+        panelDatoDetSin.Name = "panelDatoDetSin"
+        panelDatoDetSin.Size = New Size(127, 276)
+        panelDatoDetSin.TabIndex = 4
+        ' 
+        ' labelComuDetSin
+        ' 
+        labelComuDetSin.AutoSize = True
+        labelComuDetSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelComuDetSin.Location = New Point(32, 239)
+        labelComuDetSin.Name = "labelComuDetSin"
+        labelComuDetSin.Size = New Size(71, 20)
+        labelComuDetSin.TabIndex = 7
+        labelComuDetSin.Text = "Comuna:"
+        ' 
+        ' labelTelDetSin
+        ' 
+        labelTelDetSin.AutoSize = True
+        labelTelDetSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTelDetSin.Location = New Point(32, 205)
+        labelTelDetSin.Name = "labelTelDetSin"
+        labelTelDetSin.Size = New Size(74, 20)
+        labelTelDetSin.TabIndex = 6
+        labelTelDetSin.Text = "Telefono:"
+        ' 
+        ' labelDirPanSin
+        ' 
+        labelDirPanSin.AutoSize = True
+        labelDirPanSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelDirPanSin.Location = New Point(27, 171)
+        labelDirPanSin.Name = "labelDirPanSin"
+        labelDirPanSin.Size = New Size(78, 20)
+        labelDirPanSin.TabIndex = 5
+        labelDirPanSin.Text = "Direccion:"
+        ' 
+        ' labelRutVerSin
+        ' 
+        labelRutVerSin.AutoSize = True
+        labelRutVerSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelRutVerSin.Location = New Point(39, 137)
+        labelRutVerSin.Name = "labelRutVerSin"
+        labelRutVerSin.Size = New Size(43, 20)
+        labelRutVerSin.TabIndex = 4
+        labelRutVerSin.Text = "RUT:"
+        ' 
+        ' labelApeMatVerSin
+        ' 
+        labelApeMatVerSin.AutoSize = True
+        labelApeMatVerSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelApeMatVerSin.Location = New Point(6, 100)
+        labelApeMatVerSin.Name = "labelApeMatVerSin"
+        labelApeMatVerSin.Size = New Size(135, 20)
+        labelApeMatVerSin.TabIndex = 3
+        labelApeMatVerSin.Text = "Apellido Materno:"
+        ' 
+        ' labelNomSin
+        ' 
+        labelNomSin.AutoSize = True
+        labelNomSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelNomSin.Location = New Point(32, 17)
+        labelNomSin.Name = "labelNomSin"
+        labelNomSin.Size = New Size(71, 20)
+        labelNomSin.TabIndex = 0
+        labelNomSin.Text = "Nombre:"
+        ' 
+        ' labelApePatSin
+        ' 
+        labelApePatSin.AutoSize = True
+        labelApePatSin.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelApePatSin.Location = New Point(6, 56)
+        labelApePatSin.Name = "labelApePatSin"
+        labelApePatSin.Size = New Size(130, 20)
+        labelApePatSin.TabIndex = 2
+        labelApePatSin.Text = "Apellido Paterno:"
+        ' 
+        ' tituloVerDetalleSiniestros
+        ' 
+        tituloVerDetalleSiniestros.AutoSize = True
+        tituloVerDetalleSiniestros.Font = New Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        tituloVerDetalleSiniestros.ForeColor = Color.White
+        tituloVerDetalleSiniestros.Location = New Point(240, 0)
+        tituloVerDetalleSiniestros.Name = "tituloVerDetalleSiniestros"
+        tituloVerDetalleSiniestros.Size = New Size(386, 60)
+        tituloVerDetalleSiniestros.TabIndex = 0
+        tituloVerDetalleSiniestros.Text = "Detalle Siniestros"
+        ' 
+        ' labelTituloSiniestros
+        ' 
+        labelTituloSiniestros.AutoSize = True
+        labelTituloSiniestros.BackColor = Color.Transparent
+        labelTituloSiniestros.Font = New Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        labelTituloSiniestros.ForeColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
+        labelTituloSiniestros.Location = New Point(366, 23)
+        labelTituloSiniestros.Name = "labelTituloSiniestros"
+        labelTituloSiniestros.Size = New Size(191, 50)
+        labelTituloSiniestros.TabIndex = 5
+        labelTituloSiniestros.Text = "Siniestros"
+        ' 
+        ' dataGridViewSiniestro
+        ' 
+        dataGridViewSiniestro.BackgroundColor = Color.Indigo
+        dataGridViewSiniestro.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dataGridViewSiniestro.Location = New Point(21, 96)
+        dataGridViewSiniestro.Margin = New Padding(3, 4, 3, 4)
+        dataGridViewSiniestro.Name = "dataGridViewSiniestro"
+        dataGridViewSiniestro.RowHeadersWidth = 51
+        dataGridViewSiniestro.Size = New Size(848, 308)
+        dataGridViewSiniestro.TabIndex = 4
+        ' 
+        ' buttonEliminarSiniestro
+        ' 
+        buttonEliminarSiniestro.Location = New Point(733, 439)
+        buttonEliminarSiniestro.Margin = New Padding(3, 4, 3, 4)
+        buttonEliminarSiniestro.Name = "buttonEliminarSiniestro"
+        buttonEliminarSiniestro.Size = New Size(86, 31)
+        buttonEliminarSiniestro.TabIndex = 3
+        buttonEliminarSiniestro.Text = "buttonEliminarSiniestro"
+        buttonEliminarSiniestro.UseVisualStyleBackColor = True
+        ' 
+        ' buttonAgregarSiniestro
+        ' 
+        buttonAgregarSiniestro.Location = New Point(395, 439)
+        buttonAgregarSiniestro.Margin = New Padding(3, 4, 3, 4)
+        buttonAgregarSiniestro.Name = "buttonAgregarSiniestro"
+        buttonAgregarSiniestro.Size = New Size(86, 31)
+        buttonAgregarSiniestro.TabIndex = 2
+        buttonAgregarSiniestro.Text = "Agregar"
+        buttonAgregarSiniestro.UseVisualStyleBackColor = True
+        ' 
+        ' buttonVerDetallesSiniestro
+        ' 
+        buttonVerDetallesSiniestro.Location = New Point(74, 439)
+        buttonVerDetallesSiniestro.Margin = New Padding(3, 4, 3, 4)
+        buttonVerDetallesSiniestro.Name = "buttonVerDetallesSiniestro"
+        buttonVerDetallesSiniestro.Size = New Size(86, 31)
+        buttonVerDetallesSiniestro.TabIndex = 1
+        buttonVerDetallesSiniestro.Text = "Ver"
+        buttonVerDetallesSiniestro.UseVisualStyleBackColor = True
         ' 
         ' panelGestionServicios
         ' 
@@ -1100,7 +1826,7 @@ Partial Class Menu
         ' 
         LabelTipo.AutoSize = True
         LabelTipo.BackColor = Color.Transparent
-        LabelTipo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelTipo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelTipo.ForeColor = SystemColors.ControlLight
         LabelTipo.Location = New Point(515, 227)
         LabelTipo.Name = "LabelTipo"
@@ -1112,7 +1838,7 @@ Partial Class Menu
         ' 
         LabelCorreo.AutoSize = True
         LabelCorreo.BackColor = Color.Transparent
-        LabelCorreo.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelCorreo.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelCorreo.ForeColor = SystemColors.ControlLight
         LabelCorreo.Location = New Point(501, 309)
         LabelCorreo.Name = "LabelCorreo"
@@ -1131,7 +1857,7 @@ Partial Class Menu
         ' 
         LabelContraseña.AutoSize = True
         LabelContraseña.BackColor = Color.Transparent
-        LabelContraseña.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelContraseña.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelContraseña.ForeColor = SystemColors.ControlLight
         LabelContraseña.Location = New Point(71, 309)
         LabelContraseña.Name = "LabelContraseña"
@@ -1151,7 +1877,7 @@ Partial Class Menu
         ' 
         LabelRutUsuario.AutoSize = True
         LabelRutUsuario.BackColor = Color.Transparent
-        LabelRutUsuario.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LabelRutUsuario.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LabelRutUsuario.ForeColor = SystemColors.Control
         LabelRutUsuario.Location = New Point(48, 231)
         LabelRutUsuario.Name = "LabelRutUsuario"
@@ -1169,7 +1895,7 @@ Partial Class Menu
         ' buttonConsultarRut
         ' 
         buttonConsultarRut.BackColor = Color.Transparent
-        buttonConsultarRut.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonConsultarRut.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonConsultarRut.Location = New Point(459, 72)
         buttonConsultarRut.Name = "buttonConsultarRut"
         buttonConsultarRut.Size = New Size(123, 67)
@@ -1191,7 +1917,7 @@ Partial Class Menu
         ' 
         ' limpiarCamposGestionUsuarios
         ' 
-        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        limpiarCamposGestionUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         limpiarCamposGestionUsuarios.Location = New Point(610, 49)
         limpiarCamposGestionUsuarios.Margin = New Padding(3, 4, 3, 4)
         limpiarCamposGestionUsuarios.Name = "limpiarCamposGestionUsuarios"
@@ -1202,7 +1928,7 @@ Partial Class Menu
         ' 
         ' buttonMostrarUsuarios
         ' 
-        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        buttonMostrarUsuarios.Font = New Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         buttonMostrarUsuarios.Location = New Point(736, 51)
         buttonMostrarUsuarios.Name = "buttonMostrarUsuarios"
         buttonMostrarUsuarios.Size = New Size(128, 65)
@@ -1223,15 +1949,15 @@ Partial Class Menu
         ' 
         ' Menu
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(914, 637)
-        Controls.Add(panelVentaRepuestos)
-        Controls.Add(panelRepuestos)
+        Controls.Add(panelSiniestro)
         Controls.Add(panelUsuario)
         Controls.Add(panelGestionServicios)
-        Controls.Add(panelSiniestro)
+        Controls.Add(panelVentaRepuestos)
+        Controls.Add(panelRepuestos)
         Controls.Add(panelSoliServicios)
         Controls.Add(panelHome)
         Controls.Add(Panel2)
@@ -1252,6 +1978,18 @@ Partial Class Menu
         CType(dgvResumenVentas, ComponentModel.ISupportInitialize).EndInit()
         GroupBox1.ResumeLayout(False)
         GroupBox1.PerformLayout()
+        panelSiniestro.ResumeLayout(False)
+        panelSiniestro.PerformLayout()
+        panelDetalleSiniestro.ResumeLayout(False)
+        panelDetalleSiniestro.PerformLayout()
+        panelAgreSis.ResumeLayout(False)
+        panelAgreSis.PerformLayout()
+        panelDetalleSinSelec.ResumeLayout(False)
+        panelDetalleSinSelec.PerformLayout()
+        CType(pictureBoxEstadSin, ComponentModel.ISupportInitialize).EndInit()
+        panelDatoDetSin.ResumeLayout(False)
+        panelDatoDetSin.PerformLayout()
+        CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).EndInit()
         panelRepuestos.ResumeLayout(False)
         panelRepuestos.PerformLayout()
         panelUsuario.ResumeLayout(False)
@@ -1368,4 +2106,66 @@ Partial Class Menu
     Friend WithEvents Label11 As Label
     Friend WithEvents gpBoleta As GroupBox
     Friend WithEvents btnEnviarBoleta As Button
+    Friend WithEvents pnregistroCliente As Panel
+    Friend WithEvents btRegistrarCli As Button
+    Friend WithEvents buttonEliminarSiniestro As Button
+    Friend WithEvents buttonAgregarSiniestro As Button
+    Friend WithEvents buttonVerDetallesSiniestro As Button
+    Friend WithEvents dataGridViewSiniestro As DataGridView
+    Friend WithEvents labelTituloSiniestros As Label
+    Friend WithEvents panelDetalleSiniestro As Panel
+    Friend WithEvents panelDetalleSinSelec As Panel
+    Friend WithEvents tituloVerDetalleSiniestros As Label
+    Friend WithEvents panelDatoDetSin As Panel
+    Friend WithEvents labelApePatSin As Label
+    Friend WithEvents labelNomSin As Label
+    Friend WithEvents labelApeMatVerSin As Label
+    Friend WithEvents textBoxRutDetSis As TextBox
+    Friend WithEvents textBoxApeMatDetSis As TextBox
+    Friend WithEvents textBoxApePatDetSis As TextBox
+    Friend WithEvents textBoxNomDetSis As TextBox
+    Friend WithEvents labelRutVerSin As Label
+    Friend WithEvents textBoxDireDetSis As TextBox
+    Friend WithEvents labelDirPanSin As Label
+    Friend WithEvents labelTelDetSin As Label
+    Friend WithEvents textBoxComuDetSis As TextBox
+    Friend WithEvents textBoxTelDetSis As TextBox
+    Friend WithEvents labelComuDetSin As Label
+    Friend WithEvents labelEstadDetSin As Label
+    Friend WithEvents pictureBoxEstadSin As PictureBox
+    Friend WithEvents labelSegDetSin As Label
+    Friend WithEvents labelEstadoSeguSis As Label
+    Friend WithEvents labelTituloCompDetSis As Label
+    Friend WithEvents labelNomCompDetSin As Label
+    Friend WithEvents nomCompSin As Label
+    Friend WithEvents buttonFinalizado As Button
+    Friend WithEvents buttonPendiente As Button
+    Friend WithEvents buttonActivo As Button
+    Friend WithEvents buttonCerrarPanDetSin As Button
+    Friend WithEvents labelTituloDetalleSin As Label
+    Friend WithEvents labelDetalleSin As Label
+    Friend WithEvents label13PanSin As Label
+    Friend WithEvents panelAgreSis As Panel
+    Friend WithEvents textBoxNomAgrSin As TextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents labelRutAgrSin As Label
+    Private labelNomAgrSin As Label
+    Friend WithEvents textBoxTelAgrSin As TextBox
+    Friend WithEvents labelTelAgrSis As Label
+    Friend WithEvents textBoxApeMatAgrSin As TextBox
+    Friend WithEvents labelApeMatAgrSin As Label
+    Friend WithEvents textBoxApePatAgrSin As TextBox
+    Friend WithEvents labelApelliPatAgrSin As Label
+    Friend WithEvents comboBoxRutAgrSin As ComboBox
+    Friend WithEvents labelCompSin As Label
+    Friend WithEvents dateTimePickerFecSin As DateTimePicker
+    Friend WithEvents labelFechaSin As Label
+    Friend WithEvents textBoxDetallAgrSin As TextBox
+    Friend WithEvents labelDetaSin As Label
+    Friend WithEvents comboBoxCompaAgrSin As ComboBox
+    Friend WithEvents comboBoxEstadSegAgrSin As ComboBox
+    Friend WithEvents labelEstadSeguSin As Label
+    Friend WithEvents labelTituloAgrSin As Label
+    Friend WithEvents buttonCancelSin As Button
+    Friend WithEvents buttonAgrSinConf As Button
 End Class
