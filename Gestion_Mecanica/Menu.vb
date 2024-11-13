@@ -1277,7 +1277,7 @@ Public Class Menu
         ' Alternar la visibilidad del panel y llevarlo al frente si es visible
         pnregistroCliente.Visible = True
     End Sub
-
+    'Espero que funcione'
     Private Sub btCerrarRegistroCli_Click(sender As Object, e As EventArgs) Handles btCerrarRegistroCli.Click
         pnregistroCliente.Visible = False
     End Sub
