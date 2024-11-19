@@ -2135,5 +2135,84 @@ Public Class Menu
         End Using
     End Sub
 
+    Private mostrandoTodos As Boolean = True ' Variable de estado para alternar entre los modos
+
+    Private Sub buttonConsuRutSin_Click(sender As Object, e As EventArgs) Handles buttonConsuRutSin.Click
+        If mostrandoTodos Then
+            BuscarPorRut() ' Llamar a la función para buscar por RUT
+            mostrandoTodos = False
+            buttonConsuRutSin.Text = "Mostrar Todos" ' Cambiar texto del botón
+        Else
+            MostrarTodosLosDatos() ' Llamar a la función para mostrar todos los datos
+            mostrandoTodos = True
+            buttonConsuRutSin.Text = "Buscar por RUT" ' Cambiar texto del botón
+        End If
+    End Sub
+
+    Private Sub BuscarPorRut()
+        Dim rut As String = textBoxConsRutSin.Text.Trim()
+
+        ' Verificar si el TextBox está vacío
+        If String.IsNullOrEmpty(rut) Then
+            MessageBox.Show("Por favor, ingresa un RUT para buscar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Establecer la conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT * FROM siniestro WHERE Rut = @Rut"
+            Dim command As New MySqlCommand(query, connection)
+            command.Parameters.AddWithValue("@Rut", rut)
+
+            Try
+                ' Abrir la conexión y ejecutar la consulta
+                connection.Open()
+                Dim adapter As New MySqlDataAdapter(command)
+                Dim table As New DataTable()
+
+                ' Llenar la tabla con los resultados
+                adapter.Fill(table)
+
+                ' Asignar los resultados al DataGridView
+                dataGridViewSiniestro.DataSource = table
+
+                ' Verificar si se encontraron resultados
+                If table.Rows.Count = 0 Then
+                    MessageBox.Show("No se encontraron registros para el RUT ingresado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al buscar los datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
+    Private Sub MostrarTodosLosDatos()
+        ' Establecer la conexión a la base de datos
+        Using connection As New MySqlConnection("Server=localhost;Database=taller;Uid=root;Pwd=;")
+            Dim query As String = "SELECT * FROM siniestro"
+            Dim command As New MySqlCommand(query, connection)
+
+            Try
+                ' Abrir la conexión y ejecutar la consulta
+                connection.Open()
+                Dim adapter As New MySqlDataAdapter(command)
+                Dim table As New DataTable()
+
+                ' Llenar la tabla con los resultados
+                adapter.Fill(table)
+
+                ' Asignar los resultados al DataGridView
+                dataGridViewSiniestro.DataSource = table
+
+                ' Limpiar el TextBox
+                textBoxConsRutSin.Clear()
+
+            Catch ex As MySqlException
+                MessageBox.Show("Error al cargar todos los datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+    End Sub
+
 
 End Class

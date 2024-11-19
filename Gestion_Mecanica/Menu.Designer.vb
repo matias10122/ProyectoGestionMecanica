@@ -91,6 +91,9 @@ Partial Class Menu
         lblNeto = New Label()
         Label7 = New Label()
         panelSiniestro = New Panel()
+        buttonConsuRutSin = New Button()
+        textBoxConsRutSin = New TextBox()
+        labelTituConsSin = New Label()
         panelDetalleSiniestro = New Panel()
         panelAgreSis = New Panel()
         buttonCancelSin = New Button()
@@ -152,6 +155,7 @@ Partial Class Menu
         buttonVerDetallesSiniestro = New Button()
         panelGestionServicios = New Panel()
         panelClientes = New Panel()
+        panelThreeCrudCli = New Panel()
         comboBoxBuscCli = New ComboBox()
         labelBuscTitRut = New Label()
         buttonLimpCli = New Button()
@@ -212,7 +216,6 @@ Partial Class Menu
         limpiarCamposGestionUsuarios = New Button()
         buttonMostrarUsuarios = New Button()
         LabelRut = New Label()
-        panelThreeCrudCli = New Panel()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         panelVentaRepuestos.SuspendLayout()
@@ -229,11 +232,11 @@ Partial Class Menu
         panelDatoDetSin.SuspendLayout()
         CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).BeginInit()
         panelClientes.SuspendLayout()
+        panelThreeCrudCli.SuspendLayout()
         panelTitulClientes.SuspendLayout()
         panelRepuestos.SuspendLayout()
         panelUsuario.SuspendLayout()
         panelEncabezadoUsuario.SuspendLayout()
-        panelThreeCrudCli.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
@@ -948,10 +951,38 @@ Partial Class Menu
         panelSiniestro.Controls.Add(buttonEliminarSiniestro)
         panelSiniestro.Controls.Add(buttonAgregarSiniestro)
         panelSiniestro.Controls.Add(buttonVerDetallesSiniestro)
+        panelSiniestro.Controls.Add(labelTituConsSin)
+        panelSiniestro.Controls.Add(textBoxConsRutSin)
+        panelSiniestro.Controls.Add(buttonConsuRutSin)
         panelSiniestro.Location = New Point(8, 57)
         panelSiniestro.Name = "panelSiniestro"
         panelSiniestro.Size = New Size(790, 392)
         panelSiniestro.TabIndex = 2
+        ' 
+        ' buttonConsuRutSin
+        ' 
+        buttonConsuRutSin.Location = New Point(678, 30)
+        buttonConsuRutSin.Name = "buttonConsuRutSin"
+        buttonConsuRutSin.Size = New Size(75, 23)
+        buttonConsuRutSin.TabIndex = 9
+        buttonConsuRutSin.Text = "Consultar"
+        buttonConsuRutSin.UseVisualStyleBackColor = True
+        ' 
+        ' textBoxConsRutSin
+        ' 
+        textBoxConsRutSin.Location = New Point(557, 30)
+        textBoxConsRutSin.Name = "textBoxConsRutSin"
+        textBoxConsRutSin.Size = New Size(100, 23)
+        textBoxConsRutSin.TabIndex = 8
+        ' 
+        ' labelTituConsSin
+        ' 
+        labelTituConsSin.AutoSize = True
+        labelTituConsSin.Location = New Point(451, 33)
+        labelTituConsSin.Name = "labelTituConsSin"
+        labelTituConsSin.Size = New Size(100, 15)
+        labelTituConsSin.TabIndex = 7
+        labelTituConsSin.Text = "Consultar por rut:"
         ' 
         ' panelDetalleSiniestro
         ' 
@@ -959,7 +990,7 @@ Partial Class Menu
         panelDetalleSiniestro.Controls.Add(panelAgreSis)
         panelDetalleSiniestro.Controls.Add(panelDetalleSinSelec)
         panelDetalleSiniestro.Controls.Add(tituloVerDetalleSiniestros)
-        panelDetalleSiniestro.Location = New Point(12, 20)
+        panelDetalleSiniestro.Location = New Point(17, 11)
         panelDetalleSiniestro.Name = "panelDetalleSiniestro"
         panelDetalleSiniestro.Size = New Size(763, 293)
         panelDetalleSiniestro.TabIndex = 6
@@ -988,7 +1019,7 @@ Partial Class Menu
         panelAgreSis.Controls.Add(textBoxNomAgrSin)
         panelAgreSis.Controls.Add(labelNomAgrSin)
         panelAgreSis.Controls.Add(labelRutAgrSin)
-        panelAgreSis.Location = New Point(0, 0)
+        panelAgreSis.Location = New Point(0, 3)
         panelAgreSis.Name = "panelAgreSis"
         panelAgreSis.Size = New Size(763, 292)
         panelAgreSis.TabIndex = 2
@@ -1512,7 +1543,7 @@ Partial Class Menu
         labelTituloSiniestros.BackColor = Color.Transparent
         labelTituloSiniestros.Font = New Font("Segoe UI", 21.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         labelTituloSiniestros.ForeColor = Color.FromArgb(CByte(0), CByte(192), CByte(0))
-        labelTituloSiniestros.Location = New Point(320, 17)
+        labelTituloSiniestros.Location = New Point(49, 16)
         labelTituloSiniestros.Name = "labelTituloSiniestros"
         labelTituloSiniestros.Size = New Size(150, 40)
         labelTituloSiniestros.TabIndex = 5
@@ -1578,6 +1609,21 @@ Partial Class Menu
         panelClientes.Name = "panelClientes"
         panelClientes.Size = New Size(790, 392)
         panelClientes.TabIndex = 3
+        ' 
+        ' panelThreeCrudCli
+        ' 
+        panelThreeCrudCli.BackColor = Color.DarkSlateBlue
+        panelThreeCrudCli.Controls.Add(comboBoxBuscCli)
+        panelThreeCrudCli.Controls.Add(labelBuscTitRut)
+        panelThreeCrudCli.Controls.Add(buttonLimpCli)
+        panelThreeCrudCli.Controls.Add(buttonEditCli)
+        panelThreeCrudCli.Controls.Add(buttonElimCli)
+        panelThreeCrudCli.Controls.Add(buttonAgreCli)
+        panelThreeCrudCli.Controls.Add(buttonVerCli)
+        panelThreeCrudCli.Location = New Point(455, 20)
+        panelThreeCrudCli.Name = "panelThreeCrudCli"
+        panelThreeCrudCli.Size = New Size(248, 330)
+        panelThreeCrudCli.TabIndex = 15
         ' 
         ' comboBoxBuscCli
         ' 
@@ -2174,29 +2220,14 @@ Partial Class Menu
         LabelRut.TabIndex = 3
         LabelRut.Text = "Rut"
         ' 
-        ' panelThreeCrudCli
-        ' 
-        panelThreeCrudCli.BackColor = Color.DarkSlateBlue
-        panelThreeCrudCli.Controls.Add(comboBoxBuscCli)
-        panelThreeCrudCli.Controls.Add(labelBuscTitRut)
-        panelThreeCrudCli.Controls.Add(buttonLimpCli)
-        panelThreeCrudCli.Controls.Add(buttonEditCli)
-        panelThreeCrudCli.Controls.Add(buttonElimCli)
-        panelThreeCrudCli.Controls.Add(buttonAgreCli)
-        panelThreeCrudCli.Controls.Add(buttonVerCli)
-        panelThreeCrudCli.Location = New Point(455, 20)
-        panelThreeCrudCli.Name = "panelThreeCrudCli"
-        panelThreeCrudCli.Size = New Size(248, 330)
-        panelThreeCrudCli.TabIndex = 15
-        ' 
         ' Menu
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondoLogin01
         ClientSize = New Size(800, 478)
-        Controls.Add(panelClientes)
         Controls.Add(panelSiniestro)
+        Controls.Add(panelClientes)
         Controls.Add(panelUsuario)
         Controls.Add(panelGestionServicios)
         Controls.Add(panelVentaRepuestos)
@@ -2233,6 +2264,8 @@ Partial Class Menu
         CType(dataGridViewSiniestro, ComponentModel.ISupportInitialize).EndInit()
         panelClientes.ResumeLayout(False)
         panelClientes.PerformLayout()
+        panelThreeCrudCli.ResumeLayout(False)
+        panelThreeCrudCli.PerformLayout()
         panelTitulClientes.ResumeLayout(False)
         panelTitulClientes.PerformLayout()
         panelRepuestos.ResumeLayout(False)
@@ -2241,8 +2274,6 @@ Partial Class Menu
         panelUsuario.PerformLayout()
         panelEncabezadoUsuario.ResumeLayout(False)
         panelEncabezadoUsuario.PerformLayout()
-        panelThreeCrudCli.ResumeLayout(False)
-        panelThreeCrudCli.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -2437,4 +2468,7 @@ Partial Class Menu
     Friend WithEvents labelBuscTitRut As Label
     Friend WithEvents buttonLimpCli As Button
     Friend WithEvents panelThreeCrudCli As Panel
+    Friend WithEvents buttonConsuRutSin As Button
+    Friend WithEvents textBoxConsRutSin As TextBox
+    Friend WithEvents labelTituConsSin As Label
 End Class
